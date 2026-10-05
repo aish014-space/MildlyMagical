@@ -1,0 +1,837 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mildly Magical</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #D9F2EE;
+    --pink-soft: #FCE4EE;
+    --pink: #F4A6C0;
+    --ink: #264541;
+    --muted: #46665F;
+    --accent: #A8456A;
+    --gold: #D9A92E;
+    --gold-light: #F2D77E;
+    --card: rgba(255, 255, 255, 0.62);
+    --line: rgba(244, 166, 192, 0.7);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; min-height: 100%; }
+  body {
+    background: var(--teal);
+    background: linear-gradient(180deg, var(--teal) 0%, var(--teal) 45%, var(--pink-soft) 100%) fixed;
+    color: var(--ink);
+    font-family: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
+    line-height: 1.5;
+    position: relative;
+    overflow-x: hidden;
+  }
+  main {
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 40px 16px 56px;
+    text-align: center;
+    position: relative;
+  }
+  .star {
+    position: absolute;
+    color: var(--gold);
+    font-size: 18px;
+    opacity: 0.4;
+    pointer-events: none;
+    user-select: none;
+  }
+  .star.one { top: 36px; left: 9%; }
+  .star.two { top: 150px; right: 8%; font-size: 14px; }
+  @media (prefers-reduced-motion: no-preference) {
+    .star { animation: twinkle 5s ease-in-out infinite; }
+    .star.two { animation-delay: 2.3s; animation-duration: 6.5s; }
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.18; }
+    50% { opacity: 0.55; }
+  }
+
+  .sparkles { position: relative; display: inline-block; }
+  .spark {
+    position: absolute; color: var(--gold); pointer-events: none; user-select: none;
+    text-shadow: 0 0 8px var(--gold-light);
+    opacity: 0.75;
+  }
+  .spark.s1 { top: 4%; left: -26%; font-size: 22px; }
+  .spark.s2 { top: 52%; right: -30%; font-size: 16px; }
+  .spark.s3 { bottom: 6%; left: -14%; font-size: 12px; }
+  .spark.s4 { top: -4%; right: -16%; font-size: 13px; }
+  @media (prefers-reduced-motion: no-preference) {
+    .spark { animation: glint 3.6s ease-in-out infinite; }
+    .spark.s2 { animation-delay: .9s; } .spark.s3 { animation-delay: 1.8s; } .spark.s4 { animation-delay: 2.5s; }
+  }
+  @keyframes glint {
+    0%, 100% { opacity: .3; transform: scale(.8) rotate(0deg); }
+    50% { opacity: 1; transform: scale(1.15) rotate(20deg); }
+  }
+  .burst { position: fixed; pointer-events: none; color: var(--gold); text-shadow: 0 0 6px var(--gold-light); z-index: 10; }
+  .rule { color: var(--gold); letter-spacing: .6em; font-size: .8rem; margin: 14px 0 0; }
+
+  .greeting { margin: 0 0 28px; }
+  .hello { margin: 0; font-size: 1.2rem; color: var(--ink); }
+  .tease { margin: 6px 0 0; font-size: 0.9rem; font-style: italic; color: var(--muted); min-height: 2.8em; }
+
+  .count { margin: 0; font-size: clamp(5.5rem, 26vw, 9rem); line-height: 1; color: var(--accent); font-weight: normal; letter-spacing: -0.02em; }
+  .count.is-text { font-size: clamp(2.6rem, 13vw, 4.4rem); line-height: 1.1; letter-spacing: 0; }
+  .cake { margin: 10px 0 0; }
+  .count-label { margin: 4px 0 0; font-size: 1.15rem; }
+  .footnote { margin: 10px 0 0; font-size: 0.85rem; font-style: italic; color: var(--muted); }
+
+  .card {
+    margin-top: 32px;
+    padding: 20px 18px 22px;
+    background: var(--card);
+    border: 1.5px solid var(--gold-light);
+    border-radius: 22px;
+    box-shadow: 0 6px 24px rgba(217, 169, 46, 0.18), 0 0 0 4px rgba(244, 166, 192, 0.18);
+  }
+  .tiers {
+    display: inline-flex; gap: 2px; padding: 3px; margin-bottom: 16px;
+    background: rgba(217, 242, 238, 0.7);
+    border: 1px solid rgba(217, 169, 46, 0.45);
+    border-radius: 999px;
+  }
+  .tier {
+    font-family: Quicksand, system-ui, sans-serif; font-weight: 600; font-size: 0.85rem;
+    padding: 6px 18px; border-radius: 999px;
+    border: 0; background: transparent; color: var(--muted);
+    cursor: pointer;
+    transition: background .2s, color .2s, box-shadow .2s;
+  }
+  .tier:hover { color: var(--ink); }
+  .tier[aria-pressed="true"] { background: #fff; color: var(--ink); box-shadow: 0 1px 4px rgba(168, 69, 106, 0.22); }
+  .takes { margin: 0; font-size: 0.85rem; letter-spacing: 0.02em; color: var(--muted); }
+  .task { margin: 8px 0 20px; font-family: Quicksand, "Nunito", system-ui, -apple-system, "Segoe UI", sans-serif; font-weight: 500; font-size: 1.05rem; line-height: 1.55; min-height: 5.2em; display: flex; align-items: center; justify-content: center; }
+  .task.is-done { opacity: 0.55; }
+  .actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    font-family: Quicksand, system-ui, sans-serif; font-weight: 600; font-size: 0.95rem;
+    padding: 12px 22px; border-radius: 16px;
+    border: 1.5px solid transparent;
+    cursor: pointer; color: #3F1A2B;
+    transition: transform .15s, box-shadow .15s, background .2s;
+  }
+  .btn.primary {
+    background: linear-gradient(180deg, #F8BFD2 0%, var(--pink) 100%);
+    border-color: var(--gold-light);
+    box-shadow: 0 3px 0 rgba(168, 69, 106, 0.28), 0 6px 14px rgba(244, 166, 192, 0.35);
+  }
+  .btn.ghost {
+    background: rgba(255, 255, 255, 0.7);
+    border-color: var(--pink);
+    border-style: dashed;
+  }
+  .btn:hover:not(:disabled) { transform: translateY(-2px); }
+  .btn.ghost:hover { background: var(--pink-soft); }
+  .btn.primary:active:not(:disabled) { transform: translateY(2px); box-shadow: 0 1px 0 rgba(168, 69, 106, 0.28); }
+  .btn.ghost:active { transform: translateY(1px); }
+  .btn:focus-visible, .tier:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) { .btn, .tier { transition: none; } .btn:hover:not(:disabled), .btn:active:not(:disabled) { transform: none; } }
+  .thanks { margin: 14px 0 0; min-height: 1.5em; font-style: italic; color: var(--muted); font-size: 0.95rem; }
+
+  .moon { margin: 30px 0 0; font-size: 0.95rem; color: var(--muted); }
+  .moon b { color: var(--ink); font-weight: normal; }
+  .tally { margin: 14px 0 0; font-size: 0.8rem; color: var(--muted); }
+  .feedback { margin: 36px 0 0; font-size: 0.8rem; color: var(--muted); }
+</style>
+</head>
+<body>
+<span class="star one" aria-hidden="true">✦</span>
+<span class="star two" aria-hidden="true">✦</span>
+
+<main>
+  <div class="greeting">
+    <p class="hello" id="hello"></p>
+    <p class="tease" id="greeting"></p>
+  </div>
+
+  <div class="sparkles" aria-hidden="false">
+    <h1 class="count" id="count">–</h1>
+    <span class="spark s1" aria-hidden="true">✦</span>
+    <span class="spark s2" aria-hidden="true">✧</span>
+    <span class="spark s3" aria-hidden="true">✦</span>
+    <span class="spark s4" aria-hidden="true">✧</span>
+  </div>
+  <div class="cake" id="cake" hidden aria-hidden="true">
+    <svg viewBox="0 0 160 130" width="200" height="163" xmlns="http://www.w3.org/2000/svg">
+      <defs><clipPath id="face"><rect x="30" y="50" width="100" height="58" rx="8"/></clipPath></defs>
+      <ellipse cx="80" cy="112" rx="66" ry="10" fill="#B7DDD6"/>
+      <ellipse cx="80" cy="110" rx="58" ry="7.5" fill="#D9F2EE"/>
+      <polygon points="32,52 128,52 104,30 56,30" fill="#F8BFD2" stroke="#F4A6C0" stroke-width="2" stroke-linejoin="round"/>
+      <g clip-path="url(#face)">
+        <rect x="30" y="50" width="100" height="58" fill="#E8C468"/>
+        <rect x="30" y="84" width="100" height="7" fill="#FFF8FB"/>
+        <rect x="30" y="66" width="100" height="7" fill="#FFF8FB"/>
+        <rect x="30" y="73" width="100" height="11" fill="#F0CE82"/>
+        <rect x="30" y="91" width="100" height="17" fill="#F0CE82"/>
+        <rect x="30" y="50" width="100" height="16" fill="#F4A6C0"/>
+        <path d="M30 62 q9 14 18 0 q9 10 18 0 q9 13 18 0 q9 10 18 0 q9 12 18 0 v-12 h-90z" fill="#F4A6C0"/>
+        <circle cx="48" cy="98" r="1.4" fill="#C9962A"/><circle cx="72" cy="78" r="1.4" fill="#C9962A"/><circle cx="96" cy="99" r="1.4" fill="#C9962A"/><circle cx="114" cy="78" r="1.4" fill="#C9962A"/><circle cx="60" cy="100" r="1.2" fill="#C9962A"/>
+      </g>
+      <rect x="30" y="50" width="100" height="58" rx="8" fill="none" stroke="#C9962A" stroke-width="1.5" opacity=".55"/>
+      <path d="M80 36 c-9 0 -13 7 -9 13 c3 5 15 5 18 0 c4 -6 0 -13 -9 -13z" fill="#D9577F"/>
+      <path d="M72 36 q8 -6 16 0 q-4 -6 -8 -6 q-4 0 -8 6z" fill="#7FBFAF"/>
+      <circle cx="76" cy="42" r="1" fill="#F2D77E"/><circle cx="82" cy="44" r="1" fill="#F2D77E"/><circle cx="85" cy="40" r="1" fill="#F2D77E"/><circle cx="79" cy="47" r="1" fill="#F2D77E"/>
+      <circle cx="58" cy="36" r="1.5" fill="#D9A92E"/><circle cx="102" cy="37" r="1.5" fill="#D9A92E"/><circle cx="66" cy="45" r="1.5" fill="#F2D77E"/><circle cx="96" cy="46" r="1.5" fill="#F2D77E"/>
+    </svg>
+  </div>
+  <p class="count-label" id="countLabel">days until the new year</p>
+  <p class="footnote" id="footnote"></p>
+
+  <p class="rule" aria-hidden="true">✦ ✧ ✦</p>
+
+  <section class="card" id="card" aria-label="Today's small thing">
+    <div class="tiers" role="group" aria-label="How long have you got?">
+      <button class="tier" data-tier="2" aria-pressed="true">2 min</button>
+      <button class="tier" data-tier="10" aria-pressed="false">10 min</button>
+    </div>
+    <p class="takes" id="takes"></p>
+    <p class="task" id="task" aria-live="polite"></p>
+    <div class="actions">
+      <button class="btn primary" id="doneBtn">Done, somehow</button>
+      <button class="btn ghost" id="swapBtn">Something else, please</button>
+    </div>
+    <p class="thanks" id="thanks" aria-live="polite"></p>
+  </section>
+
+  <p class="moon" id="moon"></p>
+  <p class="tally" id="tally"></p>
+
+  <p class="feedback">Made with coffee, cake and a mild amount of magic.</p>
+</main>
+
+<script>
+(function () {
+  "use strict";
+
+  // ---------- Content (all original) ----------
+
+  // The constant: what this page stands for. Only the salutation follows the clock.
+  var HELLO = {
+    morning:   `Good morning, dear human. Let’s find the whimsy today.`,
+    afternoon: `Good afternoon, dear human. Let’s find the whimsy today.`,
+    evening:   `Good evening, dear human. Let’s find the whimsy today.`,
+    night:     `Hello, night owl, dear human. Let’s find the whimsy today.`
+  };
+
+  // One per day, in order, enough to cover the whole countdown without a repeat.
+  var TEASES = [
+    `Today’s forecast: mostly fine, with scattered biscuits.`,
+    `You have been busy all year. This tab would like to formally congratulate you.`,
+    `Nothing here is urgent. That is the whole point of here.`,
+    `The universe has a long to-do list too, and it still stops for tea.`,
+    `Somewhere a pigeon is having a worse day than you, and it is handling it with a strut.`,
+    `If today were a sandwich, we are aiming for a good one, not the sort from a petrol station.`,
+    `You are officially permitted to enjoy something today. The paperwork is in the post.`,
+    `Today’s magic is small, local, and made from ingredients you already own.`,
+    `Everyone else is making it up as they go along. Some are just better at confident walking.`,
+    `Your list will still be there later. Lists are loyal like that.`,
+    `The world has been going for four billion years and will not miss the next two minutes.`,
+    `The trick to a good day is lowering the bar and then stepping over it with flair.`,
+    `A little silliness is the cheapest medicine in the cupboard.`,
+    `There is a small, quiet cheer going on in your honour. You may not hear it, but it is lovely.`,
+    `Be gentle with yourself. You are the only version of you currently available.`,
+    `Today we are aiming for “pleasantly present”, with a stretch goal of “mildly smug”.`,
+    `The tea has opinions. They are all encouraging.`,
+    `Some days run on coffee. Today runs on whimsy, with a splash of milk.`,
+    `Your shoulders called. They would like to come down now.`,
+    `If a goose can waddle through life with confidence, so can you.`,
+    `Today’s mission is entirely optional and mostly delightful.`,
+    `Spare a thought for the humble Tuesday, which never gets any credit. Today, it does.`,
+    `You are made of stardust and snack crumbs. Both deserve respect.`,
+    `The year has been long. The next two minutes are short. Spend them well.`,
+    `Somewhere a cat is judging nothing at all, and thriving. Aspire to this.`,
+    `A day without a small delight is like a teapot without a lid: possible, but drippy.`,
+    `You do not have to be productive to be worthwhile. Terrible news for productivity, wonderful news for you.`,
+    `There is a pocket of quiet in every day. Today’s is right here.`,
+    `Be kind to the person in the mirror. They have been up since forever.`,
+    `The world is mostly made of ordinary things, and ordinary things are secretly wonderful.`,
+    `Let us take this one small thing at a time. The big things are busy queueing.`,
+    `A giggle at an inconvenient moment is a form of wisdom.`,
+    `You have exactly enough time for one small good thing. It is an excellent ratio.`,
+    `Pocket-sized joy, available now, no batteries required.`,
+    `Nobody has ever regretted a biscuit break. Historians have checked.`,
+    `You are doing better than you think, and the evidence is that you are still here, reading this.`,
+    `Think of this as a small lantern in the middle of a very busy forest.`,
+    `Today’s wizardry: put the phone down, pick the kettle up.`,
+    `The best-laid plans often go awry. The best-laid snacks rarely do.`,
+    `Your brain has been carrying a lot. Let it sit on the sofa for a bit.`,
+    `The hedgehog does not fret about tomorrow. It simply snuffles on. Take notes.`,
+    `Happiness is mostly small and slightly crumpled, like a good coat.`,
+    `Today is not the day to fix everything. It is the day to fix one small thing and have a sit.`,
+    `Fun fact: laughing at nothing in particular is entirely legal.`,
+    `There is no wrong way to do a little thing. Squint if you must.`,
+    `Somewhere a dragon is hoarding something sensible, like naps. Join it.`,
+    `You are a marvel held together by caffeine and good intentions. We salute you.`,
+    `A little nonsense a day keeps the grumpiness at bay. Probably. Research is ongoing.`,
+    `If things get loud, here is a quiet corner with your name on it.`,
+    `Plenty of people are cheering for you. Several of them are birds, but still.`,
+    `Clocks run on their own opinions. You are allowed to have yours.`,
+    `Today’s agenda: one tiny kindness, one small laugh and a tactical sit-down.`,
+    `Every great adventure began with someone saying, “Right, one moment.”`,
+    `The to-do list is a suggestion box, and today you are taking one suggestion.`,
+    `Life is short, and the biscuits are right there.`,
+    `You are the main character of a busy, slightly sitcom-like story. Enjoy the plot twist of calm.`,
+    `Today’s spell requires only a breath, a smile and the courage to be briefly silly.`,
+    `If worrying were useful, you would have fixed everything by now. Try a stretch instead.`,
+    `Small joys, like socks, are found when you stop looking for them.`,
+    `You deserve a gentle moment. It is in the rules. We checked the rules.`,
+    `A good day is just a bad day with a better snack strategy.`,
+    `The kettle and the sun are both on your side, or at least in the neighbourhood.`,
+    `Somewhere a very small elf has put your name down for a nice moment.`,
+    `Things you can control today: your tea, your shoulders and the tone of your inner narrator.`,
+    `Let us be honest: the dishes will outlive us all. Go on, have some fun.`,
+    `The shortest route to feeling better is usually just around the corner, and slightly silly.`,
+    `You are allowed to be a work in progress and a delight, simultaneously.`,
+    `Even the busiest bee stops for a flower. It is practically policy.`,
+    `Look at yourself the way a friend would: warmly, and with snacks.`,
+    `The universe loves a person who pauses. It says so in the small print.`,
+    `Today’s sorcery is entirely domestic and entirely effective.`,
+    `Inside every busy person is a small, giddy child who wants to doodle. Let them.`,
+    `A bad mood is just a good mood that has not had a snack yet.`,
+    `You cannot pour from an empty teapot. Fill up first, then pour.`,
+    `Be as gentle with yourself as you would be with a sleeping cat.`,
+    `The best part of being a grown-up is eating biscuits at any hour. Use this power wisely, or at least cheerfully.`,
+    `The bar is low, the biscuits are high and the vibes are acceptable.`,
+    `It is remarkable how much good one tiny, ridiculous thing can do.`,
+    `A pocketful of small kindnesses is heavier than it looks, in the nicest possible way.`,
+    `Time is a river. Today we are paddling slowly, with tea.`,
+    `Somewhere a wise old owl is saying, “Go on, have a laugh.” Owls are rarely wrong.`,
+    `The world will keep turning while you take a breath. It is very capable.`,
+    `Fun is a muscle. Today, we give it a light warm-up.`,
+    `You have been a grown-up for ages. A little foolishness is long overdue.`,
+    `The universe is mostly empty space, which leaves plenty of room for a nap.`,
+    `Nothing says “I am doing great” like a spontaneous dance in the hallway.`,
+    `Today’s enchantment is brought to you by the letters T, E and A.`,
+    `Even dragons have off days, and they have fire. You are doing fine.`,
+    `Little rituals are how busy people hold on to the magic. Today’s is waiting just below.`,
+    `There is still time for a good end to the year. It starts with one small, silly step.`
+  ];
+
+  var FOOTNOTES = [
+    `* Give or take a nap.`,
+    `* Calculated over a second cup of coffee, so treat with caution.`,
+    `* Subject to the usual amount of Tuesday.`,
+    `* Counted by hand, by someone who got distracted by cake.`,
+    `* Includes weekends, which are mostly rumour.`,
+    `* Plus or minus one cup of tea.`,
+    `* The cat was consulted. It declined to comment, as cats do.`,
+    `* Please arrange your panic in order of urgency.`,
+    `* Approximate. Even calendars struggle with Wednesdays.`,
+    `* Results may vary depending on how often you press snooze.`,
+    `* Verified by a raven who would only accept payment in cake.`,
+    `* Measured in the traditional units: sunrises, kettles and sighs.`,
+    `* Not valid during emails.`,
+    `* Time was never very good at being on time.`,
+    `* Best read with coffee and a slice of something.`,
+    `* The tea leaves suggested “plenty”, then fell asleep.`,
+    `* Some of these days will be spent looking for the other sock.`,
+    `* Count may fall short in the presence of a really good nap.`,
+    `* Certified accurate by a very serious pigeon.`,
+    `* The calendar has been told to behave. It has made no promises.`,
+    `* Fewer days than you feared, more than you will use wisely. Perfectly normal.`,
+    `* Terms and conditions apply. Cake is not included, but is encouraged.`,
+    `* Close enough, in the way that dragons are close enough to lizards.`,
+    `* Please do not feed the number after midnight.`,
+    `* Counted over coffee, then recounted over more coffee.`,
+    `* Hedgehog-approved, which is the most rigorous standard we know of.`,
+    `* Excludes the day you lose to a cold and a very long sofa.`,
+    `* Not counting days spent staring into the fridge for answers.`,
+    `* Time moves differently in the school-run queue.`,
+    `* Reviewed by a panel of mugs. Verdict: more coffee.`,
+    `* Some of these days are shorter on the inside.`,
+    `* One day will be lost looking for your keys. They were in your other coat.`,
+    `* Counted with a pencil, a hunch and a half-eaten slice of cake.`,
+    `* Subject to revision by the universe, a notoriously poor timekeeper.`,
+    `* Includes at least one day when the brain takes unscheduled leave.`,
+    `* Allow extra for days that are Mondays in disguise.`,
+    `* Happiness not guaranteed. Coffee is.`,
+    `* A day is a day, however many tabs are open.`,
+    `* Do not operate heavy to-do lists without coffee.`,
+    `* Past results are not indicative of future naps.`,
+    `* The owl in the garden counted twice and got a different answer. Owls are like that.`,
+    `* Estimated by someone who also loses count of the dishes.`,
+    `* No refunds on hours lost to scrolling, though going outside is known to help.`,
+    `* The universe is very large and very unhurried. Take its example.`,
+    `* The number is correct. Your feelings about it are optional.`,
+    `* A small black cat sat on the calculator. We went with its figure.`,
+    `* May contain traces of nonsense.`,
+    `* Each of these days comes with a free opportunity to sit down.`,
+    `* Please keep arms and legs inside the year at all times.`,
+    `* Sage advice: have a slice of cake.`,
+    `* Pinned to the calendar with a paperclip, for luck.`,
+    `* Time flies. It rarely leaves a forwarding address.`,
+    `* Counted twice, once by a person and once by a very sceptical frog.`,
+    `* The nights are drawing in. They will be back out by March.`,
+    `* Drawn up by candlelight and one reluctant spreadsheet.`,
+    `* The odd day may arrive early. Be gracious to it.`,
+    `* Best served with tea, a sofa and absolutely no agenda.`,
+    `* The stars have been notified and are looking forward to the new year as much as you.`,
+    `* Compiled by a committee of crows who disagree about everything except cake.`,
+    `* If the number looks wrong, check again after coffee. It usually improves.`,
+    `* Sourced from a very old almanac that mostly gives advice about turnips.`,
+    `* Lucky number may vary. Lucky socks do not.`,
+    `* Counted by someone who got distracted by a nice cloud.`,
+    `* This figure is a suggestion, much like the washing-up rota.`,
+    `* Wise people say: never trust a day that has not had its coffee.`,
+    `* Some of these days are best spent in pyjamas. We have checked with the relevant authorities.`,
+    `* Whatever happens, the kettle remains on your side.`,
+    `* Double-checked with a teaspoon and a second slice of cake.`,
+    `* The year does not mind being hurried, but it does like to be thanked.`,
+    `* The coffee machine insists the number is lower. The coffee machine is wrong.`,
+    `* Tested on a sample of three cats, none of whom cared.`,
+    `* Does not account for leap years, leap frogs or other sudden hops.`,
+    `* Fresh daily, with a faint aroma of coffee.`,
+    `* Hand-polished with a soft cloth and a gentle sigh.`,
+    `* Reality may vary, but the biscuit tin is roughly where you left it.`,
+    `* Printed in invisible ink on the back of a very good cloud.`,
+    `* Do not worry. The year has done this before.`,
+    `* Contains no actual dragons, though some days feel otherwise.`,
+    `* The wind was asked and replied, “Soon.”`,
+    `* Joy is mostly paying attention, with a snack nearby.`,
+    `* Sworn on a teaspoon, a mug and a lightly burnt crumpet.`,
+    `* Subject to the whims of a wandering Thursday.`,
+    `* Checked by a very small accountant who was easily bribed with cake.`,
+    `* Please overlook any sneezes, hiccups and sudden urges to dance.`,
+    `* Wrapped in a warm cardigan against the draught of the future.`,
+    `* Calculated on the back of a coffee-stained envelope. It holds up.`,
+    `* The odds are good and the goods are odd. Both are fine.`,
+    `* Delivered by a pigeon who took the scenic route.`,
+    `* If in doubt, add cake.`,
+    `* Brewed slowly, as all the best numbers are. Tea or coffee, your choice.`,
+    `* Stamped, signed and sniffed by an officially unimpressed cat.`,
+    `* Approved over a flat white and a small, well-earned muffin.`
+  ];
+
+  var MOON_NAMES = ["New moon", "Waxing crescent", "First quarter", "Waxing gibbous",
+                    "Full moon", "Waning gibbous", "Last quarter", "Waning crescent"];
+  var MOON_ICONS = ["🌑", "🌒", "🌓", "🌔", "🌕", "🌖", "🌗", "🌘"];
+
+  // Eight lines per phase; they rotate so a line does not return for ~2 lunar months.
+  var MOON_LINES = [
+    [ // new
+      `The moon is off duty tonight. Technically still there, like a colleague on holiday.`,
+      `The sky has switched off the big light. Nobody is sure where the switch is.`,
+      `No moon. An excellent evening for sulking in the dark with a clear conscience.`,
+      `The moon is hiding. It is allowed. Everyone needs a day with the camera off.`,
+      `A new moon: the universe’s way of saying “fresh start” without the pamphlets.`,
+      `Perfect for quiet wishes, the kind that don’t require the universe to ask for references.`,
+      `The moon has gone to refill. Please do the same with your tea.`,
+      `Moonless tonight, which is the sky’s version of an out-of-office.`
+    ],
+    [ // waxing crescent
+      `A slim crescent: the moon, one eyebrow raised at your to-do list.`,
+      `The moon is thinking about getting involved. It has not yet decided.`,
+      `A crescent, roughly the shape of a smile told to keep it brief.`,
+      `A growing moon. Unlike your inbox, it is doing so on purpose.`,
+      `The moon is a little bowl tonight, ready to hold any wishes that need holding.`,
+      `The moon is trying a new look. Bold. Slightly slimming.`,
+      `A good evening for starting things you will finish later, or never, but warmly.`,
+      `The moon is a slim hammock tonight. Nobody is lying in it, but the offer stands.`
+    ],
+    [ // first quarter
+      `Half a moon, exactly. Half-committed, which is relatable.`,
+      `Half a moon tonight. It has done what it could, and so have you.`,
+      `The sky’s version of “to be continued”.`,
+      `The moon has cut itself in half, like a sandwich prepared by a sensible adult.`,
+      `Optimists say half full. Witches say half the spell is already cast.`,
+      `Neither one thing nor the other, much like a Wednesday.`,
+      `Ideal for half-finished things. Gold stars for trying.`,
+      `The moon is half there. Let the rest of the day be half there too.`
+    ],
+    [ // waxing gibbous
+      `Nearly full, and visibly pleased with itself.`,
+      `Almost a full moon, with a little nibbled off the side, like a biscuit.`,
+      `The moon is filling out nicely. It has been eating, and good for it.`,
+      `Gibbous sounds like a rude word. It is only geometry.`,
+      `Nearly full tonight. Fair warning: the cats are already getting ideas.`,
+      `The moon is building up to something. Possibly a performance review.`,
+      `The last chapter before the big reveal.`,
+      `A fat moon rising, like a pearl that has found its confidence.`
+    ],
+    [ // full
+      `Full moon. If you feel odd, remember that it is the moon and not you. Mostly.`,
+      `The sky’s biggest hint, and nobody takes it.`,
+      `Witches are rumoured to be extra busy. The rest of us are just awake at 3 a.m.`,
+      `Round, bright and unapologetic, like a good dumpling.`,
+      `Excellent for howling, if you have had the week. Softly. There are neighbours.`,
+      `Maximum brightness. Please do not attempt to find your keys by it.`,
+      `The sky has switched on the big lamp and left it on all night, and nobody is going to mention the bill.`,
+      `Sleep may be difficult. Think of it as a free late-night showing.`
+    ],
+    [ // waning gibbous
+      `Past its peak and handling it with grace. Take notes.`,
+      `The moon has begun its long, dignified wind-down. Feel free to join it.`,
+      `The moon after the party, still wearing the hat.`,
+      `A little less each night. Think of it as decluttering.`,
+      `A good time to let go of one small thing. Perhaps an email.`,
+      `The moon is easing off, and so may you. The universe approves.`,
+      `Still plump, a little tired. Same, moon. Same.`,
+      `Shrinking politely, like a guest who has noticed the time.`
+    ],
+    [ // last quarter
+      `Half a moon again, but this one is tired.`,
+      `Half the sky’s lamp is off. Save electricity by doing the same.`,
+      `A quiet reminder that finishing things is optional but nice.`,
+      `A half moon on its way out, like Friday afternoon, only astronomical.`,
+      `The moon is tidying the edges tonight. Take the hint.`,
+      `Ideal for wrapping up whatever you have been avoiding. Gently.`,
+      `Half light, half dark, half way to a nap. A solid evening for the moon.`,
+      `The moon is doing its end-of-month paperwork.`
+    ],
+    [ // waning crescent
+      `Down to its last sliver of enthusiasm.`,
+      `The thinnest of moons, like a fingernail paring with ambitions.`,
+      `Nearly done, and quietly proud of it.`,
+      `Almost no moon. A good night to go to bed early and call it astronomy.`,
+      `A slim smile on its way out. Return it in kind.`,
+      `Rest now. The new moon can handle the heavy lifting.`,
+      `A thread of moon left. Pull it and the whole week may unravel. Don’t.`,
+      `Candles, soft socks and a sensible bedtime are recommended.`
+    ]
+  ];
+
+  // 41 per length, so nothing comes round again for at least five weeks.
+  var TASKS = {
+    "2": [
+      `Drink a full glass of water, like a wizard downing a suspicious potion: with confidence and no questions.`,
+      `Wash your face with warm water, slowly. Imagine the day’s nonsense going down the drain, because it is.`,
+      `Put on moisturiser and sunscreen. Your face has to last you the rest of your life. Be polite to it.`,
+      `Text a friend a single word: “Biscuits.” Then watch to see who understands.`,
+      `Unclench your jaw. Lower your shoulders from around your ears. Return the ears to their usual position.`,
+      `Take five slow breaths, in through the nose, out through the mouth, like a kettle that has made peace with itself.`,
+      `Stand, stretch both arms at the ceiling and announce “Ta-da” to an empty room. The room won’t applaud. That’s fine.`,
+      `Text someone: “Thinking of you. No reply needed.” A rare gift: a message with no homework.`,
+      `Apply lip balm as if sealing a very important letter.`,
+      `Look out of a window for a full minute. Count birds, clouds or the neighbours’ bins.`,
+      `Roll your wrists and ankles in slow circles. They do a lot of unpaid work.`,
+      `Rub in hand cream one finger at a time, as if casting a spell with very low stakes.`,
+      `Say three things you did right today, out loud. “I woke up and wore trousers” counts.`,
+      `Eat something fruity or green and chew it with the dignity of a small king.`,
+      `Do a very small, very bad victory dance. Under thirty seconds. Witnesses optional.`,
+      `Play the song that made you feel unstoppable at sixteen. Stay for the first chorus.`,
+      `Brush your teeth standing on one leg. Balance is a skill, and so is dental care.`,
+      `Run cool water over your wrists for twenty seconds. Folk wisdom says it helps. Folk are occasionally right.`,
+      `Tell the mirror one nice thing about yourself. Use an accent if the sincerity is too much.`,
+      `Tidy one square foot of your desk. Just one. The rest will wait; it is very patient.`,
+      `Open a window and take three deep breaths of outside. Free, no subscription.`,
+      `Send a friend a photo of something mildly ridiculous that you can see right now.`,
+      `Massage your scalp with your fingertips for a minute, as if gently persuading an idea out.`,
+      `Hug someone, a cushion, or a tree if neither is available. Count to six. Six is the minimum.`,
+      `Make your tea or coffee, then sit down for the first three sips. Revolutionary.`,
+      `Scrunch a scrap of paper and take a shot at the bin. Score yourself generously.`,
+      `Put on your silliest socks. Nobody needs to know. The socks will know.`,
+      `Write “Not today, nonsense” on a sticky note and put it where you will see it.`,
+      `Tip your ear towards each shoulder, slowly. Make a small noise of relief. The noise is part of it.`,
+      `Tell a houseplant, a pet or the kettle something good that happened this week.`,
+      `Smell something lovely (coffee, soap, an orange peel) and give it thirty seconds of your full attention.`,
+      `Put your phone face down and look at the ceiling for one minute. It has been waiting for this.`,
+      `Have a sip of water, then say “ahhh” like in an advert for water. Commit to it.`,
+      `Sing the first line of any song in the voice of a disappointed butler.`,
+      `Take your shoes off and wiggle your toes. They have been in there all day, like tiny prisoners.`,
+      `Wipe your phone screen and your glasses. Seeing clearly: underrated self-care.`,
+      `Doodle something tiny in the margin of any paper nearby. A star, a snail, a teapot with opinions.`,
+      `Write one full sentence in your best cursive. Any sentence. Let the loops do the talking.`,
+      `If you had to name yourself today, what would you pick? “Gerald the Unbothered”, perhaps. Say it out loud.`,
+      `If you were a snack, which would you be? Decide, then defend your choice to the nearest houseplant.`,
+      `Send a friend a joke. Doesn’t have to be good. Groans count as replies.`
+    ],
+    "10": [
+      `Read one article about something you know nothing about. Octopuses are a fine start: three hearts and no regrets.`,
+      `Make a proper cup of tea and drink it without doing anything else. Yes, that is the whole task.`,
+      `Write down three things you are looking forward to before New Year. Small ones count. Biscuits count.`,
+      `Go outside and find five shades of green (or, this time of year, brown). Report to nobody.`,
+      `Draw your coffee mug as if it were a minor nobleman.`,
+      `Clear out one drawer. Everyone has one. You know the one.`,
+      `Send a voice note to a friend you have been meaning to talk to. Conversation without eye contact.`,
+      `Lie on the floor and stretch however your body suggests. Sound effects encouraged.`,
+      `Read a poem aloud to yourself. Short ones preferred, dramatic ones permitted.`,
+      `Make a playlist of five songs for the next hour. Include one you would only admit to under oath.`,
+      `Write down everything in your head on one page, then close the notebook. The thoughts will wait outside, like polite vampires.`,
+      `Assemble a fancy snack on a proper plate: something crunchy, something sweet, something cheesy. Eat it sitting down.`,
+      `Walk around the block without your phone. Notice something you have never noticed. It is usually a door.`,
+      `Learn to say “thank you” in a language you don’t speak, then say it to the nearest cat.`,
+      `Build a tiny calm corner: a candle, a plant, a mug. Instant sanctuary, no planning permission.`,
+      `Delete ten photos or apps from your phone. Lighter pockets, lighter soul.`,
+      `Give your hands and face a small pamper: a mask or cream, and absolutely nothing else.`,
+      `Watch a short video of baby goats, or any nature clip. Medicinal.`,
+      `Write down a recipe from your childhood, as accurately as you can remember it.`,
+      `Dance in the kitchen to two songs. The kettle may join in.`,
+      `Read a chapter of the book you have been ignoring. It has been sulking on the shelf.`,
+      `Plan one small treat for the weekend and put it in your calendar like a proper appointment.`,
+      `Water your plants and trim one dead leaf. Check them for signs of drama.`,
+      `Write a thank-you note to someone who helped you this year. Send it, or save it for later.`,
+      `Do cat-cow ten times, then child’s pose for a minute. Cats approve of the first one.`,
+      `Draw the view from your window in six lines or fewer.`,
+      `Soak your feet or hold a hot water bottle for ten minutes with your eyes closed.`,
+      `Sort your to-do list into three piles: do, delegate, and “the universe will sort it out”.`,
+      `Look up the history of an everyday object (the paperclip, the umbrella) and tell someone about it at dinner.`,
+      `Write a list of ten things that are going well. “Still here” counts.`,
+      `Make a sandwich with unusual care, and cut it into triangles for no reason except joy.`,
+      `Watch the sky from a window or doorstep for ten minutes. Clouds do their best work unobserved, but they will tolerate you.`,
+      `Clear ten emails and unsubscribe from at least three. Freedom smells like fewer newsletters.`,
+      `Invent a name for your current mood as if it were a new tea blend. “Slightly Frazzled Earl Grey”, for example.`,
+      `Write a four-line joke about your inbox. Revenge is best served concisely.`,
+      `Write a four-line joke about your favourite food. The food will not be offended.`,
+      `Improvise a snack you would genuinely enjoy from whatever is in the cupboard. Name it something grand.`,
+      `Make yourself a treat you loved as a kid: toast with something sweet, cereal, hot chocolate. Eat it with childish joy.`,
+      `Call a parent or a friend, just to say hello. No agenda. Agendas are for meetings.`,
+      `Write a joke. Any joke, any length, as long as one person could plausibly groan at it.`,
+      `Doodle for ten minutes with no plan. Let the pen wander and see where it goes.`
+    ]
+  };
+
+  var THANKS = [
+    `Done, somehow. The universe is quietly delighted, though it would never say so.`,
+    `Splendid. A small, kind thing, now safely entered in the great ledger of things that matter.`,
+    `Well done. The day has just become a little more bearable, which is how most good things start.`,
+    `Lovely. Somewhere a very small bell has rung, and it was rung for you.`,
+    `Noted, and rather admired. Looking after oneself is a craft, and you are getting good at it.`,
+    `Excellent. The rest of the day may now proceed at whatever speed you like.`,
+    `That will do nicely. Small things are where the big ones keep their courage.`,
+    `Marvellous. The world is gently improved, by roughly one person’s worth.`,
+    `There. A tiny bit of magic, entirely your own, and no wand required.`,
+    `Very good. You have been kind to someone today, and it was you, which counts double.`,
+    `Done. The kettle, the moon and the cat all approve.`,
+    `A fine piece of work. Do take a biscuit; the occasion rather demands it.`
+  ];
+
+  // Two fixed days: 31 December and 1 January. One calming task per length, no swapping.
+  var SPECIAL = {
+    last: {
+      tasks: {
+        "2": `Close your eyes and think of a highlight from this year that makes you smile.`,
+        "10": `Make something warm to drink and sit somewhere comfortable, screens away, for ten minutes. Let the year wind down with you.`
+      },
+      tease: `Last day of the year. The to-do list can wait until next year. It is very good at that.`,
+      foot: `* At midnight this page turns into a cake worth savouring. The management recommends a fork.`,
+      label: `last day of the year`,
+      lock: `Today’s task is locked in. Some days deserve to be kept simple.`
+    },
+    first: {
+      count: `Happy New Year`,
+      tasks: {
+        "2": `Take one slow breath and say hello to the new year, out loud. Be polite. It is brand new.`,
+        "10": `Have a slice of cake, or something cake-adjacent, and write down one small thing you would like more of this year.`
+      },
+      tease: `A whole new year, still in its wrapper. Be gentle with it.`,
+      foot: `* As promised, the cake has arrived. The management still recommends a fork.`,
+      label: `Welcome, dear human.`,
+      lock: `Today’s task is locked in. A new year deserves a gentle start.`
+    }
+  };
+  var special = null;
+
+  var TIER_LABEL = { "2": "2 minutes", "10": "10 minutes" };
+  var REPEAT_GAP_DAYS = 35;
+  var STORE_KEY = "nearly-new-year.v1";
+
+  // ---------- Helpers ----------
+
+  function dayNumber(d) { return Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 864e5); }
+  function pickRandom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+  function $(id) { return document.getElementById(id); }
+
+  function loadState() {
+    try {
+      var s = JSON.parse(localStorage.getItem(STORE_KEY));
+      if (s && typeof s === "object") return s;
+    } catch (e) {}
+    return {};
+  }
+  function saveState() {
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch (e) {}
+  }
+
+  var state = loadState();
+  state.seen = state.seen || {};      // seen[tier][idx] = last day shown
+  state.tally = state.tally || 0;
+  var today = dayNumber(new Date());
+  var tier = "2";
+
+  function startDay() {
+    today = dayNumber(new Date());
+    if (state.day !== today) {
+      state.day = today;
+      state.picks = {};
+      state.done = {};
+      saveState();
+    }
+  }
+
+  // Tasks that involve gazing. Never on consecutive days in a length,
+  // and never in both lengths on the same day.
+  var STARE = /look out of a window|look at the ceiling|Watch the sky/;
+  function isStare(t, idx) { return STARE.test(TASKS[t][idx]); }
+  function stareBlocked(t) {
+    var st = state.stare || (state.stare = {});
+    var mine = st[t] || (st[t] = {});
+    var prevPick = state.picks[t];
+    if (mine[today - 1] || mine[today]) return true;
+    if (prevPick !== undefined && isStare(t, prevPick)) return true;
+    for (var o in TASKS) {
+      if (o !== t && st[o] && st[o][today]) return true;
+    }
+    return false;
+  }
+
+  // Choose a task not shown in the last 5 weeks. The day number sets the
+  // starting point, so an untouched run never repeats inside 36 days.
+  function choose(t) {
+    var n = TASKS[t].length;
+    var seen = state.seen[t] || (state.seen[t] = {});
+    var base = ((today % n) + n) % n;
+    var best = -1, oldest = Infinity;
+    var noStare = stareBlocked(t);
+    var current = state.picks[t];
+    for (var i = 0; i < n; i++) {
+      var idx = (base + i) % n;
+      if (noStare && isStare(t, idx)) continue;
+      var last = seen[idx];
+      if (last === undefined || today - last >= REPEAT_GAP_DAYS) { best = idx; break; }
+      if (idx !== current && last < oldest) { oldest = last; best = idx; }
+    }
+    if (best < 0) best = base;
+    seen[best] = today;
+    if (isStare(t, best)) state.stare[t][today] = true;
+    return best;
+  }
+
+  // ---------- Moon ----------
+
+  function moonTonight() {
+    var SYN = 29.530588853;
+    var REF = Date.UTC(2000, 0, 6, 18, 14) / 864e5;
+    var n = new Date();
+    var tonight = new Date(n.getFullYear(), n.getMonth(), n.getDate(), 20, 0, 0);
+    var days = tonight.getTime() / 864e5 - REF;
+    var cycle = Math.floor(days / SYN);
+    var age = days - cycle * SYN;
+    var upper = [1.84566, 5.53699, 9.22831, 12.91963, 16.61096, 20.30228, 23.99361, 27.68493];
+    var p = 0;
+    while (p < upper.length && age >= upper[p]) p++;
+    var phase = p % 8;
+    var start = p === 8 ? upper[7] : (p === 0 ? 0 : upper[p - 1]);
+    var dip = Math.min(3, Math.max(0, Math.floor(age - start)));
+    var line = MOON_LINES[phase][(((cycle * 4 + dip) % 8) + 8) % 8];
+    return { icon: MOON_ICONS[phase], name: MOON_NAMES[phase], line: line };
+  }
+
+  // ---------- Render ----------
+
+  function renderHeader() {
+    var now = new Date();
+    var h = now.getHours();
+    var slot = h >= 5 && h < 12 ? "morning" : h >= 12 && h < 17 ? "afternoon" : h >= 17 && h < 22 ? "evening" : "night";
+    $("hello").textContent = HELLO[slot];
+
+    var target = dayNumber(new Date(now.getFullYear() + 1, 0, 1));
+    var left = target - today;
+    special = (now.getMonth() === 0 && now.getDate() === 1) ? SPECIAL.first : (left === 1 ? SPECIAL.last : null);
+    $("greeting").textContent = special ? special.tease : TEASES[today % TEASES.length];
+    $("count").textContent = special && special.count ? special.count : left;
+    $("count").classList.toggle("is-text", !!(special && special.count));
+    $("cake").hidden = !(special && special.count);
+    $("card").hidden = special === SPECIAL.first;
+    $("countLabel").hidden = !!(special && special.count);
+    $("countLabel").textContent = special ? special.label : (left === 1 ? "day" : "days") + " until the new year";
+    $("footnote").textContent = special ? special.foot : FOOTNOTES[today % FOOTNOTES.length];
+
+    var m = moonTonight();
+    $("moon").innerHTML = "";
+    var b = document.createElement("b");
+    b.textContent = m.icon + " Moon tonight: " + m.name + ".";
+    $("moon").appendChild(b);
+    $("moon").appendChild(document.createTextNode(" " + m.line));
+  }
+
+  function renderTask() {
+    if (!special && state.picks[tier] === undefined) { state.picks[tier] = choose(tier); saveState(); }
+    var done = !!state.done[tier];
+    $("takes").textContent = "Takes about " + TIER_LABEL[tier];
+    $("task").textContent = special ? special.tasks[tier] : TASKS[tier][state.picks[tier]];
+    $("swapBtn").hidden = !!special;
+    $("task").classList.toggle("is-done", done);
+    $("thanks").textContent = done ? (state.thanks && state.thanks[tier]) || "" : (special ? special.lock : "");
+    $("doneBtn").disabled = done;
+    $("doneBtn").style.opacity = done ? "0.6" : "";
+    $("doneBtn").style.cursor = done ? "default" : "";
+    var buttons = document.querySelectorAll(".tier");
+    for (var i = 0; i < buttons.length; i++) {
+      buttons[i].setAttribute("aria-pressed", String(buttons[i].getAttribute("data-tier") === tier));
+    }
+    $("tally").textContent = state.tally
+      ? "Small things done so far: " + state.tally + ". Tiny, but cumulative."
+      : "";
+  }
+
+  // ---------- Events ----------
+
+  function burst(el) {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    var r = el.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+    for (var i = 0; i < 12; i++) {
+      var p = document.createElement("span");
+      p.className = "burst";
+      p.textContent = i % 2 ? "✦" : "✧";
+      p.style.left = cx + "px"; p.style.top = cy + "px";
+      p.style.fontSize = (10 + Math.random() * 12) + "px";
+      document.body.appendChild(p);
+      var a = (Math.PI * 2 * i) / 12 + Math.random() * 0.4, dist = 50 + Math.random() * 60;
+      p.animate([
+        { transform: "translate(-50%,-50%) scale(.4)", opacity: 1 },
+        { transform: "translate(calc(-50% + " + Math.cos(a) * dist + "px), calc(-50% + " + Math.sin(a) * dist + "px)) scale(1.1)", opacity: 0 }
+      ], { duration: 900 + Math.random() * 400, easing: "ease-out" }).onfinish = (function (n) { return function () { n.remove(); }; })(p);
+    }
+  }
+
+  $("doneBtn").addEventListener("click", function () {
+    if (state.done[tier]) return;
+    burst($("doneBtn"));
+    state.done[tier] = true;
+    state.thanks = state.thanks || {};
+    state.thanks[tier] = THANKS[(state.tally) % THANKS.length];
+    state.tally += 1;
+    saveState();
+    renderTask();
+  });
+
+  $("swapBtn").addEventListener("click", function () {
+    state.picks[tier] = choose(tier);
+    state.done[tier] = false;
+    saveState();
+    renderTask();
+  });
+
+  var tierButtons = document.querySelectorAll(".tier");
+  for (var i = 0; i < tierButtons.length; i++) {
+    tierButtons[i].addEventListener("click", function (e) {
+      tier = e.currentTarget.getAttribute("data-tier");
+      renderTask();
+    });
+  }
+
+  // Left open overnight? Roll over to the new day.
+  setInterval(function () {
+    if (dayNumber(new Date()) !== today) { startDay(); renderHeader(); renderTask(); }
+  }, 60000);
+
+  startDay();
+  renderHeader();
+  renderTask();
+  if (special === SPECIAL.first) setTimeout(function () { burst($("count")); }, 500);
+})();
+</script>
+</body>
+</html>
