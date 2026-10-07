@@ -3,28 +3,30 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mildly Magical</title>
+<title>A Pinch of Whimsy</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --teal: #D9F2EE;
-    --pink-soft: #FCE4EE;
-    --pink: #F4A6C0;
-    --ink: #264541;
-    --muted: #46665F;
-    --accent: #A8456A;
-    --gold: #D9A92E;
+    --olive: #DDE6C8;
+    --champagne: #F8EDD9;
+    --sage: #B8C98E;
+    --ink: #3A2430;
+    --muted: #6B4650;
+    --accent: #7B1E3A;
+    --blue: #9DB9D3;
+    --blue-deep: #4A6E92;
+    --gold: #C79A2A;
     --gold-light: #F2D77E;
-    --card: rgba(255, 255, 255, 0.62);
-    --line: rgba(244, 166, 192, 0.7);
+    --card: rgba(255, 251, 243, 0.68);
+    --line: rgba(184, 201, 142, 0.8);
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; min-height: 100%; }
   body {
-    background: var(--teal);
-    background: linear-gradient(180deg, var(--teal) 0%, var(--teal) 45%, var(--pink-soft) 100%) fixed;
+    background: var(--olive);
+    background: linear-gradient(180deg, var(--olive) 0%, var(--olive) 45%, var(--champagne) 100%) fixed;
     color: var(--ink);
     font-family: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
     line-height: 1.5;
@@ -47,7 +49,7 @@
     user-select: none;
   }
   .star.one { top: 36px; left: 9%; }
-  .star.two { top: 150px; right: 8%; font-size: 14px; }
+  .star.two { top: 150px; right: 8%; font-size: 14px; color: var(--blue-deep); }
   @media (prefers-reduced-motion: no-preference) {
     .star { animation: twinkle 5s ease-in-out infinite; }
     .star.two { animation-delay: 2.3s; animation-duration: 6.5s; }
@@ -76,6 +78,8 @@
     50% { opacity: 1; transform: scale(1.15) rotate(20deg); }
   }
   .burst { position: fixed; pointer-events: none; color: var(--gold); text-shadow: 0 0 6px var(--gold-light); z-index: 10; }
+  .rule .b { color: var(--blue-deep); }
+  .spark.s2, .spark.s4 { color: var(--blue-deep); text-shadow: 0 0 8px var(--blue); }
   .rule { color: var(--gold); letter-spacing: .6em; font-size: .8rem; margin: 14px 0 0; }
 
   .greeting { margin: 0 0 28px; }
@@ -94,12 +98,12 @@
     background: var(--card);
     border: 1.5px solid var(--gold-light);
     border-radius: 22px;
-    box-shadow: 0 6px 24px rgba(217, 169, 46, 0.18), 0 0 0 4px rgba(244, 166, 192, 0.18);
+    box-shadow: 0 6px 24px rgba(217, 169, 46, 0.18), 0 0 0 4px rgba(157, 185, 211, 0.3);
   }
   .tiers {
     display: inline-flex; gap: 2px; padding: 3px; margin-bottom: 16px;
-    background: rgba(217, 242, 238, 0.7);
-    border: 1px solid rgba(217, 169, 46, 0.45);
+    background: rgba(248, 237, 217, 0.7);
+    border: 1px solid rgba(157, 185, 211, 0.95);
     border-radius: 999px;
   }
   .tier {
@@ -110,8 +114,8 @@
     transition: background .2s, color .2s, box-shadow .2s;
   }
   .tier:hover { color: var(--ink); }
-  .tier[aria-pressed="true"] { background: #fff; color: var(--ink); box-shadow: 0 1px 4px rgba(168, 69, 106, 0.22); }
-  .takes { margin: 0; font-size: 0.85rem; letter-spacing: 0.02em; color: var(--muted); }
+  .tier[aria-pressed="true"] { background: #FFFBF3; color: var(--ink); box-shadow: 0 0 0 1.5px var(--blue), 0 1px 4px rgba(74, 110, 146, 0.25); }
+  .takes { margin: 0; font-size: 0.85rem; letter-spacing: 0.02em; color: var(--blue-deep); }
   .task { margin: 8px 0 20px; font-family: Quicksand, "Nunito", system-ui, -apple-system, "Segoe UI", sans-serif; font-weight: 500; font-size: 1.05rem; line-height: 1.55; min-height: 5.2em; display: flex; align-items: center; justify-content: center; }
   .task.is-done { opacity: 0.55; }
   .actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
@@ -119,22 +123,22 @@
     font-family: Quicksand, system-ui, sans-serif; font-weight: 600; font-size: 0.95rem;
     padding: 12px 22px; border-radius: 16px;
     border: 1.5px solid transparent;
-    cursor: pointer; color: #3F1A2B;
+    cursor: pointer; color: #3A1220;
     transition: transform .15s, box-shadow .15s, background .2s;
   }
   .btn.primary {
-    background: linear-gradient(180deg, #F8BFD2 0%, var(--pink) 100%);
+    background: linear-gradient(180deg, #D4E0AC 0%, var(--sage) 100%);
     border-color: var(--gold-light);
-    box-shadow: 0 3px 0 rgba(168, 69, 106, 0.28), 0 6px 14px rgba(244, 166, 192, 0.35);
+    box-shadow: 0 3px 0 rgba(123, 30, 58, 0.28), 0 6px 14px rgba(184, 201, 142, 0.35);
   }
   .btn.ghost {
-    background: rgba(255, 255, 255, 0.7);
-    border-color: var(--pink);
+    background: rgba(255, 251, 243, 0.75);
+    border-color: var(--blue);
     border-style: dashed;
   }
   .btn:hover:not(:disabled) { transform: translateY(-2px); }
-  .btn.ghost:hover { background: var(--pink-soft); }
-  .btn.primary:active:not(:disabled) { transform: translateY(2px); box-shadow: 0 1px 0 rgba(168, 69, 106, 0.28); }
+  .btn.ghost:hover { background: var(--champagne); }
+  .btn.primary:active:not(:disabled) { transform: translateY(2px); box-shadow: 0 1px 0 rgba(123, 30, 58, 0.28); }
   .btn.ghost:active { transform: translateY(1px); }
   .btn:focus-visible, .tier:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
   @media (prefers-reduced-motion: reduce) { .btn, .tier { transition: none; } .btn:hover:not(:disabled), .btn:active:not(:disabled) { transform: none; } }
@@ -166,22 +170,22 @@
   <div class="cake" id="cake" hidden aria-hidden="true">
     <svg viewBox="0 0 160 130" width="200" height="163" xmlns="http://www.w3.org/2000/svg">
       <defs><clipPath id="face"><rect x="30" y="50" width="100" height="58" rx="8"/></clipPath></defs>
-      <ellipse cx="80" cy="112" rx="66" ry="10" fill="#B7DDD6"/>
-      <ellipse cx="80" cy="110" rx="58" ry="7.5" fill="#D9F2EE"/>
-      <polygon points="32,52 128,52 104,30 56,30" fill="#F8BFD2" stroke="#F4A6C0" stroke-width="2" stroke-linejoin="round"/>
+      <ellipse cx="80" cy="112" rx="66" ry="10" fill="#B4CBE0"/>
+      <ellipse cx="80" cy="110" rx="58" ry="7.5" fill="#E3EEF7"/>
+      <polygon points="32,52 128,52 104,30 56,30" fill="#B9657F" stroke="#7B1E3A" stroke-width="2" stroke-linejoin="round"/>
       <g clip-path="url(#face)">
         <rect x="30" y="50" width="100" height="58" fill="#E8C468"/>
-        <rect x="30" y="84" width="100" height="7" fill="#FFF8FB"/>
-        <rect x="30" y="66" width="100" height="7" fill="#FFF8FB"/>
+        <rect x="30" y="84" width="100" height="7" fill="#FFF6E6"/>
+        <rect x="30" y="66" width="100" height="7" fill="#FFF6E6"/>
         <rect x="30" y="73" width="100" height="11" fill="#F0CE82"/>
         <rect x="30" y="91" width="100" height="17" fill="#F0CE82"/>
-        <rect x="30" y="50" width="100" height="16" fill="#F4A6C0"/>
-        <path d="M30 62 q9 14 18 0 q9 10 18 0 q9 13 18 0 q9 10 18 0 q9 12 18 0 v-12 h-90z" fill="#F4A6C0"/>
+        <rect x="30" y="50" width="100" height="16" fill="#8E2D4A"/>
+        <path d="M30 62 q9 14 18 0 q9 10 18 0 q9 13 18 0 q9 10 18 0 q9 12 18 0 v-12 h-90z" fill="#8E2D4A"/>
         <circle cx="48" cy="98" r="1.4" fill="#C9962A"/><circle cx="72" cy="78" r="1.4" fill="#C9962A"/><circle cx="96" cy="99" r="1.4" fill="#C9962A"/><circle cx="114" cy="78" r="1.4" fill="#C9962A"/><circle cx="60" cy="100" r="1.2" fill="#C9962A"/>
       </g>
       <rect x="30" y="50" width="100" height="58" rx="8" fill="none" stroke="#C9962A" stroke-width="1.5" opacity=".55"/>
-      <path d="M80 36 c-9 0 -13 7 -9 13 c3 5 15 5 18 0 c4 -6 0 -13 -9 -13z" fill="#D9577F"/>
-      <path d="M72 36 q8 -6 16 0 q-4 -6 -8 -6 q-4 0 -8 6z" fill="#7FBFAF"/>
+      <path d="M80 36 c-9 0 -13 7 -9 13 c3 5 15 5 18 0 c4 -6 0 -13 -9 -13z" fill="#5E1427"/>
+      <path d="M72 36 q8 -6 16 0 q-4 -6 -8 -6 q-4 0 -8 6z" fill="#8FA05A"/>
       <circle cx="76" cy="42" r="1" fill="#F2D77E"/><circle cx="82" cy="44" r="1" fill="#F2D77E"/><circle cx="85" cy="40" r="1" fill="#F2D77E"/><circle cx="79" cy="47" r="1" fill="#F2D77E"/>
       <circle cx="58" cy="36" r="1.5" fill="#D9A92E"/><circle cx="102" cy="37" r="1.5" fill="#D9A92E"/><circle cx="66" cy="45" r="1.5" fill="#F2D77E"/><circle cx="96" cy="46" r="1.5" fill="#F2D77E"/>
     </svg>
@@ -189,7 +193,7 @@
   <p class="count-label" id="countLabel">days until the new year</p>
   <p class="footnote" id="footnote"></p>
 
-  <p class="rule" aria-hidden="true">✦ ✧ ✦</p>
+  <p class="rule" aria-hidden="true">✦ <span class="b">✧</span> ✦</p>
 
   <section class="card" id="card" aria-label="Today's small thing">
     <div class="tiers" role="group" aria-label="How long have you got?">
@@ -230,9 +234,9 @@
     `Today’s forecast: mostly fine, with scattered biscuits.`,
     `You have been busy all year. This tab would like to formally congratulate you.`,
     `Nothing here is urgent. That is the whole point of here.`,
-    `The universe has a long to-do list too, and it still stops for tea.`,
+    `The universe has a long to-do list too, and it still stops for a tiny break.`,
     `Somewhere a pigeon is having a worse day than you, and it is handling it with a strut.`,
-    `If today were a sandwich, we are aiming for a good one, not the sort from a petrol station.`,
+    `If today were a sandwich, we are aiming for a good one. Buttered and non-soggy.`,
     `You are officially permitted to enjoy something today. The paperwork is in the post.`,
     `Today’s magic is small, local, and made from ingredients you already own.`,
     `Everyone else is making it up as they go along. Some are just better at confident walking.`,
@@ -243,7 +247,7 @@
     `There is a small, quiet cheer going on in your honour. You may not hear it, but it is lovely.`,
     `Be gentle with yourself. You are the only version of you currently available.`,
     `Today we are aiming for “pleasantly present”, with a stretch goal of “mildly smug”.`,
-    `The tea has opinions. They are all encouraging.`,
+    `Encouraging you to drink another coffee.`,
     `Some days run on coffee. Today runs on whimsy, with a splash of milk.`,
     `Your shoulders called. They would like to come down now.`,
     `If a goose can waddle through life with confidence, so can you.`,
@@ -261,19 +265,19 @@
     `A giggle at an inconvenient moment is a form of wisdom.`,
     `You have exactly enough time for one small good thing. It is an excellent ratio.`,
     `Pocket-sized joy, available now, no batteries required.`,
-    `Nobody has ever regretted a biscuit break. Historians have checked.`,
+    `Nobody has ever regretted a snack break. Historians have checked.`,
     `You are doing better than you think, and the evidence is that you are still here, reading this.`,
     `Think of this as a small lantern in the middle of a very busy forest.`,
-    `Today’s wizardry: put the phone down, pick the kettle up.`,
+    `Today’s wizardry: put the phone down, pick up coffee cup.`,
     `The best-laid plans often go awry. The best-laid snacks rarely do.`,
     `Your brain has been carrying a lot. Let it sit on the sofa for a bit.`,
     `The hedgehog does not fret about tomorrow. It simply snuffles on. Take notes.`,
-    `Happiness is mostly small and slightly crumpled, like a good coat.`,
+    `Happiness is mostly small and slightly crumpled, like an old favourite dress.`,
     `Today is not the day to fix everything. It is the day to fix one small thing and have a sit.`,
     `Fun fact: laughing at nothing in particular is entirely legal.`,
     `There is no wrong way to do a little thing. Squint if you must.`,
     `Somewhere a dragon is hoarding something sensible, like naps. Join it.`,
-    `You are a marvel held together by caffeine and good intentions. We salute you.`,
+    `You are a marvel. We salute you.`,
     `A little nonsense a day keeps the grumpiness at bay. Probably. Research is ongoing.`,
     `If things get loud, here is a quiet corner with your name on it.`,
     `Plenty of people are cheering for you. Several of them are birds, but still.`,
@@ -281,17 +285,17 @@
     `Today’s agenda: one tiny kindness, one small laugh and a tactical sit-down.`,
     `Every great adventure began with someone saying, “Right, one moment.”`,
     `The to-do list is a suggestion box, and today you are taking one suggestion.`,
-    `Life is short, and the biscuits are right there.`,
+    `Life is short, and the chips are right there.`,
     `You are the main character of a busy, slightly sitcom-like story. Enjoy the plot twist of calm.`,
     `Today’s spell requires only a breath, a smile and the courage to be briefly silly.`,
     `If worrying were useful, you would have fixed everything by now. Try a stretch instead.`,
     `Small joys, like socks, are found when you stop looking for them.`,
     `You deserve a gentle moment. It is in the rules. We checked the rules.`,
     `A good day is just a bad day with a better snack strategy.`,
-    `The kettle and the sun are both on your side, or at least in the neighbourhood.`,
+    `You have a big heart made of gold and low-stakes spells.`,
     `Somewhere a very small elf has put your name down for a nice moment.`,
-    `Things you can control today: your tea, your shoulders and the tone of your inner narrator.`,
-    `Let us be honest: the dishes will outlive us all. Go on, have some fun.`,
+    `Things you can control today: your drink, your shoulders and the tone of your inner narrator.`,
+    `Let us be honest, the to-dos will outlive us. Go on, have some fun.`,
     `The shortest route to feeling better is usually just around the corner, and slightly silly.`,
     `You are allowed to be a work in progress and a delight, simultaneously.`,
     `Even the busiest bee stops for a flower. It is practically policy.`,
@@ -302,11 +306,11 @@
     `A bad mood is just a good mood that has not had a snack yet.`,
     `You cannot pour from an empty teapot. Fill up first, then pour.`,
     `Be as gentle with yourself as you would be with a sleeping cat.`,
-    `The best part of being a grown-up is eating biscuits at any hour. Use this power wisely, or at least cheerfully.`,
+    `The best part of being a grown-up is eating snacks at any hour. Use this power wisely, or at least cheerfully.`,
     `The bar is low, the biscuits are high and the vibes are acceptable.`,
     `It is remarkable how much good one tiny, ridiculous thing can do.`,
     `A pocketful of small kindnesses is heavier than it looks, in the nicest possible way.`,
-    `Time is a river. Today we are paddling slowly, with tea.`,
+    `Time is a river. Today we are paddling slowly, with coffee.`,
     `Somewhere a wise old owl is saying, “Go on, have a laugh.” Owls are rarely wrong.`,
     `The world will keep turning while you take a breath. It is very capable.`,
     `Fun is a muscle. Today, we give it a light warm-up.`,
@@ -325,13 +329,13 @@
     `* Subject to the usual amount of Tuesday.`,
     `* Counted by hand, by someone who got distracted by cake.`,
     `* Includes weekends, which are mostly rumour.`,
-    `* Plus or minus one cup of tea.`,
-    `* The cat was consulted. It declined to comment, as cats do.`,
+    `* Plus or minus one cup of coffee.`,
+    `* A cat was consulted. It declined to comment, as cats do.`,
     `* Please arrange your panic in order of urgency.`,
     `* Approximate. Even calendars struggle with Wednesdays.`,
     `* Results may vary depending on how often you press snooze.`,
-    `* Verified by a raven who would only accept payment in cake.`,
-    `* Measured in the traditional units: sunrises, kettles and sighs.`,
+    `* Verified by a raven who would only accept payment in side-eyes.`,
+    `* Measured in the traditional units: sunrises, coffees and sighs.`,
     `* Not valid during emails.`,
     `* Time was never very good at being on time.`,
     `* Best read with coffee and a slice of something.`,
@@ -343,12 +347,12 @@
     `* Fewer days than you feared, more than you will use wisely. Perfectly normal.`,
     `* Terms and conditions apply. Cake is not included, but is encouraged.`,
     `* Close enough, in the way that dragons are close enough to lizards.`,
-    `* Please do not feed the number after midnight.`,
+    `* Please do not feed the goblin after midnight.`,
     `* Counted over coffee, then recounted over more coffee.`,
-    `* Hedgehog-approved, which is the most rigorous standard we know of.`,
-    `* Excludes the day you lose to a cold and a very long sofa.`,
+    `* Puppy-approved, which is the most rigorous standard we know of.`,
+    `* Excludes the day you lose to a cold and a very good sofa.`,
     `* Not counting days spent staring into the fridge for answers.`,
-    `* Time moves differently in the school-run queue.`,
+    `* Time moves differently with some snacks.`,
     `* Reviewed by a panel of mugs. Verdict: more coffee.`,
     `* Some of these days are shorter on the inside.`,
     `* One day will be lost looking for your keys. They were in your other coat.`,
@@ -505,89 +509,89 @@
   // 41 per length, so nothing comes round again for at least five weeks.
   var TASKS = {
     "2": [
-      `Drink a full glass of water, like a wizard downing a suspicious potion: with confidence and no questions.`,
+      `Drink a full glass of water, like you are downing a suspicious potion: with confidence and no questions. Committed to hydration.`,
       `Wash your face with warm water, slowly. Imagine the day’s nonsense going down the drain, because it is.`,
-      `Put on moisturiser and sunscreen. Your face has to last you the rest of your life. Be polite to it.`,
-      `Text a friend a single word: “Biscuits.” Then watch to see who understands.`,
+      `Put on moisturiser and sunscreen. Your face holds back many ill-timed sniggers. Be polite to it.`,
+      `Text a friend a single word: “Biscuits.” Then watch to see where it goes.`,
       `Unclench your jaw. Lower your shoulders from around your ears. Return the ears to their usual position.`,
       `Take five slow breaths, in through the nose, out through the mouth, like a kettle that has made peace with itself.`,
-      `Stand, stretch both arms at the ceiling and announce “Ta-da” to an empty room. The room won’t applaud. That’s fine.`,
-      `Text someone: “Thinking of you. No reply needed.” A rare gift: a message with no homework.`,
-      `Apply lip balm as if sealing a very important letter.`,
-      `Look out of a window for a full minute. Count birds, clouds or the neighbours’ bins.`,
+      `Stand, stretch both arms at the ceiling and say a soft “Ta-da” to an empty room. The room won’t applaud. That’s fine.`,
+      `Text someone: “Thinking of you. No reply needed.” It’s a rare kinda nice.`,
+      `Apply lip balm as if sealing a very important piece of information.`,
+      `Look out of a window for a full minute. Count birds, clouds or people-watch.`,
       `Roll your wrists and ankles in slow circles. They do a lot of unpaid work.`,
       `Rub in hand cream one finger at a time, as if casting a spell with very low stakes.`,
-      `Say three things you did right today, out loud. “I woke up and wore trousers” counts.`,
-      `Eat something fruity or green and chew it with the dignity of a small king.`,
+      `Say three things you did right today, out loud. “I woke up and wore pants” counts.`,
+      `Eat something fruity or green and chew it with dignity.`,
       `Do a very small, very bad victory dance. Under thirty seconds. Witnesses optional.`,
-      `Play the song that made you feel unstoppable at sixteen. Stay for the first chorus.`,
-      `Brush your teeth standing on one leg. Balance is a skill, and so is dental care.`,
+      `Play the song that made you feel amazing when you were 16. Sing along too.`,
+      `Brush your teeth standing on one leg. Balance is crucial, and so is dental care.`,
       `Run cool water over your wrists for twenty seconds. Folk wisdom says it helps. Folk are occasionally right.`,
       `Tell the mirror one nice thing about yourself. Use an accent if the sincerity is too much.`,
       `Tidy one square foot of your desk. Just one. The rest will wait; it is very patient.`,
-      `Open a window and take three deep breaths of outside. Free, no subscription.`,
+      `Open a window and take three deep breaths of outside. It’s free.`,
       `Send a friend a photo of something mildly ridiculous that you can see right now.`,
-      `Massage your scalp with your fingertips for a minute, as if gently persuading an idea out.`,
-      `Hug someone, a cushion, or a tree if neither is available. Count to six. Six is the minimum.`,
+      `Massage your scalp with your fingertips for a minute, as if gently persuading an idea out or maybe a few strands of new hair.`,
+      `Hug someone, a cushion, or a tree. Count to six. Six is the minimum.`,
       `Make your tea or coffee, then sit down for the first three sips. Revolutionary.`,
       `Scrunch a scrap of paper and take a shot at the bin. Score yourself generously.`,
       `Put on your silliest socks. Nobody needs to know. The socks will know.`,
       `Write “Not today, nonsense” on a sticky note and put it where you will see it.`,
       `Tip your ear towards each shoulder, slowly. Make a small noise of relief. The noise is part of it.`,
-      `Tell a houseplant, a pet or the kettle something good that happened this week.`,
+      `Whisper to a houseplant, a pet or your book something good that happened this week.`,
       `Smell something lovely (coffee, soap, an orange peel) and give it thirty seconds of your full attention.`,
       `Put your phone face down and look at the ceiling for one minute. It has been waiting for this.`,
-      `Have a sip of water, then say “ahhh” like in an advert for water. Commit to it.`,
-      `Sing the first line of any song in the voice of a disappointed butler.`,
-      `Take your shoes off and wiggle your toes. They have been in there all day, like tiny prisoners.`,
-      `Wipe your phone screen and your glasses. Seeing clearly: underrated self-care.`,
+      `Have a sip of water, then say “ahhh” like you’re in an advertisement for water. Commit to it.`,
+      `Sing the first line of any song in the voice of a disapproving family uncle.`,
+      `Scrunch your toes and hold for 3 seconds and let go. Repeat 3 times. Feel the day drain out.`,
+      `Wipe your phone screen and your glasses. An underrated self-care.`,
       `Doodle something tiny in the margin of any paper nearby. A star, a snail, a teapot with opinions.`,
       `Write one full sentence in your best cursive. Any sentence. Let the loops do the talking.`,
-      `If you had to name yourself today, what would you pick? “Gerald the Unbothered”, perhaps. Say it out loud.`,
-      `If you were a snack, which would you be? Decide, then defend your choice to the nearest houseplant.`,
+      `If you had to name yourself today, what would you pick? “Tara the Unbothered”, perhaps. Say it out loud.`,
+      `If you were a snack, which would you be? Decide, then defend your choice to a friend, your cat, a house plant?`,
       `Send a friend a joke. Doesn’t have to be good. Groans count as replies.`
     ],
     "10": [
-      `Read one article about something you know nothing about. Octopuses are a fine start: three hearts and no regrets.`,
-      `Make a proper cup of tea and drink it without doing anything else. Yes, that is the whole task.`,
-      `Write down three things you are looking forward to before New Year. Small ones count. Biscuits count.`,
-      `Go outside and find five shades of green (or, this time of year, brown). Report to nobody.`,
-      `Draw your coffee mug as if it were a minor nobleman.`,
+      `Read one article about something you know nothing about. Octopuses are a fine start.`,
+      `Make a proper cup of tea or coffee. Drink it without anything else, sitting down. Yes, that is the whole task.`,
+      `Write down three things you are looking forward to before New Year. Small ones count. A new flavour of chips count.`,
+      `Go outside and find five shades of green. Maybe give them names. Report to nobody.`,
+      `Draw an everyday object you use as if it were a noble person.`,
       `Clear out one drawer. Everyone has one. You know the one.`,
       `Send a voice note to a friend you have been meaning to talk to. Conversation without eye contact.`,
       `Lie on the floor and stretch however your body suggests. Sound effects encouraged.`,
-      `Read a poem aloud to yourself. Short ones preferred, dramatic ones permitted.`,
+      `Read a poem aloud to yourself. Short ones preferred. Dramatic ones, even better.`,
       `Make a playlist of five songs for the next hour. Include one you would only admit to under oath.`,
-      `Write down everything in your head on one page, then close the notebook. The thoughts will wait outside, like polite vampires.`,
+      `Write down everything in your head on one page, then close the notebook. Let the thoughts wait outside, like polite vampires.`,
       `Assemble a fancy snack on a proper plate: something crunchy, something sweet, something cheesy. Eat it sitting down.`,
-      `Walk around the block without your phone. Notice something you have never noticed. It is usually a door.`,
-      `Learn to say “thank you” in a language you don’t speak, then say it to the nearest cat.`,
-      `Build a tiny calm corner: a candle, a plant, a mug. Instant sanctuary, no planning permission.`,
-      `Delete ten photos or apps from your phone. Lighter pockets, lighter soul.`,
-      `Give your hands and face a small pamper: a mask or cream, and absolutely nothing else.`,
-      `Watch a short video of baby goats, or any nature clip. Medicinal.`,
+      `Walk around your neighbourhood without your phone. Notice something you have never noticed. Maybe pick up a stone you like.`,
+      `Learn to order a snack you like in a language you don’t speak. It’s a life skill.`,
+      `Build a tiny calm corner for yourself. Instant sanctuary.`,
+      `Delete ten photos or a few apps from your phone. Feel lighter and calmer.`,
+      `Give your hands and face a small pamper. A mask or cream, and absolutely nothing else.`,
+      `Watch a short video of baby animals, or any nature clip. Medicinal.`,
       `Write down a recipe from your childhood, as accurately as you can remember it.`,
-      `Dance in the kitchen to two songs. The kettle may join in.`,
+      `Dance to two songs. The room won’t applaud. It’s okay.`,
       `Read a chapter of the book you have been ignoring. It has been sulking on the shelf.`,
       `Plan one small treat for the weekend and put it in your calendar like a proper appointment.`,
       `Water your plants and trim one dead leaf. Check them for signs of drama.`,
       `Write a thank-you note to someone who helped you this year. Send it, or save it for later.`,
       `Do cat-cow ten times, then child’s pose for a minute. Cats approve of the first one.`,
-      `Draw the view from your window in six lines or fewer.`,
+      `Write down a funny memory.`,
       `Soak your feet or hold a hot water bottle for ten minutes with your eyes closed.`,
-      `Sort your to-do list into three piles: do, delegate, and “the universe will sort it out”.`,
+      `Reread a chapter from a book you loved.`,
       `Look up the history of an everyday object (the paperclip, the umbrella) and tell someone about it at dinner.`,
       `Write a list of ten things that are going well. “Still here” counts.`,
-      `Make a sandwich with unusual care, and cut it into triangles for no reason except joy.`,
+      `Make a meal with unusual care, and enjoy it. No reason except joy.`,
       `Watch the sky from a window or doorstep for ten minutes. Clouds do their best work unobserved, but they will tolerate you.`,
-      `Clear ten emails and unsubscribe from at least three. Freedom smells like fewer newsletters.`,
+      `Clear ten emails and unsubscribe from at least three. A sigh of relief from fewer newsletters.`,
       `Invent a name for your current mood as if it were a new tea blend. “Slightly Frazzled Earl Grey”, for example.`,
-      `Write a four-line joke about your inbox. Revenge is best served concisely.`,
+      `Write a four-line joke about your inbox.`,
       `Write a four-line joke about your favourite food. The food will not be offended.`,
       `Improvise a snack you would genuinely enjoy from whatever is in the cupboard. Name it something grand.`,
-      `Make yourself a treat you loved as a kid: toast with something sweet, cereal, hot chocolate. Eat it with childish joy.`,
+      `Make yourself a treat you loved as a kid. Eat it with childish joy.`,
       `Call a parent or a friend, just to say hello. No agenda. Agendas are for meetings.`,
-      `Write a joke. Any joke, any length, as long as one person could plausibly groan at it.`,
+      `Use crayons or colour pencils for something today. Add a little drama to that piece of paper.`,
       `Doodle for ten minutes with no plan. Let the pen wander and see where it goes.`
     ]
   };
@@ -672,7 +676,7 @@
 
   // Tasks that involve gazing. Never on consecutive days in a length,
   // and never in both lengths on the same day.
-  var STARE = /look out of a window|look at the ceiling|Watch the sky/;
+  var STARE = /look out of a window|look at the ceiling|watch the sky/i;
   function isStare(t, idx) { return STARE.test(TASKS[t][idx]); }
   function stareBlocked(t) {
     var st = state.stare || (state.stare = {});
