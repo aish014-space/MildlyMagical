@@ -3,15 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0E0F28">
 <title>A Pinch of Whimsy</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --navy-deep: #121838;
-    --navy: #161D45;
-    --navy-light: #12404A;
+    --navy-deep: #0E0F28;
+    --navy: #131741;
+    --navy-light: #08383F;
     --jungle: #29AB87;
     --jungle-deep: #17705A;
     --tan: #E9D9BC;
@@ -695,7 +696,7 @@
   };
 
   var THANKS = [
-    `Done, somehow. The universe is quietly delighted, though it would never say so.`,
+    `The universe is quietly delighted, though it would never say so.`,
     `Splendid. A small, kind thing, now safely entered in the great ledger of things that matter.`,
     `Well done. The day has just become a little more bearable, which is how most good things start.`,
     `Lovely. Somewhere a very small bell has rung, and it was rung for you.`,
@@ -859,9 +860,12 @@
       box.appendChild(wrap);
     }
     // Ghosted outlines of the charms still to find
-    var ghostCount = Math.min(3, STICKERS.length - list.length);
-    for (var g = 0; g < ghostCount; g++) {
-      var gdef = STICKERS[(list.length + g) % STICKERS.length];
+    var ownedNow = {};
+    list.forEach(function (x) { ownedNow[x.i] = true; });
+    var upcoming = [];
+    for (var u = 0; u < STICKERS.length && upcoming.length < 3; u++) if (!ownedNow[u]) upcoming.push(u);
+    for (var g = 0; g < upcoming.length; g++) {
+      var gdef = STICKERS[upcoming[g]];
       var gw = document.createElement("div");
       gw.className = "sticker-wrap ghost";
       gw.tabIndex = 0;
@@ -1088,10 +1092,14 @@
     state.tally += 1;
     var key = today + "-" + tier, freshIndex = -1;
     var have = state.stickers.some(function (x) { return x.k === key; });
-    if (!have && state.stickers.length >= STICKERS.length) {
+    var ownedIdx = {};
+    state.stickers.forEach(function (x) { ownedIdx[x.i] = true; });
+    var nextIdx = -1;
+    for (var q = 0; q < STICKERS.length; q++) if (!ownedIdx[q]) { nextIdx = q; break; }
+    if (!have && nextIdx < 0) {
       state.thanks[tier] += "\nEvery charm in the margins is already yours.";
     } else if (!have) {
-      state.stickers.push({ k: key, i: state.stickers.length % STICKERS.length });
+      state.stickers.push({ k: key, i: nextIdx });
       freshIndex = state.stickers.length - 1;
       var nm = STICKERS[state.stickers[freshIndex].i].name;
       var pw = STICKERS[state.stickers[freshIndex].i].power;
