@@ -6,29 +6,33 @@
 <title>A Pinch of Whimsy</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --olive: #DDE6C8;
-    --champagne: #F8EDD9;
-    --sage: #B8C98E;
-    --ink: #3A2430;
-    --muted: #6B4650;
-    --accent: #7B1E3A;
-    --blue: #9DB9D3;
-    --blue-deep: #4A6E92;
-    --gold: #C79A2A;
-    --gold-light: #F2D77E;
-    --card: rgba(255, 251, 243, 0.68);
-    --line: rgba(184, 201, 142, 0.8);
+    --navy-deep: #121838;
+    --navy: #161D45;
+    --navy-light: #12404A;
+    --jungle: #29AB87;
+    --jungle-deep: #17705A;
+    --tan: #E9D9BC;
+    --tan-card: #EFE3CB;
+    --burgundy: #4A0E1E;
+    --gold: #B08A3E;
+    --gold-light: #B08A3E;
+    --ink: #F1E6D0;
+    --muted: #C9B993;
+    --accent: var(--burgundy);
+    color-scheme: dark;
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; min-height: 100%; }
+  html { font-size: 100%; }
+  button { font-family: inherit; }
   body {
-    background: var(--olive);
-    background: linear-gradient(180deg, var(--olive) 0%, var(--olive) 45%, var(--champagne) 100%) fixed;
+    background: var(--navy);
+    background: linear-gradient(180deg, var(--navy-deep) 0%, var(--navy) 58%, var(--navy-light) 100%) fixed;
     color: var(--ink);
-    font-family: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
+    font-family: Kalam, "Segoe Print", "Bradley Hand", "Comic Sans MS", cursive;
     line-height: 1.5;
     position: relative;
     overflow-x: hidden;
@@ -40,119 +44,207 @@
     text-align: center;
     position: relative;
   }
-  .star {
-    position: absolute;
-    color: var(--gold);
-    font-size: 18px;
-    opacity: 0.4;
+  /* Bokeh dots: soft, glowing, gold */
+  .star, .spark, .rule i, .burst {
+    display: block;
+    border-radius: 50%;
+    background: radial-gradient(circle at 38% 36%, rgba(224, 198, 128, 0.95) 0%, rgba(176, 138, 62, 0.6) 38%, rgba(176, 138, 62, 0.18) 62%, rgba(176, 138, 62, 0) 74%);
+    box-shadow: 0 0 10px rgba(176, 138, 62, 0.3);
     pointer-events: none;
     user-select: none;
   }
+  .star { position: absolute; width: 9px; height: 9px; opacity: 0.45; filter: blur(0.4px); }
   .star.one { top: 36px; left: 9%; }
-  .star.two { top: 150px; right: 8%; font-size: 14px; color: var(--blue-deep); }
+  .star.two { top: 150px; right: 8%; width: 7px; height: 7px; }
+  .star.three { top: 330px; left: 5%; width: 16px; height: 16px; opacity: 0.22; filter: blur(2px); }
+  .star.four { top: 250px; right: 4%; width: 22px; height: 22px; opacity: 0.16; filter: blur(3px); }
+  .star.five { top: 520px; left: 14%; width: 6px; height: 6px; opacity: 0.35; }
   @media (prefers-reduced-motion: no-preference) {
     .star { animation: twinkle 5s ease-in-out infinite; }
     .star.two { animation-delay: 2.3s; animation-duration: 6.5s; }
+    .star.three { animation-delay: 1s; animation-duration: 8s; }
+    .star.four { animation-delay: 3s; animation-duration: 9s; }
+    .star.five { animation-delay: 4s; }
   }
   @keyframes twinkle {
-    0%, 100% { opacity: 0.18; }
+    0%, 100% { opacity: 0.15; }
     50% { opacity: 0.55; }
   }
 
-  .sparkles { position: relative; display: inline-block; }
-  .spark {
-    position: absolute; color: var(--gold); pointer-events: none; user-select: none;
-    text-shadow: 0 0 8px var(--gold-light);
-    opacity: 0.75;
+  .sparkles { position: relative; display: inline-block; isolation: isolate; }
+  .sparkles::before {
+    content: "";
+    position: absolute; left: 50%; top: 50%; z-index: -1;
+    width: 170%; aspect-ratio: 1.5;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(closest-side, rgba(176, 138, 62, 0.16), rgba(176, 138, 62, 0.06) 55%, transparent);
+    pointer-events: none;
   }
-  .spark.s1 { top: 4%; left: -26%; font-size: 22px; }
-  .spark.s2 { top: 52%; right: -30%; font-size: 16px; }
-  .spark.s3 { bottom: 6%; left: -14%; font-size: 12px; }
-  .spark.s4 { top: -4%; right: -16%; font-size: 13px; }
+  .spark { position: absolute; opacity: 0.8; filter: blur(0.5px); }
+  .spark.s1 { top: 12%; left: -24%; width: 12px; height: 12px; }
+  .spark.s3 { bottom: 10%; left: -12%; width: 7px; height: 7px; }
+  .spark.s4 { top: 2%; right: -14%; width: 9px; height: 9px; }
   @media (prefers-reduced-motion: no-preference) {
     .spark { animation: glint 3.6s ease-in-out infinite; }
-    .spark.s2 { animation-delay: .9s; } .spark.s3 { animation-delay: 1.8s; } .spark.s4 { animation-delay: 2.5s; }
+    .spark.s3 { animation-delay: 1.8s; } .spark.s4 { animation-delay: 2.5s; }
   }
   @keyframes glint {
-    0%, 100% { opacity: .3; transform: scale(.8) rotate(0deg); }
-    50% { opacity: 1; transform: scale(1.15) rotate(20deg); }
+    0%, 100% { opacity: .3; transform: scale(.8); }
+    50% { opacity: 1; transform: scale(1.2); }
   }
-  .burst { position: fixed; pointer-events: none; color: var(--gold); text-shadow: 0 0 6px var(--gold-light); z-index: 10; }
-  .rule .b { color: var(--blue-deep); }
-  .spark.s2, .spark.s4 { color: var(--blue-deep); text-shadow: 0 0 8px var(--blue); }
-  .rule { color: var(--gold); letter-spacing: .6em; font-size: .8rem; margin: 14px 0 0; }
+  .burst { position: fixed; z-index: 10; }
+  .rule { display: flex; justify-content: center; align-items: center; gap: 16px; margin: 18px 0 0; }
+  .rule i { width: 6px; height: 6px; filter: blur(0.4px); }
+  .rule i:nth-child(2) { width: 9px; height: 9px; }
+
+  @media (min-width: 820px) {
+    html { font-size: 118%; }
+    main { max-width: 720px; padding-top: 56px; }
+  }
 
   .greeting { margin: 0 0 28px; }
-  .hello { margin: 0; font-size: 1.2rem; color: var(--ink); }
-  .tease { margin: 6px 0 0; font-size: 0.9rem; font-style: italic; color: var(--muted); min-height: 2.8em; }
+  .hello, .tease { text-wrap: balance; }
+  .hello { margin: 0; font-size: 1.4rem; font-weight: 700; color: var(--ink); }
+  .tease { margin: 6px 0 0; font-size: 1.05rem; color: var(--muted); min-height: 2.8em; }
 
-  .count { margin: 0; font-size: clamp(5.5rem, 26vw, 9rem); line-height: 1; color: var(--accent); font-weight: normal; letter-spacing: -0.02em; }
+  .count { margin: 0; font-size: clamp(6.5rem, 30vw, 11rem); line-height: 1.05; color: var(--gold-light); font-weight: 300; text-shadow: 0 1px 0 var(--burgundy), 0 0 24px rgba(176, 138, 62, 0.3); letter-spacing: -0.02em; }
   .count.is-text { font-size: clamp(2.6rem, 13vw, 4.4rem); line-height: 1.1; letter-spacing: 0; }
   .cake { margin: 10px 0 0; }
-  .count-label { margin: 4px 0 0; font-size: 1.15rem; }
-  .footnote { margin: 10px 0 0; font-size: 0.85rem; font-style: italic; color: var(--muted); }
+  .count-label { margin: 4px 0 0; font-size: 1.4rem; }
+  .footnote { margin: 10px 0 0; font-size: 1.05rem; color: var(--muted); }
 
   .card {
-    margin-top: 32px;
-    padding: 20px 18px 22px;
-    background: var(--card);
-    border: 1.5px solid var(--gold-light);
-    border-radius: 22px;
-    box-shadow: 0 6px 24px rgba(217, 169, 46, 0.18), 0 0 0 4px rgba(157, 185, 211, 0.3);
+    --ink: #2B1A22;
+    --muted: #46323A;
+    position: relative;
+    width: 90%;
+    margin: 38px auto 0;
+    transform: rotate(-1.1deg);
+    filter: drop-shadow(0 14px 14px rgba(0, 0, 0, 0.45));
   }
+  .card::before {
+    content: "";
+    position: absolute; top: -13px; left: 50%; z-index: 2;
+    width: 100px; height: 28px;
+    transform: translateX(-50%) rotate(2.5deg);
+    background: rgba(176, 138, 62, 0.62);
+    clip-path: polygon(3% 0, 97% 0, 100% 10%, 97% 20%, 100% 30%, 97% 40%, 100% 50%, 97% 60%, 100% 70%, 97% 80%, 100% 90%, 97% 100%, 3% 100%, 0 90%, 3% 80%, 0 70%, 3% 60%, 0 50%, 3% 40%, 0 30%, 3% 20%, 0 10%);
+  }
+  /* A page torn from an old book of spells */
+  .paper {
+    position: relative;
+    padding: 1.45rem 1.1rem 1.35rem;
+    color: var(--ink);
+    background:
+      radial-gradient(circle at 72% 14%, rgba(110, 75, 35, 0.10) 0 5px, transparent 6px),
+      radial-gradient(circle at 24% 82%, rgba(110, 75, 35, 0.11) 0 3px, transparent 4px),
+      radial-gradient(circle at 90% 40%, rgba(110, 75, 35, 0.08) 0 4px, transparent 5px),
+      repeating-linear-gradient(0deg, rgba(120, 90, 50, 0.05) 0 1px, transparent 1px 3px),
+      linear-gradient(135deg, #CDB076, #C2A468);
+    box-shadow: inset 0 0 0 1px rgba(110, 75, 30, 0.22);
+    clip-path: polygon(0.0% 0.7%, 5.2% 1.5%, 10.1% 0.8%, 15.3% 0.3%, 20.4% 1.0%, 26.3% 0.2%, 30.7% 0.1%, 36.6% 1.1%, 40.2% 1.6%, 46.6% 1.0%, 52.0% 0.3%, 55.5% 0.8%, 59.2% 0.3%, 63.4% 0.0%, 68.3% 0.7%, 74.3% 0.8%, 79.7% 0.8%, 85.2% 0.7%, 89.6% 1.6%, 96.1% 1.3%, 100.0% 0.4%, 99.7% 4.0%, 99.9% 11.4%, 99.5% 21.3%, 99.5% 31.5%, 98.9% 42.3%, 99.7% 48.3%, 99.4% 58.9%, 99.5% 69.8%, 99.2% 76.1%, 99.6% 86.0%, 99.6% 92.4%, 99.1% 99.8%, 96.0% 99.4%, 93.2% 99.9%, 88.3% 99.6%, 84.1% 98.9%, 81.1% 98.2%, 78.2% 98.5%, 75.3% 99.0%, 72.2% 99.4%, 66.8% 98.1%, 63.3% 97.9%, 60.2% 99.1%, 55.2% 98.5%, 52.4% 97.6%, 49.2% 99.4%, 44.4% 99.2%, 41.0% 99.8%, 38.2% 98.6%, 35.0% 98.6%, 31.4% 98.9%, 26.0% 98.8%, 21.8% 97.9%, 18.7% 99.6%, 13.5% 98.0%, 10.3% 99.5%, 5.6% 97.7%, 2.5% 97.7%, 0.9% 99.2%, 0.5% 94.0%, 2.7% 90.4%, 2.0% 86.0%, 2.3% 81.6%, 1.0% 76.0%, 2.1% 71.9%, 0.8% 68.2%, 2.4% 62.7%, 0.9% 57.1%, 0.7% 50.4%, 0.9% 46.8%, 0.4% 41.8%, 1.2% 37.6%, 0.5% 32.1%, 2.5% 27.4%, 1.9% 20.4%, 1.7% 14.5%, 0.3% 10.5%, 2.6% 7.0%);
+  }
+  .paper::after {
+    content: "";
+    position: absolute; inset: 11px;
+    border: 1px solid rgba(139, 101, 20, 0.5);
+    border-radius: 3px;
+    pointer-events: none;
+  }
+  .book { width: 90%; margin: 32px auto 0; padding: 16px 14px 18px; border: 1.5px dashed rgba(176, 138, 62, 0.5); border-radius: 16px; }
+  .book h2 { margin: 0; font-size: 1.6rem; font-weight: 700; color: var(--gold); }
+  .book-sub { margin: 2px 0 14px; font-size: 1.05rem; color: var(--muted); }
+  .stickers { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 8px; }
+  .sticker-wrap { position: relative; width: 2.35rem; height: 2.35rem; border-radius: 50%; cursor: default; }
+  .sticker-wrap:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+  .sticker { width: 100%; height: 100%; transform: rotate(var(--r, 0deg)); filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.55)); transition: transform 0.15s; }
+  .sticker-wrap:hover .sticker, .sticker-wrap:focus-visible .sticker { transform: rotate(var(--r, 0deg)) scale(1.18); }
+  .sticker svg { display: block; width: 100%; height: 100%; }
+  .sticker .bg { fill: var(--sb, #1E3B2A); }
+  .sticker .bgs { stroke: var(--sb, #1E3B2A); }
+  .sticker.pop { animation: peel 0.55s ease-out both; }
+  @keyframes peel {
+    from { transform: rotate(var(--r, 0deg)) scale(1.8); opacity: 0; }
+    to { transform: rotate(var(--r, 0deg)) scale(1); opacity: 1; }
+  }
+  .tip {
+    position: absolute; left: 50%; bottom: calc(100% + 8px); z-index: 5;
+    transform: translateX(calc(-50% + var(--dx, 0px)));
+    width: max-content; max-width: 13rem;
+    padding: 5px 12px 6px; border-radius: 6px;
+    background: #CDB076; color: #2B1A22; border: 1px solid #A67C16;
+    font-size: 1.02rem; line-height: 1.2; text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.45);
+    opacity: 0; visibility: hidden; pointer-events: none;
+    transition: opacity 0.15s;
+  }
+  .tip b { display: block; font-size: 1.1rem; }
+  .tip i { display: block; font-style: normal; color: #5C3A12; margin-top: 2px; }
+  .sticker-wrap:hover .tip, .sticker-wrap:focus .tip { opacity: 1; visibility: visible; }
+  .ghost .sticker { filter: none; }
+  .ghost svg { opacity: var(--go, 0.25); }
+  .ghost .bg { fill: transparent; stroke-dasharray: 3 2.6; }
+  .ghost:hover .sticker, .ghost:focus-visible .sticker { transform: rotate(var(--r, 0deg)); }
+  @media (prefers-reduced-motion: reduce) { .sticker.pop { animation: none; } }
+
   .tiers {
     display: inline-flex; gap: 2px; padding: 3px; margin-bottom: 16px;
-    background: rgba(248, 237, 217, 0.7);
-    border: 1px solid rgba(157, 185, 211, 0.95);
+    background: rgba(92, 18, 38, 0.08);
+    border: 1px solid var(--gold);
     border-radius: 999px;
   }
   .tier {
-    font-family: Quicksand, system-ui, sans-serif; font-weight: 600; font-size: 0.85rem;
+    font-weight: 700; font-size: 0.95rem;
     padding: 6px 18px; border-radius: 999px;
     border: 0; background: transparent; color: var(--muted);
     cursor: pointer;
     transition: background .2s, color .2s, box-shadow .2s;
   }
-  .tier:hover { color: var(--ink); }
-  .tier[aria-pressed="true"] { background: #FFFBF3; color: var(--ink); box-shadow: 0 0 0 1.5px var(--blue), 0 1px 4px rgba(74, 110, 146, 0.25); }
-  .takes { margin: 0; font-size: 0.85rem; letter-spacing: 0.02em; color: var(--blue-deep); }
-  .task { margin: 8px 0 20px; font-family: Quicksand, "Nunito", system-ui, -apple-system, "Segoe UI", sans-serif; font-weight: 500; font-size: 1.05rem; line-height: 1.55; min-height: 5.2em; display: flex; align-items: center; justify-content: center; }
-  .task.is-done { opacity: 0.55; }
+  .tier:hover:not([aria-pressed="true"]) { color: var(--ink); }
+  .tier[aria-pressed="true"] { background: var(--burgundy); color: #CDAA58; box-shadow: 0 1px 4px rgba(19, 25, 54, 0.4); }
+  .takes { margin: 0; font-size: 1.05rem; letter-spacing: 0.02em; color: var(--burgundy); }
+  .task { margin: 8px 0 20px; font-weight: 400; font-size: 1.15rem; line-height: 1.45; min-height: 5.2em; display: flex; align-items: center; justify-content: center; }
+  .task.is-done { opacity: 0.6; }
   .actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
   .btn {
-    font-family: Quicksand, system-ui, sans-serif; font-weight: 600; font-size: 0.95rem;
+    font-weight: 700; font-size: 1rem;
     padding: 12px 22px; border-radius: 16px;
     border: 1.5px solid transparent;
-    cursor: pointer; color: #3A1220;
+    cursor: pointer; color: #CDAA58;
     transition: transform .15s, box-shadow .15s, background .2s;
   }
   .btn.primary {
-    background: linear-gradient(180deg, #D4E0AC 0%, var(--sage) 100%);
-    border-color: var(--gold-light);
-    box-shadow: 0 3px 0 rgba(123, 30, 58, 0.28), 0 6px 14px rgba(184, 201, 142, 0.35);
+    background: linear-gradient(180deg, #641830 0%, var(--burgundy) 100%);
+    border-color: var(--gold);
+    box-shadow: 0 3px 0 rgba(19, 25, 54, 0.45), 0 6px 16px rgba(92, 18, 38, 0.5), 0 0 0 2px rgba(176, 138, 62, 0.35);
   }
   .btn.ghost {
-    background: rgba(255, 251, 243, 0.75);
-    border-color: var(--blue);
+    background: transparent;
+    color: var(--ink);
+    border-color: var(--gold);
     border-style: dashed;
   }
   .btn:hover:not(:disabled) { transform: translateY(-2px); }
-  .btn.ghost:hover { background: var(--champagne); }
-  .btn.primary:active:not(:disabled) { transform: translateY(2px); box-shadow: 0 1px 0 rgba(123, 30, 58, 0.28); }
+  .btn.ghost:hover { background: rgba(92, 18, 38, 0.08); }
+  .btn.primary:active:not(:disabled) { transform: translateY(2px); box-shadow: 0 1px 0 rgba(15, 30, 56, 0.35); }
   .btn.ghost:active { transform: translateY(1px); }
   .btn:focus-visible, .tier:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
   @media (prefers-reduced-motion: reduce) { .btn, .tier { transition: none; } .btn:hover:not(:disabled), .btn:active:not(:disabled) { transform: none; } }
-  .thanks { margin: 14px 0 0; min-height: 1.5em; font-style: italic; color: var(--muted); font-size: 0.95rem; }
+  .thanks { margin: 14px 0 0; min-height: 1.5em; color: var(--ink); font-size: 1.1rem; white-space: pre-line; }
 
-  .moon { margin: 30px 0 0; font-size: 0.95rem; color: var(--muted); }
+  .moon { margin: 30px 0 0; font-size: 1.15rem; color: var(--muted); }
   .moon b { color: var(--ink); font-weight: normal; }
-  .tally { margin: 14px 0 0; font-size: 0.8rem; color: var(--muted); }
-  .feedback { margin: 36px 0 0; font-size: 0.8rem; color: var(--muted); }
+  .moonpic { display: block; margin: 0 auto 8px; }
+  .moonpic svg { display: block; margin: 0 auto; width: 2.55rem; height: 2.55rem; filter: drop-shadow(0 0 10px rgba(224, 198, 128, 0.35)); }
+  .feedback { margin: 36px 0 0; font-size: 1.05rem; color: var(--muted); }
 </style>
 </head>
 <body>
-<span class="star one" aria-hidden="true">✦</span>
-<span class="star two" aria-hidden="true">✦</span>
+<span class="star one" aria-hidden="true"></span>
+<span class="star two" aria-hidden="true"></span>
+<span class="star three" aria-hidden="true"></span>
+<span class="star four" aria-hidden="true"></span>
+<span class="star five" aria-hidden="true"></span>
 
 <main>
   <div class="greeting">
@@ -162,43 +254,43 @@
 
   <div class="sparkles" aria-hidden="false">
     <h1 class="count" id="count">–</h1>
-    <span class="spark s1" aria-hidden="true">✦</span>
-    <span class="spark s2" aria-hidden="true">✧</span>
-    <span class="spark s3" aria-hidden="true">✦</span>
-    <span class="spark s4" aria-hidden="true">✧</span>
+    <span class="spark s1" aria-hidden="true"></span>
+    <span class="spark s3" aria-hidden="true"></span>
+    <span class="spark s4" aria-hidden="true"></span>
   </div>
   <div class="cake" id="cake" hidden aria-hidden="true">
     <svg viewBox="0 0 160 130" width="200" height="163" xmlns="http://www.w3.org/2000/svg">
       <defs><clipPath id="face"><rect x="30" y="50" width="100" height="58" rx="8"/></clipPath></defs>
-      <ellipse cx="80" cy="112" rx="66" ry="10" fill="#B4CBE0"/>
-      <ellipse cx="80" cy="110" rx="58" ry="7.5" fill="#E3EEF7"/>
+      <ellipse cx="80" cy="112" rx="66" ry="10" fill="#29AB87"/>
+      <ellipse cx="80" cy="110" rx="58" ry="7.5" fill="#BFE6D8"/>
       <polygon points="32,52 128,52 104,30 56,30" fill="#B9657F" stroke="#7B1E3A" stroke-width="2" stroke-linejoin="round"/>
       <g clip-path="url(#face)">
-        <rect x="30" y="50" width="100" height="58" fill="#E8C468"/>
+        <rect x="30" y="50" width="100" height="58" fill="#D9B863"/>
         <rect x="30" y="84" width="100" height="7" fill="#FFF6E6"/>
         <rect x="30" y="66" width="100" height="7" fill="#FFF6E6"/>
-        <rect x="30" y="73" width="100" height="11" fill="#F0CE82"/>
-        <rect x="30" y="91" width="100" height="17" fill="#F0CE82"/>
+        <rect x="30" y="73" width="100" height="11" fill="#E3C27A"/>
+        <rect x="30" y="91" width="100" height="17" fill="#E3C27A"/>
         <rect x="30" y="50" width="100" height="16" fill="#8E2D4A"/>
         <path d="M30 62 q9 14 18 0 q9 10 18 0 q9 13 18 0 q9 10 18 0 q9 12 18 0 v-12 h-90z" fill="#8E2D4A"/>
-        <circle cx="48" cy="98" r="1.4" fill="#C9962A"/><circle cx="72" cy="78" r="1.4" fill="#C9962A"/><circle cx="96" cy="99" r="1.4" fill="#C9962A"/><circle cx="114" cy="78" r="1.4" fill="#C9962A"/><circle cx="60" cy="100" r="1.2" fill="#C9962A"/>
+        <circle cx="48" cy="98" r="1.4" fill="#B08A3E"/><circle cx="72" cy="78" r="1.4" fill="#B08A3E"/><circle cx="96" cy="99" r="1.4" fill="#B08A3E"/><circle cx="114" cy="78" r="1.4" fill="#B08A3E"/><circle cx="60" cy="100" r="1.2" fill="#B08A3E"/>
       </g>
-      <rect x="30" y="50" width="100" height="58" rx="8" fill="none" stroke="#C9962A" stroke-width="1.5" opacity=".55"/>
+      <rect x="30" y="50" width="100" height="58" rx="8" fill="none" stroke="#B08A3E" stroke-width="1.5" opacity=".55"/>
       <path d="M80 36 c-9 0 -13 7 -9 13 c3 5 15 5 18 0 c4 -6 0 -13 -9 -13z" fill="#5E1427"/>
-      <path d="M72 36 q8 -6 16 0 q-4 -6 -8 -6 q-4 0 -8 6z" fill="#8FA05A"/>
-      <circle cx="76" cy="42" r="1" fill="#F2D77E"/><circle cx="82" cy="44" r="1" fill="#F2D77E"/><circle cx="85" cy="40" r="1" fill="#F2D77E"/><circle cx="79" cy="47" r="1" fill="#F2D77E"/>
-      <circle cx="58" cy="36" r="1.5" fill="#D9A92E"/><circle cx="102" cy="37" r="1.5" fill="#D9A92E"/><circle cx="66" cy="45" r="1.5" fill="#F2D77E"/><circle cx="96" cy="46" r="1.5" fill="#F2D77E"/>
+      <path d="M72 36 q8 -6 16 0 q-4 -6 -8 -6 q-4 0 -8 6z" fill="#29AB87"/>
+      <circle cx="76" cy="42" r="1" fill="#B08A3E"/><circle cx="82" cy="44" r="1" fill="#B08A3E"/><circle cx="85" cy="40" r="1" fill="#B08A3E"/><circle cx="79" cy="47" r="1" fill="#B08A3E"/>
+      <circle cx="58" cy="36" r="1.5" fill="#B08A3E"/><circle cx="102" cy="37" r="1.5" fill="#B08A3E"/><circle cx="66" cy="45" r="1.5" fill="#B08A3E"/><circle cx="96" cy="46" r="1.5" fill="#B08A3E"/>
     </svg>
   </div>
   <p class="count-label" id="countLabel">days until the new year</p>
   <p class="footnote" id="footnote"></p>
 
-  <p class="rule" aria-hidden="true">✦ <span class="b">✧</span> ✦</p>
+  <p class="rule" aria-hidden="true"><i></i><i></i><i></i></p>
 
   <section class="card" id="card" aria-label="Today's small thing">
+    <div class="paper">
     <div class="tiers" role="group" aria-label="How long have you got?">
-      <button class="tier" data-tier="2" aria-pressed="true">2 min</button>
-      <button class="tier" data-tier="10" aria-pressed="false">10 min</button>
+      <button class="tier" data-tier="2" aria-pressed="true">2-ish</button>
+      <button class="tier" data-tier="10" aria-pressed="false">10-ish</button>
     </div>
     <p class="takes" id="takes"></p>
     <p class="task" id="task" aria-live="polite"></p>
@@ -207,10 +299,16 @@
       <button class="btn ghost" id="swapBtn">Something else, please</button>
     </div>
     <p class="thanks" id="thanks" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <section class="book" id="book" aria-label="Your sticker sheet">
+    <h2>Sticker sheet</h2>
+    <p class="book-sub" id="bookSub"></p>
+    <div class="stickers" id="stickers"></div>
   </section>
 
   <p class="moon" id="moon"></p>
-  <p class="tally" id="tally"></p>
 
   <p class="feedback">Made with coffee, cake and a mild amount of magic.</p>
 </main>
@@ -237,7 +335,7 @@
     `The universe has a long to-do list too, and it still stops for a tiny break.`,
     `Somewhere a pigeon is having a worse day than you, and it is handling it with a strut.`,
     `If today were a sandwich, we are aiming for a good one. Buttered and non-soggy.`,
-    `You are officially permitted to enjoy something today. The paperwork is in the post.`,
+    `You are officially permitted to enjoy something today.`,
     `Today’s magic is small, local, and made from ingredients you already own.`,
     `Everyone else is making it up as they go along. Some are just better at confident walking.`,
     `Your list will still be there later. Lists are loyal like that.`,
@@ -256,7 +354,7 @@
     `You are made of stardust and snack crumbs. Both deserve respect.`,
     `The year has been long. The next two minutes are short. Spend them well.`,
     `Somewhere a cat is judging nothing at all, and thriving. Aspire to this.`,
-    `A day without a small delight is like a teapot without a lid: possible, but drippy.`,
+    `A day without a small delight is like a pot without a lid: possible, but drippy.`,
     `You do not have to be productive to be worthwhile. Terrible news for productivity, wonderful news for you.`,
     `There is a pocket of quiet in every day. Today’s is right here.`,
     `Be kind to the person in the mirror. They have been up since forever.`,
@@ -554,21 +652,21 @@
     "10": [
       `Read one article about something you know nothing about. Octopuses are a fine start.`,
       `Make a proper cup of tea or coffee. Drink it without anything else, sitting down. Yes, that is the whole task.`,
-      `Write down three things you are looking forward to before New Year. Small ones count. A new flavour of chips count.`,
+      `Write down one or two things you are looking forward to before New Year. Small ones count. A new flavour of chips counts.`,
       `Go outside and find five shades of green. Maybe give them names. Report to nobody.`,
       `Draw an everyday object you use as if it were a noble person.`,
-      `Clear out one drawer. Everyone has one. You know the one.`,
+      `Throw out a couple of pens that have run out of ink. We all have those. It’s time to let go.`,
       `Send a voice note to a friend you have been meaning to talk to. Conversation without eye contact.`,
       `Lie on the floor and stretch however your body suggests. Sound effects encouraged.`,
       `Read a poem aloud to yourself. Short ones preferred. Dramatic ones, even better.`,
-      `Make a playlist of five songs for the next hour. Include one you would only admit to under oath.`,
+      `Make or add to a playlist of three songs for the next hour. Include one you would only admit to under oath.`,
       `Write down everything in your head on one page, then close the notebook. Let the thoughts wait outside, like polite vampires.`,
       `Assemble a fancy snack on a proper plate: something crunchy, something sweet, something cheesy. Eat it sitting down.`,
-      `Walk around your neighbourhood without your phone. Notice something you have never noticed. Maybe pick up a stone you like.`,
+      `Walk around without your phone. Notice something you have never noticed. Maybe pick up a stone you like.`,
       `Learn to order a snack you like in a language you don’t speak. It’s a life skill.`,
-      `Build a tiny calm corner for yourself. Instant sanctuary.`,
+      `Think of a different ending for a movie you wish had ended another way.`,
       `Delete ten photos or a few apps from your phone. Feel lighter and calmer.`,
-      `Give your hands and face a small pamper. A mask or cream, and absolutely nothing else.`,
+      `Give your hands and face a small pamper. A mask or cream, cracking your knuckles. They’ll love it.`,
       `Watch a short video of baby animals, or any nature clip. Medicinal.`,
       `Write down a recipe from your childhood, as accurately as you can remember it.`,
       `Dance to two songs. The room won’t applaud. It’s okay.`,
@@ -578,18 +676,18 @@
       `Write a thank-you note to someone who helped you this year. Send it, or save it for later.`,
       `Do cat-cow ten times, then child’s pose for a minute. Cats approve of the first one.`,
       `Write down a funny memory.`,
-      `Soak your feet or hold a hot water bottle for ten minutes with your eyes closed.`,
+      `Look through your camera roll for a picture that makes you smile. Maybe send it to someone.`,
       `Reread a chapter from a book you loved.`,
       `Look up the history of an everyday object (the paperclip, the umbrella) and tell someone about it at dinner.`,
       `Write a list of ten things that are going well. “Still here” counts.`,
-      `Make a meal with unusual care, and enjoy it. No reason except joy.`,
+      `Eat your next meal with unusual care, and enjoy it. No reason except joy.`,
       `Watch the sky from a window or doorstep for ten minutes. Clouds do their best work unobserved, but they will tolerate you.`,
-      `Clear ten emails and unsubscribe from at least three. A sigh of relief from fewer newsletters.`,
+      `Clear ten emails and unsubscribe from at least one. A sigh of relief from fewer newsletters.`,
       `Invent a name for your current mood as if it were a new tea blend. “Slightly Frazzled Earl Grey”, for example.`,
-      `Write a four-line joke about your inbox.`,
-      `Write a four-line joke about your favourite food. The food will not be offended.`,
-      `Improvise a snack you would genuinely enjoy from whatever is in the cupboard. Name it something grand.`,
-      `Make yourself a treat you loved as a kid. Eat it with childish joy.`,
+      `Make up a joke about something that happened yesterday.`,
+      `Write the menu card of your dream restaurant: four dishes, and every one of them is allowed to be dessert.`,
+      `Name your weapon of choice as a magical beast. A stare that stops meetings? Wings for dramatic exits? Write it down.`,
+      `Make yourself a treat you loved as a kid. Name it something grand. Eat it with childish joy.`,
       `Call a parent or a friend, just to say hello. No agenda. Agendas are for meetings.`,
       `Use crayons or colour pencils for something today. Add a little drama to that piece of paper.`,
       `Doodle for ten minutes with no plan. Let the pen wander and see where it goes.`
@@ -637,7 +735,165 @@
   };
   var special = null;
 
-  var TIER_LABEL = { "2": "2 minutes", "10": "10 minutes" };
+  // ---------- Stickers: small everyday magical things, one per task finished ----------
+  var STICKERS = [
+    { name: `a mortar and pestle`, power: `Grinds one large worry into a manageable pinch.`, base: `b`, art: `<path d="M9 24h30c0 10-7 16-15 16S9 34 9 24z" fill="#8A3A1B" stroke="#B08A3E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 24h30" fill="none" stroke="#B08A3E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M29 20L38 7" fill="none" stroke="#B08A3E" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="39" cy="6" r="3" fill="#D4B466" stroke="#B08A3E" stroke-width="1"/><path d="M0 0Q4 -2.6 8 0Q4 2.6 0 0z" fill="#2F9E7A" stroke="#B08A3E" stroke-width=".9" stroke-linejoin="round" transform="translate(14 21) rotate(-110)"/><path d="M0 0Q3.5 -2.2 7 0Q3.5 2.2 0 0z" fill="#2F9E7A" stroke="#B08A3E" stroke-width=".9" stroke-linejoin="round" transform="translate(20 21) rotate(-70)"/><path d="M10 10Q10 12 12 12Q10 12 10 14Q10 12 8 12Q10 12 10 10z" fill="#F1E6D0"/><path d="M38 32.5Q38 34 39.5 34Q38 34 38 35.5Q38 34 36.5 34Q38 34 38 32.5z" fill="#F1E6D0"/>` },
+    { name: `a spellbook`, power: `Has a chapter on exactly what you were about to ask. It is chapter nine.`, base: `f`, art: `<path d="M12 9h22a2 2 0 0 1 2 2v26a2 2 0 0 1-2 2H12z" fill="#B4532A" stroke="#B08A3E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 9v30" fill="none" stroke="#B08A3E" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><rect x="15" y="12" width="18" height="24" rx="1.5" fill="none" stroke="#B08A3E" stroke-width="1" opacity=".7"/><path d="M24 18.5L25.36 22.13L29.23 22.3L26.2 24.71L27.23 28.45L24 26.31L20.77 28.45L21.8 24.71L18.77 22.3L22.64 22.13z" fill="#D4B466" stroke="#B08A3E" stroke-width=".8" stroke-linejoin="round"/><circle cx="18" cy="16" r="0.9" fill="#B08A3E"/><circle cx="30" cy="16" r="0.9" fill="#B08A3E"/><circle cx="18" cy="32" r="0.9" fill="#B08A3E"/><circle cx="30" cy="32" r="0.9" fill="#B08A3E"/><path d="M36 12v24" fill="none" stroke="#B08A3E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M38 14v22M38 14h-2" fill="none" stroke="#F1E6D0" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>` },
+    { name: `a forest twig`, power: `Points toward the nearest shade, snack or comfortable chair.`, base: `r`, art: `<path d="M10 39Q20 22 37 10" fill="none" stroke="#B08A3E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M0 0Q4 -2.8 8 0Q4 2.8 0 0z" fill="#3E7B4A" stroke="#B08A3E" stroke-width=".9" stroke-linejoin="round" transform="translate(15.44 30.81) rotate(-5.28)"/><path d="M0 0Q3.5 -2.8 7 0Q3.5 2.8 0 0z" fill="#3E7B4A" stroke="#B08A3E" stroke-width=".9" stroke-linejoin="round" transform="translate(15.44 30.81) rotate(-101.28)"/><path d="M0 0Q4 -2.8 8 0Q4 2.8 0 0z" fill="#3E7B4A" stroke="#B08A3E" stroke-width=".9" stroke-linejoin="round" transform="translate(20.42 24.71) rotate(-0.28)"/><path d="M0 0Q4 -2.8 8 0Q4 2.8 0 0z" fill="#3E7B4A" stroke="#B08A3E" stroke-width=".9" stroke-linejoin="round" transform="translate(21.75 23.25) rotate(-95.05)"/><path d="M0 0Q3.5 -2.8 7 0Q3.5 2.8 0 0z" fill="#3E7B4A" stroke="#B08A3E" stroke-width=".9" stroke-linejoin="round" transform="translate(27.43 17.65) rotate(5.82)"/><path d="M0 0Q3.5 -2.8 7 0Q3.5 2.8 0 0z" fill="#3E7B4A" stroke="#B08A3E" stroke-width=".9" stroke-linejoin="round" transform="translate(28.03 17.11) rotate(-89.7)"/><path d="M0 0Q3.5 -2.6 7 0Q3.5 2.6 0 0z" fill="#3E7B4A" stroke="#B08A3E" stroke-width=".9" stroke-linejoin="round" transform="translate(37 10) rotate(-40)"/><circle cx="15" cy="33.5" r="1.5" fill="#B4532A" stroke="#B08A3E" stroke-width=".8"/><circle cx="21" cy="28" r="1.5" fill="#B4532A" stroke="#B08A3E" stroke-width=".8"/>` },
+    { name: `a quill and inkwell`, power: `Makes your handwriting briefly legible.`, base: `r`, art: `<path d="M38 7C30 9 25 17 23 31C32 29 38 20 38 7z" fill="#F1E6D0" stroke="#B08A3E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M23 32L37 9M30 18l-4 1M32 14l-4 1" fill="none" stroke="#B08A3E" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 33h14v4a4 4 0 0 1-4 4h-6a4 4 0 0 1-4-4z" fill="#1B2348" stroke="#B08A3E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 29h8v4h-8z" fill="#1B2348" stroke="#B08A3E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 37h10" fill="none" stroke="#F1E6D0" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/><path d="M12 14Q12 16 14 16Q12 16 12 18Q12 16 10 16Q12 16 12 14z" fill="#F1E6D0"/>` },
+    { name: `a crystal ball`, power: `Foretells with great confidence that things will probably be fine.`, base: `b`, art: `<circle cx="24" cy="21" r="12" fill="#2D3A66" stroke="#B08A3E" stroke-width="1.5" fill-opacity="0.9"/><path d="M16 15a10 10 0 0 1 8-5" fill="none" stroke="#F1E6D0" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/><path d="M26 20.8Q26 24 29.2 24Q26 24 26 27.2Q26 24 22.8 24Q26 24 26 20.8z" fill="#F1E6D0"/><path d="M19 24.4Q19 26 20.6 26Q19 26 19 27.6Q19 26 17.4 26Q19 26 19 24.4z" fill="#F1E6D0"/><circle cx="30" cy="17" r="1" fill="#D4B466"/><path d="M13 39h22l-3-8-5 3H21l-5-3z" fill="#8A3A1B" stroke="#B08A3E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M13 39h22" fill="none" stroke="#B08A3E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>` },
+    { name: `a frog in a wizard hat`, power: `Turns minor inconveniences into good anecdotes.`, base: `b`, art: `<ellipse cx="24" cy="36.5" rx="12.5" ry="7.5" fill="#3E7B4A" stroke="#B08A3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="16.5" cy="30.5" r="3.3" fill="#3E7B4A" stroke="#B08A3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="31.5" cy="30.5" r="3.3" fill="#3E7B4A" stroke="#B08A3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="16.8" cy="31" r="1.3" class="bg"/><circle cx="31.2" cy="31" r="1.3" class="bg"/><path d="M17 39.500Q24 44 31 39.500" fill="none" stroke="#B08A3E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="22" cy="35.500" r=".7" class="bg"/><circle cx="26" cy="35.500" r=".7" class="bg"/><ellipse cx="24" cy="25" rx="13.5" ry="3" fill="#8A3A1B" stroke="#B08A3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M14.500 25Q21 17 25.500 5.500Q28.500 16 33.500 25z" fill="#8A3A1B" stroke="#B08A3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M15.800 21.500Q24.500 24 32.500 21.500" fill="none" stroke="#B08A3E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M24.2 13.1Q24.2 15.5 26.6 15.5Q24.2 15.5 24.2 17.9Q24.2 15.5 21.8 15.5Q24.2 15.5 24.2 13.1z" fill="#D4B466"/>` },
+    { name: `a lucky coin`, power: `Always lands on the side that avoids the meeting.`, base: `r`, art: `<circle cx="24" cy="24" r="14" fill="#D4B466" stroke="#B08A3E" stroke-width="1.5" fill-opacity="0.9"/><rect x="20" y="20" width="8" height="8" fill="#6B2E16" stroke="#B08A3E" stroke-width="1.2"/><path d="M24 12v3M24 33v3M12 24h3M33 24h3" fill="none" stroke="#8A3A1B" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24" cy="24" r="11" fill="none" stroke="#8A3A1B" stroke-width=".8" opacity=".7"/><path d="M35 9Q35 11 37 11Q35 11 35 13Q35 11 33 11Q35 11 35 9z" fill="#F1E6D0"/>` },
+    { name: `a witch's broom`, power: `Sweeps away the day, except the bit under the sofa, which is private.`, base: `f`, art: `<path d="M37 8L18 29" fill="none" stroke="#B08A3E" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 25L21 32L13 43L6 36z" fill="#B08A3E" stroke="#B08A3E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M13 27l-5 10M16 29l-4 11M19 31l-3 10" fill="none" stroke="#8A3A1B" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/><path d="M14 25L21 32" fill="none" stroke="#8A3A1B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M35 33Q35 35 37 35Q35 35 35 37Q35 35 33 35Q35 35 35 33z" fill="#F1E6D0"/><path d="M10 11.4Q10 13 11.6 13Q10 13 10 14.6Q10 13 8.4 13Q10 13 10 11.4z" fill="#F1E6D0"/>` },
+    { name: `a small scroll`, power: `Unrolls the instructions you were sure you had lost.`, base: `b`, art: `<ellipse cx="24" cy="12" rx="13" ry="3" fill="#E3D4AA" stroke="#B08A3E" stroke-width="1.3"/><path d="M12 12v22c0 2 3 3 5 2h16c2 1 5 0 5-2V12" fill="#F1E6D0" stroke="#B08A3E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="24" cy="36" rx="13" ry="3" fill="#E3D4AA" stroke="#B08A3E" stroke-width="1.3"/><path d="M17 18h14M17 22h14M17 26h9" fill="none" stroke="#8A3A1B" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/><path d="M37 16.4Q37 18 38.6 18Q37 18 37 19.6Q37 18 35.4 18Q37 18 37 16.4z" fill="#B08A3E"/>` },
+    { name: `a goblin with a book`, power: `Finds the one useful sentence in any email.`, base: `b`, art: `<g transform="translate(0 2.500)"><path d="M16 16.500L5.500 11.500l8.500 11z" fill="#3E7B4A" stroke="#B08A3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M32 16.500L42.500 11.500l-8.500 11z" fill="#3E7B4A" stroke="#B08A3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24" cy="18" r="8" fill="#3E7B4A" stroke="#B08A3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M19.500 16.500l2.500 1M28.500 16.500l-2.500 1" fill="none" stroke="#B08A3E" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="21" cy="18.800" r="1" class="bg"/><circle cx="27" cy="18.800" r="1" class="bg"/><path d="M24 19.500l-1.400 3h2.800z" fill="#2F5D3A"/><path d="M19.500 24Q24 27.500 28.500 24" fill="none" stroke="#B08A3E" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></g><g transform="translate(0 -1)"><path d="M14.500 32Q19.200 30 24 33Q28.800 30 33.500 32V42Q28.800 40 24 43Q19.200 40 14.500 42z" fill="#8A3A1B" stroke="#B08A3E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 33V43M17 35Q20 34.500 22 35.500M26 35.500Q28 34.500 31 35" fill="none" stroke="#F1E6D0" stroke-width=".8" opacity=".8"/><circle cx="14.500" cy="36" r="2.4" fill="#3E7B4A" stroke="#B08A3E" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="33.500" cy="36" r="2.4" fill="#3E7B4A" stroke="#B08A3E" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></g>` },
+    { name: `a magic wand`, power: `Works mostly on doorknobs, sleepy cats and hiccups.`, base: `f`, art: `<path d="M10 39L31 18" fill="none" stroke="#B08A3E" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 39L21 28" fill="none" stroke="#F1E6D0" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M34 8L35.48 11.96L39.71 12.15L36.4 14.78L37.53 18.85L34 16.52L30.47 18.85L31.6 14.78L28.29 12.15L32.52 11.96z" fill="#D4B466" stroke="#B08A3E" stroke-width=".8" stroke-linejoin="round"/><path d="M14 11.8Q14 14 16.2 14Q14 14 14 16.2Q14 14 11.8 14Q14 14 14 11.8z" fill="#F1E6D0"/><path d="M38 28.2Q38 30 39.8 30Q38 30 38 31.8Q38 30 36.2 30Q38 30 38 28.2z" fill="#F1E6D0"/><path d="M24 6.6Q24 8 25.4 8Q24 8 24 9.4Q24 8 22.6 8Q24 8 24 6.6z" fill="#F1E6D0"/><circle cx="9" cy="25" r="0.9" fill="#B08A3E"/><circle cx="40" cy="22" r="0.9" fill="#B08A3E"/>` },
+    { name: `a dragon egg`, power: `Warms slowly. Do not ask what is inside; it will tell you in time.`, base: `b`, art: `<path d="M24 7C32 7 37 19 37 28a13 13 0 0 1-26 0C11 19 16 7 24 7z" fill="#2F5D3A" stroke="#B08A3E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M13 24q5 3 10 0q5 3 10 0M12 30q6 3 12 0q6 3 12 0M14 36q5 3 10 0q5 3 10 0" fill="none" stroke="#B08A3E" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/><path d="M33 11.8Q33 14 35.2 14Q33 14 33 16.2Q33 14 30.8 14Q33 14 33 11.8z" fill="#F1E6D0"/><circle cx="20" cy="14" r="1" fill="#D4B466"/>` },
+    { name: `a snail`, power: `Reminds everyone that arriving slowly is still arriving.`, base: `f`, art: `<path d="M8 36Q7 28 14 28l22 3Q42 32 41 36z" fill="#F1E6D0" stroke="#B08A3E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="28" cy="23" r="10" fill="#8A3A1B" stroke="#B08A3E" stroke-width="1.3"/><path d="M28 23m0 0a2 2 0 1 1 3 2a5 5 0 1 1-7-4a8 8 0 1 1 11 7" fill="none" stroke="#B08A3E" stroke-width="1.3" stroke-linecap="round"/><path d="M10 28L8 21M14 27L14 20" fill="none" stroke="#B08A3E" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="8" cy="20" r="1.4" fill="#D4B466"/><circle cx="14" cy="19" r="1.4" fill="#D4B466"/><path d="M10 33h1" fill="none" stroke="#8A3A1B" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>` },
+    { name: `a crescent moon`, power: `Makes 3 a.m. thoughts slightly less dramatic.`, base: `f`, art: `<path d="M30 8.500A15.500 15.500 0 1 0 39 33A12.500 12.500 0 0 1 30 8.500z" fill="#B08A3E" stroke="#B08A3E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill-opacity="0.9"/><path d="M34 11Q34 14 37 14Q34 14 34 17Q34 14 31 14Q34 14 34 11z" fill="#F1E6D0"/><path d="M38.5 22Q38.5 24 40.5 24Q38.5 24 38.5 26Q38.5 24 36.5 24Q38.5 24 38.5 22z" fill="#F1E6D0"/><path d="M11 10.8Q11 13 13.2 13Q11 13 11 15.2Q11 13 8.8 13Q11 13 11 10.8z" fill="#F1E6D0"/><path d="M15 36.5Q15 38 16.5 38Q15 38 15 39.5Q15 38 13.5 38Q15 38 15 36.5z" fill="#F1E6D0"/>` },
+    { name: `a luna moth`, power: `Finds the one lit window in a dark week.`, base: `b`, art: `<g transform="translate(48 0) scale(-1 1)"><path d="M24 22C16 6 5 11 7 24C8 31 16 32 24 27z" fill="#9FD2AE" stroke="#B08A3E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 28C19 31 14 38 18 42C22 43 25 34 24 28z" fill="#9FD2AE" stroke="#B08A3E" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="14" cy="20" r="3" fill="#1E3A28" stroke="#B08A3E" stroke-width="1" fill-opacity="1"/></g><path d="M24 22C16 6 5 11 7 24C8 31 16 32 24 27z" fill="#9FD2AE" stroke="#B08A3E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 28C19 31 14 38 18 42C22 43 25 34 24 28z" fill="#9FD2AE" stroke="#B08A3E" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="14" cy="20" r="3" fill="#1E3A28" stroke="#B08A3E" stroke-width="1" fill-opacity="1"/><ellipse cx="24" cy="26" rx="2.2" ry="9" fill="#F1E6D0" stroke="#B08A3E" stroke-width="1.2"/><path d="M23 17Q20 11 17 10M25 17Q28 11 31 10" fill="none" stroke="#B08A3E" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>` },
+    { name: `a butterfly`, power: `Lets one small change today cause a pleasant surprise later.`, base: `r`, art: `<g transform="translate(48 0) scale(-1 1)"><path d="M24 24C17 8 6 9 8 20C9 27 17 28 24 26z" fill="#D4B466" stroke="#B08A3E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 27C16 28 12 36 17 39C21 40 24 33 24 27z" fill="#C88A65" stroke="#B08A3E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="13" cy="19" r="2.3" fill="#8A3A1B" stroke="#B08A3E" stroke-width="0.9"/></g><path d="M24 24C17 8 6 9 8 20C9 27 17 28 24 26z" fill="#D4B466" stroke="#B08A3E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 27C16 28 12 36 17 39C21 40 24 33 24 27z" fill="#C88A65" stroke="#B08A3E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="13" cy="19" r="2.3" fill="#8A3A1B" stroke="#B08A3E" stroke-width="0.9"/><ellipse cx="24" cy="27" rx="1.8" ry="9" fill="#2B1A22" stroke="#B08A3E" stroke-width="1"/><path d="M23 18Q21 12 18 10M25 18Q27 12 30 10" fill="none" stroke="#B08A3E" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>` },
+    { name: `a toadstool`, power: `Grants permission to sit under something and do nothing.`, base: `f`, art: `<path d="M9 28A15 14 0 0 1 39 28z" fill="#B4532A" stroke="#B08A3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="17" cy="22" r="2.300" fill="#F1E6D0"/><circle cx="26" cy="17.500" r="2.600" fill="#F1E6D0"/><circle cx="32" cy="24" r="1.900" fill="#F1E6D0"/><circle cx="22" cy="25.500" r="1.400" fill="#F1E6D0"/><path d="M18.500 28v8c0 3.500 2.500 5.500 5.500 5.500s5.500-2 5.500-5.500v-8" fill="#F1E6D0" stroke="#B08A3E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill-opacity="0.9"/><path d="M12 42.500Q24 45 36 42.500" fill="none" stroke="#B08A3E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 42Q15 38.500 13.500 38M33 42Q34 38.500 35.500 38" fill="none" stroke="#B08A3E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>` },
+    { name: `a bee`, power: `Turns a tiny effort into something sweet by evening.`, base: `f`, art: `<ellipse cx="18" cy="16" rx="7" ry="4.5" fill="#CFE3F0" fill-opacity=".8" stroke="#B08A3E" stroke-width="1" transform="rotate(-25 18 16)"/><ellipse cx="29" cy="15" rx="7" ry="4.5" fill="#CFE3F0" fill-opacity=".8" stroke="#B08A3E" stroke-width="1" transform="rotate(25 29 15)"/><ellipse cx="24" cy="27" rx="12" ry="9" fill="#D4B466" stroke="#B08A3E" stroke-width="1.4"/><path d="M19 19v16M25 18v18M31 20v14" stroke="#2B1A22" stroke-width="2.6" stroke-linecap="round"/><circle cx="14" cy="26" r="1.2" fill="#2B1A22" stroke="#2B1A22" stroke-width="0.5"/><path d="M36 27l4 1" fill="none" stroke="#B08A3E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M38 10.4Q38 12 39.6 12Q38 12 38 13.6Q38 12 36.4 12Q38 12 38 10.4z" fill="#F1E6D0"/><circle cx="9" cy="36" r="0.9" fill="#B08A3E"/>` },
+    { name: `a fox`, power: `Finds the clever way around the thing everyone else is walking into.`, base: `b`, art: `<path d="M9 10L19 18Q24 17 29 18L39 10L38 28Q35 40 24 41Q13 40 10 28z" fill="#B4532A" stroke="#B08A3E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 28Q13 38 24 38Q35 38 38 28Q31 33 24 31Q17 33 10 28z" fill="#F1E6D0" stroke="#B08A3E" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M13 14l5 5M35 14l-5 5" stroke="#2B1A22" stroke-width="1.6" stroke-linecap="round"/><circle cx="18" cy="24" r="1.4" fill="#2B1A22" stroke="#2B1A22" stroke-width="0.5"/><circle cx="30" cy="24" r="1.4" fill="#2B1A22" stroke="#2B1A22" stroke-width="0.5"/><path d="M22 32h4l-2 3z" fill="#2B1A22" stroke="#B08A3E" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>` },
+    { name: `a moon hare`, power: `Knows precisely when to bolt and when to sit very still.`, base: `r`, art: `<ellipse cx="19" cy="13" rx="3" ry="9" fill="#F1E6D0" stroke="#B08A3E" stroke-width="1.2" transform="rotate(-8 19 13)"/><ellipse cx="29" cy="13" rx="3" ry="9" fill="#F1E6D0" stroke="#B08A3E" stroke-width="1.2" transform="rotate(8 29 13)"/><circle cx="24" cy="30" r="10" fill="#F1E6D0" stroke="#B08A3E" stroke-width="1.4"/><circle cx="20" cy="28" r="1.3" fill="#2B1A22" stroke="#2B1A22" stroke-width="0.5"/><circle cx="28" cy="28" r="1.3" fill="#2B1A22" stroke="#2B1A22" stroke-width="0.5"/><path d="M22.500 32h3l-1.500 2z" fill="#8A3A1B" stroke="#B08A3E" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 34v2M20 36q4 2 8 0" fill="none" stroke="#B08A3E" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 31l6 1M12 35l6-1.500M36 31l-6 1M36 35l-6-1.500" fill="none" stroke="#B08A3E" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/><path d="M38 8Q38 10 40 10Q38 10 38 12Q38 10 36 10Q38 10 38 8z" fill="#F1E6D0"/>` },
+    { name: `a watchful cat`, power: `Knows exactly when you need a break, and sits on the work.`, base: `r`, art: `<path d="M13 19L14 8l7.500 6Q24 13.500 26.500 14L34 8l1 11Q38 25 33 31Q24 38 15 31Q10 25 13 19z" class="bg" stroke="#B08A3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M16.500 21.500q3.500-3.500 7 0q-3.500 3-7 0z" fill="#B08A3E"/><path d="M25.500 21.500q3.500-3.500 7 0q-3.500 3-7 0z" fill="#B08A3E"/><path d="M20 21.500v0M29 21.500v0" class="bgs" stroke-width="1.600" stroke-linecap="round"/><path d="M22.500 26.500h3l-1.500 2z" fill="#B4532A"/><path d="M24 28.500v1.500M24 30q-2 1.500-4 .5M24 30q2 1.500 4 .5" fill="none" stroke="#B08A3E" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 25l7 1M10 29l7-1.500M38 25l-7 1M38 29l-7-1.500" fill="none" stroke="#B08A3E" stroke-width=".9" stroke-linecap="round" opacity=".8"/><path d="M36 33.8Q36 36 38.2 36Q36 36 36 38.2Q36 36 33.8 36Q36 36 36 33.8z" fill="#B08A3E"/>` },
+    { name: `an owl`, power: `Says very little, and is credited with wisdom for it.`, base: `f`, art: `<path d="M13 13l-2-6 7 3M35 13l2-6-7 3" fill="#B08A3E" stroke="#B08A3E" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="24" cy="26" rx="12" ry="14" fill="#B08A3E" stroke="#B08A3E" stroke-width="1.4"/><circle cx="18.5" cy="22" r="5" fill="#F1E6D0" stroke="#B08A3E" stroke-width="1.3"/><circle cx="29.5" cy="22" r="5" fill="#F1E6D0" stroke="#B08A3E" stroke-width="1.3"/><circle cx="18.5" cy="22" r="2.3" fill="#2B1A22" stroke="#2B1A22" stroke-width="0.5"/><circle cx="29.5" cy="22" r="2.3" fill="#2B1A22" stroke="#2B1A22" stroke-width="0.5"/><path d="M22 27l2 4 2-4z" fill="#8A3A1B" stroke="#B08A3E" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 33q2 2 4 0M23 35q2 2 4 0M27 33q2 2 4 0" fill="none" stroke="#8A3A1B" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>` },
+    { name: `a small whale`, power: `Sings low, long notes that settle a restless room.`, base: `b`, art: `<path d="M5 28C5 17 15 14 25 16C34 18 38 24 42 17C44 28 38 38 25 38C13 38 5 36 5 28z" fill="#2F5D3A" stroke="#B08A3E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 34Q24 40 34 34" fill="none" stroke="#B08A3E" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="14" cy="25" r="1.3" fill="#2B1A22" stroke="#2B1A22" stroke-width="0.5"/><path d="M18 14q-2-4 0-7M18 14q2-4 4-5M18 14q-4-3-6-3" fill="none" stroke="#F1E6D0" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 42q4-3 8 0t8 0t8 0t8 0" fill="none" stroke="#B08A3E" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>` },
+    { name: `a koi`, power: `Swims upstream and somehow looks relaxed about it.`, base: `r`, art: `<path d="M6 26C12 14 28 14 34 24L43 16V36L34 28C28 38 12 38 6 26z" fill="#B4532A" stroke="#B08A3E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 16q-2-5-5-6M20 36q-2 4-5 5" fill="none" stroke="#B08A3E" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 18q4 6 0 16M28 20q3 5 0 12" fill="none" stroke="#F1E6D0" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/><circle cx="13" cy="24" r="1.4" fill="#2B1A22" stroke="#2B1A22" stroke-width="0.5"/><ellipse cx="24" cy="24" rx="4" ry="3" fill="#F1E6D0" fill-opacity=".6" stroke="#F1E6D0" stroke-width="0.5" transform="rotate(20 24 24)"/><path d="M6 42q4-3 8 0t8 0" fill="none" stroke="#B08A3E" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>` },
+    { name: `an old key`, power: `Opens any drawer that sticks.`, base: `f`, art: `<circle cx="17" cy="17" r="6.800" fill="#B08A3E" stroke="#B08A3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill-opacity="0.25"/><circle cx="17" cy="17" r="3.200" class="bg" stroke="#B08A3E" stroke-width="1.200"/><circle cx="17" cy="10.800" r="1" fill="#B08A3E"/><circle cx="23.200" cy="17" r="1" fill="#B08A3E"/><circle cx="10.800" cy="17" r="1" fill="#B08A3E"/><circle cx="17" cy="23.200" r="1" fill="#B08A3E"/><path d="M22 22L37 37M31 31l3.500-3.500M34.500 34.500L38 31" fill="none" stroke="#B08A3E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>` },
+    { name: `a mountain at moonrise`, power: `Makes a big problem look like a view.`, base: `f`, art: `<circle cx="33" cy="15" r="6" fill="#F1E6D0" stroke="#B08A3E" stroke-width="1.2"/><path d="M5 38L19 15L26 25L31 19L43 38z" fill="#2F5D3A" stroke="#B08A3E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 21l4-6 4 6-2-1-2 2-2-2z" fill="#F1E6D0" stroke="#B08A3E" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path d="M11 11.2Q11 13 12.8 13Q11 13 11 14.8Q11 13 9.2 13Q11 13 11 11.2z" fill="#F1E6D0"/><path d="M24 7.8Q24 9 25.2 9Q24 9 24 10.2Q24 9 22.8 9Q24 9 24 7.8z" fill="#F1E6D0"/><path d="M5 38h38" fill="none" stroke="#B08A3E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>` },
+    { name: `a calm sun`, power: `Lends you one extra hour of good mood, with no interest.`, base: `r`, art: `<path transform="rotate(0 24 24)" d="M24 6 v4" fill="none" stroke="#B08A3E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path transform="rotate(45 24 24)" d="M24 6 v4" fill="none" stroke="#B08A3E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path transform="rotate(90 24 24)" d="M24 6 v4" fill="none" stroke="#B08A3E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path transform="rotate(135 24 24)" d="M24 6 v4" fill="none" stroke="#B08A3E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path transform="rotate(180 24 24)" d="M24 6 v4" fill="none" stroke="#B08A3E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path transform="rotate(225 24 24)" d="M24 6 v4" fill="none" stroke="#B08A3E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path transform="rotate(270 24 24)" d="M24 6 v4" fill="none" stroke="#B08A3E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path transform="rotate(315 24 24)" d="M24 6 v4" fill="none" stroke="#B08A3E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24" cy="24" r="10" fill="#D4B466" stroke="#B08A3E" stroke-width="1.6"/><path d="M19 23q2 2 4 0M25 23q2 2 4 0" fill="none" stroke="#8A3A1B" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 28q3 2 6 0" fill="none" stroke="#8A3A1B" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="19" cy="27" r="1.6" fill="#E7A87F" stroke="#E7A87F" stroke-width="0.1" fill-opacity="0.7"/><circle cx="29" cy="27" r="1.6" fill="#E7A87F" stroke="#E7A87F" stroke-width="0.1" fill-opacity="0.7"/>` },
+    { name: `a sea shell`, power: `Keeps the sea in it, for when the room gets too loud.`, base: `b`, art: `<path d="M24 38L9 22Q14 8 24 8Q34 8 39 22z" fill="#F1E6D0" stroke="#B08A3E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 38L16 12M24 38L24 9M24 38L32 12M24 38L11 20M24 38L37 20" fill="none" stroke="#B08A3E" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/><path d="M19 38h10l-1 3h-8z" fill="#8A3A1B" stroke="#B08A3E" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M38 9Q38 11 40 11Q38 11 38 13Q38 11 36 11Q38 11 38 9z" fill="#F1E6D0"/><circle cx="10" cy="34" r="0.9" fill="#B08A3E"/><circle cx="36" cy="33" r="0.9" fill="#B08A3E"/>` },
+    { name: `a candle stub`, power: `Makes any room feel like a good idea.`, base: `r`, art: `<path d="M14 41Q24 45 34 41" fill="none" stroke="#B08A3E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 38.500h16" fill="none" stroke="#B08A3E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><rect x="19.500" y="22" width="9" height="16.500" rx="1.500" fill="#F1E6D0" stroke="#B08A3E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill-opacity="0.9"/><path d="M24 22v-2.500" fill="none" stroke="#B08A3E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 8c4.500 3.500 4.500 8 0 10.500c-4.500-2.500-4.500-7 0-10.500z" fill="#D4B466" stroke="#B08A3E" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M20.500 28q1 2 0 4M26.500 26q1 2.500 0 5" fill="none" stroke="#B08A3E" stroke-width=".9" opacity=".6"/><path d="M12 16Q12 18 14 18Q12 18 12 20Q12 18 10 18Q12 18 12 16z" fill="#F1E6D0"/><path d="M36 20.4Q36 22 37.6 22Q36 22 36 23.6Q36 22 34.4 22Q36 22 36 20.4z" fill="#F1E6D0"/><path d="M33 9.8Q33 11 34.2 11Q33 11 33 12.2Q33 11 31.8 11Q33 11 33 9.8z" fill="#F1E6D0"/>` },
+    { name: `a lotus`, power: `Rises cheerfully out of any muddle.`, base: `f`, art: `<path d="M24 32C18 26 18 16 24 9C30 16 30 26 24 32z" fill="#B4532A" stroke="#B08A3E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 32C14 30 10 23 11 16C18 18 23 24 24 32z" fill="#B4532A" stroke="#B08A3E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 32C34 30 38 23 37 16C30 18 25 24 24 32z" fill="#B4532A" stroke="#B08A3E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 32C12 34 7 30 6 25C14 24 21 27 24 32z" fill="#8A3A1B" stroke="#B08A3E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 32C36 34 41 30 42 25C34 24 27 27 24 32z" fill="#8A3A1B" stroke="#B08A3E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 37q4-3 8 0t8 0t8 0t8 0" fill="none" stroke="#B08A3E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 3.4Q24 5 25.6 5Q24 5 24 6.6Q24 5 22.4 5Q24 5 24 3.4z" fill="#F1E6D0"/>` },
+    { name: `a dandelion clock`, power: `Turns one breath into a hundred wishes, free of charge.`, base: `r`, art: `<path d="M22 42Q24 34 24 26" fill="none" stroke="#6FA070" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 21l-9 -0" fill="none" stroke="#F1E6D0" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/><circle cx="15" cy="21" r="1.1" fill="#F1E6D0" stroke="#F1E6D0" stroke-width="0.3"/><path d="M24 21l-7.79 -4.5" fill="none" stroke="#F1E6D0" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/><circle cx="16.21" cy="16.5" r="1.1" fill="#F1E6D0" stroke="#F1E6D0" stroke-width="0.3"/><path d="M24 21l-4.5 -7.79" fill="none" stroke="#F1E6D0" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/><circle cx="19.5" cy="13.21" r="1.1" fill="#F1E6D0" stroke="#F1E6D0" stroke-width="0.3"/><path d="M24 21l0 -9" fill="none" stroke="#F1E6D0" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24" cy="12" r="1.1" fill="#F1E6D0" stroke="#F1E6D0" stroke-width="0.3"/><path d="M24 21l4.5 -7.79" fill="none" stroke="#F1E6D0" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/><circle cx="28.5" cy="13.21" r="1.1" fill="#F1E6D0" stroke="#F1E6D0" stroke-width="0.3"/><path d="M24 21l7.79 -4.5" fill="none" stroke="#F1E6D0" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/><circle cx="31.79" cy="16.5" r="1.1" fill="#F1E6D0" stroke="#F1E6D0" stroke-width="0.3"/><path d="M24 21l9 0" fill="none" stroke="#F1E6D0" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/><circle cx="33" cy="21" r="1.1" fill="#F1E6D0" stroke="#F1E6D0" stroke-width="0.3"/><circle cx="24" cy="21" r="2" fill="#D4B466" stroke="#B08A3E" stroke-width="1"/><circle cx="36" cy="10" r="1.2" fill="#F1E6D0"/><circle cx="41" cy="17" r="1.2" fill="#F1E6D0"/><circle cx="32" cy="7" r="1.2" fill="#F1E6D0"/><path d="M36 10l-4 3M41 17l-4 1" fill="none" stroke="#F1E6D0" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>` },
+    { name: `a four-leaf clover`, power: `Adds a small, undeserved piece of luck to the day.`, base: `b`, art: `<g transform="rotate(0 24 22)"><path d="M24 22C20 17 20 9 24 11C28 9 28 17 24 22z" fill="#3E7B4A" stroke="#B08A3E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></g><g transform="rotate(90 24 22)"><path d="M24 22C20 17 20 9 24 11C28 9 28 17 24 22z" fill="#3E7B4A" stroke="#B08A3E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></g><g transform="rotate(180 24 22)"><path d="M24 22C20 17 20 9 24 11C28 9 28 17 24 22z" fill="#3E7B4A" stroke="#B08A3E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></g><g transform="rotate(270 24 22)"><path d="M24 22C20 17 20 9 24 11C28 9 28 17 24 22z" fill="#3E7B4A" stroke="#B08A3E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></g><path d="M24 22Q25 32 21 41" fill="none" stroke="#2F5D3A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24" cy="22" r="1.2" fill="#D4B466" stroke="#B08A3E" stroke-width="0.6"/><path d="M37 32.2Q37 34 38.8 34Q37 34 37 35.8Q37 34 35.2 34Q37 34 37 32.2z" fill="#F1E6D0"/>` },
+    { name: `a crystal`, power: `Only ever reflects your flattering side.`, base: `f`, art: `<path d="M24 7L35 17.500L29.500 40H18.500L13 17.500z" fill="#B08A3E" stroke="#B08A3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill-opacity="0.28"/><path d="M13 17.500H35M24 7L18.500 17.500L24 40L29.500 17.500z" fill="none" stroke="#B08A3E" stroke-width="1.2" stroke-linejoin="round"/><path d="M37 6.2Q37 9 39.8 9Q37 9 37 11.8Q37 9 34.2 9Q37 9 37 6.2z" fill="#F1E6D0"/><path d="M10 30.2Q10 32 11.8 32Q10 32 10 33.8Q10 32 8.2 32Q10 32 10 30.2z" fill="#F1E6D0"/>` },
+    { name: `a pine cone`, power: `Stores a whole forest in one small, pointy parcel.`, base: `r`, art: `<path d="M24 6c8 4 12 12 11 22c-1 8-6 12-11 13c-5-1-10-5-11-13C12 18 16 10 24 6z" fill="#8A3A1B" stroke="#B08A3E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 16q6.0 3 12 0" fill="none" stroke="#B08A3E" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/><path d="M15 22q9.0 3 18 0" fill="none" stroke="#B08A3E" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/><path d="M14 28q10.0 3 20 0" fill="none" stroke="#B08A3E" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/><path d="M16 34q8.0 3 16 0" fill="none" stroke="#B08A3E" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/><path d="M19 39q5.0 3 10 0" fill="none" stroke="#B08A3E" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/><path d="M24 6v-3" fill="none" stroke="#B08A3E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="38" cy="10" r="0.9" fill="#D4B466"/><circle cx="10" cy="12" r="0.9" fill="#D4B466"/>` },
+    { name: `a brass bell`, power: `Rings once to tell the day it is time to stop.`, base: `f`, art: `<path d="M13 35C13 30 16 28 16 21C16 14 20 10 24 10C28 10 32 14 32 21C32 28 35 30 35 35z" fill="#B08A3E" fill-opacity=".85" stroke="#B08A3E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M11 35h26" fill="none" stroke="#B08A3E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24" cy="38.5" r="2.4" fill="#D4B466" stroke="#B08A3E" stroke-width="1.2"/><circle cx="24" cy="8" r="2" fill="none" stroke="#B08A3E" stroke-width="1.4"/><path d="M19 15q-2 4-2 9" fill="none" stroke="#F1E6D0" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/><path d="M37 11Q37 13 39 13Q37 13 37 15Q37 13 35 13Q37 13 37 11z" fill="#F1E6D0"/><path d="M40 20q2 3 0 6M8 20q-2 3 0 6" fill="none" stroke="#B08A3E" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>` },
+    { name: `a watchful eye`, power: `Spots the missing sock from across the room.`, base: `b`, art: `<path d="M6.500 26Q24 10 41.500 26Q24 42 6.500 26z" class="bg" stroke="#B08A3E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24" cy="26" r="6.800" fill="#B08A3E" stroke="#B08A3E" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill-opacity="0.5"/><circle cx="24" cy="26" r="3" class="bg"/><circle cx="26" cy="24" r="1.100" fill="#F1E6D0"/><path d="M24 11.500V6.500M14.500 15.500l-3-3.500M33.500 15.500l3-3.500M8.500 20l-4-1.500M39.500 20l4-1.500" fill="none" stroke="#B08A3E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>` },
+    { name: `a pocket compass`, power: `Points not to north but toward whatever you actually need.`, base: `b`, art: `<circle cx="24" cy="24" r="15" fill="#2D3A66" stroke="#B08A3E" stroke-width="1.8" fill-opacity="0.9"/><circle cx="24" cy="24" r="12" fill="none" stroke="#B08A3E" stroke-width="0.8"/><path transform="rotate(0 24 24)" d="M24 11.500v2.500" fill="none" stroke="#B08A3E" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path transform="rotate(30 24 24)" d="M24 11.500v2.500" fill="none" stroke="#B08A3E" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path transform="rotate(60 24 24)" d="M24 11.500v2.500" fill="none" stroke="#B08A3E" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path transform="rotate(90 24 24)" d="M24 11.500v2.500" fill="none" stroke="#B08A3E" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path transform="rotate(120 24 24)" d="M24 11.500v2.500" fill="none" stroke="#B08A3E" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path transform="rotate(150 24 24)" d="M24 11.500v2.500" fill="none" stroke="#B08A3E" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path transform="rotate(180 24 24)" d="M24 11.500v2.500" fill="none" stroke="#B08A3E" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path transform="rotate(210 24 24)" d="M24 11.500v2.500" fill="none" stroke="#B08A3E" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path transform="rotate(240 24 24)" d="M24 11.500v2.500" fill="none" stroke="#B08A3E" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path transform="rotate(270 24 24)" d="M24 11.500v2.500" fill="none" stroke="#B08A3E" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path transform="rotate(300 24 24)" d="M24 11.500v2.500" fill="none" stroke="#B08A3E" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path transform="rotate(330 24 24)" d="M24 11.500v2.500" fill="none" stroke="#B08A3E" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 12L27 24L24 36L21 24z" fill="#F1E6D0" stroke="#B08A3E" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 12L27 24L21 24z" fill="#B4532A" stroke="#B08A3E" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24" cy="24" r="1.5" fill="#B08A3E" stroke="#B08A3E" stroke-width="0.3"/><circle cx="24" cy="7" r="2" fill="none" stroke="#B08A3E" stroke-width="1.4"/><path d="M37 7L37.74 8.98L39.85 9.07L38.2 10.39L38.76 12.43L37 11.26L35.24 12.43L35.8 10.39L34.15 9.07L36.26 8.98z" fill="#D4B466" stroke="#B08A3E" stroke-width=".8" stroke-linejoin="round"/>` },
+    { name: `a brass telescope`, power: `Makes far-off good news look much closer.`, base: `r`, art: `<path d="M8 30L28 18l3 6L11 36z" fill="#B08A3E" fill-opacity=".85" stroke="#B08A3E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M28 18l9-5 3 6-9 5z" fill="#8A3A1B" stroke="#B08A3E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 31l5 9-2 1-5-8z" fill="#8A3A1B" stroke="#B08A3E" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 27l4 7M22 24l4 7" fill="none" stroke="#8A3A1B" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/><path d="M20 36L14 44M20 36L26 44" fill="none" stroke="#B08A3E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M39 7.6Q39 10 41.4 10Q39 10 39 12.4Q39 10 36.6 10Q39 10 39 7.6z" fill="#F1E6D0"/><path d="M32 6.6Q32 8 33.4 8Q32 8 32 9.4Q32 8 30.6 8Q32 8 32 6.6z" fill="#F1E6D0"/>` },
+    { name: `a hot air balloon`, power: `Lifts the heart three metres off the ground, no paperwork required.`, base: `f`, art: `<path d="M24 6C34 6 38 14 36 20C34 26 30 28 28 30H20C18 28 14 26 12 20C10 14 14 6 24 6z" fill="#B4532A" stroke="#B08A3E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 6Q18 18 20 30M24 6Q30 18 28 30" fill="none" stroke="#B08A3E" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/><path d="M12 20Q24 22 36 20" fill="none" stroke="#B08A3E" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 30l-2 6M28 30l2 6" fill="none" stroke="#B08A3E" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 36h14v5H17z" fill="#8A3A1B" stroke="#B08A3E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M40 10.2Q40 12 41.8 12Q40 12 40 13.8Q40 12 38.2 12Q40 12 40 10.2z" fill="#F1E6D0"/><path d="M9 32.6Q9 34 10.4 34Q9 34 9 35.4Q9 34 7.6 34Q9 34 9 32.6z" fill="#F1E6D0"/>` },
+    { name: `a fortune cup`, power: `Predicts a pleasant afternoon. Mostly.`, base: `f`, art: `<ellipse cx="24" cy="38.500" rx="13" ry="2.800" fill="none" stroke="#B08A3E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 23h24v4.500a12 12 0 0 1-24 0z" fill="#B4532A" stroke="#B08A3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M36 25h2.500a3.500 3.500 0 0 1 0 7H34" fill="none" stroke="#B08A3E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 28h24" fill="none" stroke="#B08A3E" stroke-width="1" opacity=".8"/><path d="M19 19c-3-2.500 2-4 0-7M26 19c-3-2.500 2-4 0-7" fill="none" stroke="#B08A3E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M32 10.7Q32 13 34.3 13Q32 13 32 15.3Q32 13 29.7 13Q32 13 32 10.7z" fill="#F1E6D0"/><path d="M14 8.5Q14 10 15.5 10Q14 10 14 11.5Q14 10 12.5 10Q14 10 14 8.5z" fill="#F1E6D0"/>` },
+    { name: `a paper boat`, power: `Floats one small hope safely across a puddle.`, base: `b`, art: `<path d="M24 8L36 28H24z" fill="#F1E6D0" stroke="#B08A3E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 12L14 28H24z" fill="#E3D4AA" stroke="#B08A3E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 30h32l-5 8H13z" fill="#F1E6D0" stroke="#B08A3E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 30h32" fill="none" stroke="#B08A3E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 42q4-3 8 0t8 0t8 0t8 0" fill="none" stroke="#B08A3E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/><path d="M38 10.4Q38 12 39.6 12Q38 12 38 13.6Q38 12 36.4 12Q38 12 38 10.4z" fill="#F1E6D0"/>` },
+    { name: `a jar of fireflies`, power: `Provides a night light made entirely of good intentions.`, base: `f`, art: `<path d="M15 14h18v3l2 3v16a4 4 0 0 1-4 4H17a4 4 0 0 1-4-4V20l2-3z" fill="none" stroke="#B08A3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 12h18v4H15z" fill="#8A3A1B" stroke="#B08A3E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="20" cy="24" r="1.2" fill="#D4B466" stroke="#D4B466" stroke-width="0.3"/><circle cx="20" cy="24" r="3.4" fill="#D4B466" stroke="none" stroke-width="0" fill-opacity="0.18"/><circle cx="28" cy="22" r="1.2" fill="#D4B466" stroke="#D4B466" stroke-width="0.3"/><circle cx="28" cy="22" r="3.4" fill="#D4B466" stroke="none" stroke-width="0" fill-opacity="0.18"/><circle cx="24" cy="30" r="1.2" fill="#D4B466" stroke="#D4B466" stroke-width="0.3"/><circle cx="24" cy="30" r="3.4" fill="#D4B466" stroke="none" stroke-width="0" fill-opacity="0.18"/><circle cx="19" cy="33" r="1.2" fill="#D4B466" stroke="#D4B466" stroke-width="0.3"/><circle cx="19" cy="33" r="3.4" fill="#D4B466" stroke="none" stroke-width="0" fill-opacity="0.18"/><circle cx="29" cy="32" r="1.2" fill="#D4B466" stroke="#D4B466" stroke-width="0.3"/><circle cx="29" cy="32" r="3.4" fill="#D4B466" stroke="none" stroke-width="0" fill-opacity="0.18"/><path d="M17 22q0 12 3 17" fill="none" stroke="#F1E6D0" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>` },
+    { name: `a tiny door`, power: `Leads to a very small room where nobody can find you.`, base: `r`, art: `<path d="M13 41V22a11 11 0 0 1 22 0v19z" fill="#2F5D3A" stroke="#B08A3E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 41V24a7 7 0 0 1 14 0v17z" fill="#8A3A1B" stroke="#B08A3E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="28" cy="32" r="1.2" fill="#D4B466" stroke="#B08A3E" stroke-width="0.6"/><path d="M24 17v24M17 28h14" fill="none" stroke="#B08A3E" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/><path d="M10 41h28" fill="none" stroke="#B08A3E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M0 0Q3 -2 6 0Q3 2 0 0z" fill="#3E7B4A" stroke="#B08A3E" stroke-width=".9" stroke-linejoin="round" transform="translate(11 34) rotate(-60)"/><path d="M0 0Q3 -2 6 0Q3 2 0 0z" fill="#3E7B4A" stroke="#B08A3E" stroke-width=".9" stroke-linejoin="round" transform="translate(36 36) rotate(-120)"/><path d="M38 10Q38 12 40 12Q38 12 38 14Q38 12 36 12Q38 12 38 10z" fill="#F1E6D0"/>` },
+    { name: `an hourglass`, power: `Stretches the last five minutes of a nice evening.`, base: `r`, art: `<path d="M13 9.500h22M13 38.500h22" fill="none" stroke="#B08A3E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 11h16c0 8-6 10.500-6 13s6 5 6 13H16c0-8 6-10.500 6-13s-6-5-6-13z" fill="#F1E6D0" stroke="#B08A3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill-opacity="0.12"/><path d="M19.500 36c1.500-3 3-4 4.500-4s3 1 4.500 4z" fill="#B08A3E"/><path d="M24 24v8" stroke="#B08A3E" stroke-width="1.100"/><path d="M19 14.500h10c-1 3-3.500 4.500-5 6c-1.500-1.500-4-3-5-6z" fill="#B08A3E" opacity=".85"/><path d="M38 14.2Q38 16 39.8 16Q38 16 38 17.8Q38 16 36.2 16Q38 16 38 14.2z" fill="#F1E6D0"/><path d="M10 28.5Q10 30 11.5 30Q10 30 10 31.5Q10 30 8.5 30Q10 30 10 28.5z" fill="#F1E6D0"/>` },
+    { name: `a small cauldron`, power: `Stews one bad day into something almost like soup.`, base: `b`, art: `<path d="M9 20h30c2 9-3 19-15 19S7 29 9 20z" fill="#1B2348" stroke="#B08A3E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="24" cy="20" rx="15" ry="3.6" fill="#2E8F6C" stroke="#B08A3E" stroke-width="1.5"/><path d="M14 40l-3 3M34 40l3 3" fill="none" stroke="#B08A3E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="19" cy="13" r="2" fill="none" stroke="#F1E6D0" stroke-width="1.1"/><circle cx="26" cy="10" r="1.5" fill="none" stroke="#F1E6D0" stroke-width="1"/><circle cx="30" cy="15" r="2.2" fill="none" stroke="#F1E6D0" stroke-width="1.1"/><path d="M38 26.4Q38 28 39.6 28Q38 28 38 29.6Q38 28 36.4 28Q38 28 38 26.4z" fill="#F1E6D0"/><circle cx="12" cy="28" r="1" fill="#B08A3E"/>` },
+    { name: `a pocket watch`, power: `Runs a few minutes slow, for people who need them.`, base: `r`, art: `<circle cx="24" cy="26" r="13" fill="#F1E6D0" stroke="#B08A3E" stroke-width="1.6"/><circle cx="24" cy="26" r="10.5" fill="none" stroke="#8A3A1B" stroke-width="0.8"/><path transform="rotate(0 24 26)" d="M24 17v2" fill="none" stroke="#8A3A1B" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path transform="rotate(90 24 26)" d="M24 17v2" fill="none" stroke="#8A3A1B" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path transform="rotate(180 24 26)" d="M24 17v2" fill="none" stroke="#8A3A1B" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path transform="rotate(270 24 26)" d="M24 17v2" fill="none" stroke="#8A3A1B" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 26V19M24 26l5 3" fill="none" stroke="#2B1A22" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24" cy="26" r="1.2" fill="#B08A3E" stroke="#B08A3E" stroke-width="0.3"/><path d="M21 11h6v3h-6z" fill="#B08A3E" stroke="#B08A3E" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24" cy="8" r="2.6" fill="none" stroke="#B08A3E" stroke-width="1.4"/><path d="M36 14q5 2 4 8" fill="none" stroke="#B08A3E" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>` },
+    { name: `a small potion`, power: `Lifts one mood by half a notch.`, base: `b`, art: `<rect x="19" y="5.500" width="10" height="5" rx="1.500" fill="#B4532A" stroke="#B08A3E" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M20.500 10.500v8L11.500 33a6.500 6.500 0 0 0 5.500 9.500h14A6.500 6.500 0 0 0 36.500 33L27.500 18.500v-8z" class="bg" stroke="#B08A3E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M14.500 32.500h19l2 3.500a5 5 0 0 1-4.300 6.500H16.800A5 5 0 0 1 12.500 36z" fill="#3E7B4A" fill-opacity=".8"/><path d="M24 33.5Q24 36 26.5 36Q24 36 24 38.5Q24 36 21.5 36Q24 36 24 33.5z" fill="#F1E6D0"/><circle cx="19" cy="40" r="1" fill="#F1E6D0"/><circle cx="29.500" cy="39" r="1.200" fill="#F1E6D0"/><circle cx="26" cy="23" r="1" fill="#B08A3E"/>` },
+    { name: `a spool of thread`, power: `Ties loose ends together, and occasionally two old friends.`, base: `f`, art: `<path d="M13 11h22v4H13zM13 33h22v4H13z" fill="#8A3A1B" stroke="#B08A3E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 15h16v18H16z" fill="#B4532A" stroke="#B08A3E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 19h16M16 23h16M16 27h16M16 31h16" fill="none" stroke="#F1E6D0" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/><path d="M32 24q8 2 5 9q-3 6-10 4" fill="none" stroke="#B4532A" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M36 12l-4 6" fill="none" stroke="#F1E6D0" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 24.2Q10 26 11.8 26Q10 26 10 27.8Q10 26 8.2 26Q10 26 10 24.2z" fill="#F1E6D0"/>` },
+    { name: `a tarot card`, power: `Shows the card you needed, not the one you wanted.`, base: `b`, art: `<path d="M13 8h22a2 2 0 0 1 2 2v28a2 2 0 0 1-2 2H13a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2z" fill="#F1E6D0" stroke="#B08A3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><rect x="15" y="12" width="18" height="24" rx="1.5" fill="#1B2348" stroke="#B08A3E" stroke-width="1"/><path d="M28 18a7 7 0 1 0 0 12a5.500 5.500 0 0 1 0-12z" fill="#B08A3E"/><path d="M20 15Q20 17 22 17Q20 17 20 19Q20 17 18 17Q20 17 20 15z" fill="#F1E6D0"/><path d="M30 32.6Q30 34 31.4 34Q30 34 30 35.4Q30 34 28.6 34Q30 34 30 32.6z" fill="#F1E6D0"/><circle cx="19" cy="33" r="0.9" fill="#B08A3E"/>` },
+    { name: `a paper crane`, power: `Folds one wish into a very tidy flight.`, base: `r`, art: `<path d="M12 27L24 21L37 27L24 37z" fill="#F1E6D0" stroke="#B08A3E" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 21L9 8L21 27z" fill="#E3D4AA" stroke="#B08A3E" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 21L41 10L34 26z" fill="#F1E6D0" stroke="#B08A3E" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 27L7 14" fill="none" stroke="#B08A3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 14L3.5 17.5" fill="none" stroke="#B08A3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7.2" cy="13.8" r="1.2" fill="#B4532A" stroke="#B4532A" stroke-width="0.3"/><path d="M37 27L43 31" fill="none" stroke="#B08A3E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 21L24 37M16 24l8 6" fill="none" stroke="#B08A3E" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/><path d="M40 14.4Q40 16 41.6 16Q40 16 40 17.6Q40 16 38.4 16Q40 16 40 14.4z" fill="#F1E6D0"/><path d="M12 34.6Q12 36 13.4 36Q12 36 12 37.4Q12 36 10.6 36Q12 36 12 34.6z" fill="#F1E6D0"/>` },
+    { name: `a fern frond`, power: `Unrolls a calm week, one frond at a time.`, base: `r`, art: `<path d="M15 40Q14 24 33 10" fill="none" stroke="#B08A3E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M0 0Q4.22 -2.2 8.44 0Q4.22 2.2 0 0z" fill="#3E7B4A" stroke="#B08A3E" stroke-width=".9" stroke-linejoin="round" transform="translate(15.06 36.03) rotate(-146.56)"/><path d="M0 0Q4.22 -2.2 8.44 0Q4.22 2.2 0 0z" fill="#3E7B4A" stroke="#B08A3E" stroke-width=".9" stroke-linejoin="round" transform="translate(15.06 36.03) rotate(-22.56)"/><path d="M0 0Q3.94 -2.2 7.88 0Q3.94 2.2 0 0z" fill="#3E7B4A" stroke="#B08A3E" stroke-width=".9" stroke-linejoin="round" transform="translate(15.75 32.12) rotate(-137.53)"/><path d="M0 0Q3.94 -2.2 7.88 0Q3.94 2.2 0 0z" fill="#3E7B4A" stroke="#B08A3E" stroke-width=".9" stroke-linejoin="round" transform="translate(15.75 32.12) rotate(-13.53)"/><path d="M0 0Q3.66 -2.2 7.31 0Q3.66 2.2 0 0z" fill="#3E7B4A" stroke="#B08A3E" stroke-width=".9" stroke-linejoin="round" transform="translate(17.06 28.28) rotate(-128.91)"/><path d="M0 0Q3.66 -2.2 7.31 0Q3.66 2.2 0 0z" fill="#3E7B4A" stroke="#B08A3E" stroke-width=".9" stroke-linejoin="round" transform="translate(17.06 28.28) rotate(-4.91)"/><path d="M0 0Q3.38 -2.2 6.75 0Q3.38 2.2 0 0z" fill="#3E7B4A" stroke="#B08A3E" stroke-width=".9" stroke-linejoin="round" transform="translate(19 24.5) rotate(-121.04)"/><path d="M0 0Q3.38 -2.2 6.75 0Q3.38 2.2 0 0z" fill="#3E7B4A" stroke="#B08A3E" stroke-width=".9" stroke-linejoin="round" transform="translate(19 24.5) rotate(2.96)"/><path d="M0 0Q3.09 -2.2 6.19 0Q3.09 2.2 0 0z" fill="#3E7B4A" stroke="#B08A3E" stroke-width=".9" stroke-linejoin="round" transform="translate(21.56 20.78) rotate(-114.06)"/><path d="M0 0Q3.09 -2.2 6.19 0Q3.09 2.2 0 0z" fill="#3E7B4A" stroke="#B08A3E" stroke-width=".9" stroke-linejoin="round" transform="translate(21.56 20.78) rotate(9.94)"/><path d="M0 0Q2.81 -2.2 5.62 0Q2.81 2.2 0 0z" fill="#3E7B4A" stroke="#B08A3E" stroke-width=".9" stroke-linejoin="round" transform="translate(24.75 17.12) rotate(-108.01)"/><path d="M0 0Q2.81 -2.2 5.62 0Q2.81 2.2 0 0z" fill="#3E7B4A" stroke="#B08A3E" stroke-width=".9" stroke-linejoin="round" transform="translate(24.75 17.12) rotate(15.99)"/><path d="M0 0Q2.53 -2.2 5.06 0Q2.53 2.2 0 0z" fill="#3E7B4A" stroke="#B08A3E" stroke-width=".9" stroke-linejoin="round" transform="translate(28.56 13.53) rotate(-102.82)"/><path d="M0 0Q2.53 -2.2 5.06 0Q2.53 2.2 0 0z" fill="#3E7B4A" stroke="#B08A3E" stroke-width=".9" stroke-linejoin="round" transform="translate(28.56 13.53) rotate(21.18)"/><path d="M0 0Q2.25 -1.8 4.5 0Q2.25 1.8 0 0z" fill="#3E7B4A" stroke="#B08A3E" stroke-width=".9" stroke-linejoin="round" transform="translate(33 10) rotate(-35)"/>` },
+    { name: `a lighthouse`, power: `Keeps one steady light on for whoever is still out there.`, base: `f`, art: `<path d="M19 40l2-24h6l2 24z" fill="#F1E6D0" stroke="#B08A3E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 30h8l-.5 5h-7zM20.500 22h7l-.5 4h-6z" fill="#B4532A" stroke="#B08A3E" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 16h12v-4H18z" fill="#8A3A1B" stroke="#B08A3E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 12a4 4 0 0 1 8 0z" fill="#D4B466" stroke="#B08A3E" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M32 11l9-3M32 14l10 1M16 11L7 8M16 14L6 15" fill="none" stroke="#D4B466" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/><path d="M5 40h38M8 44q4-3 8 0t8 0t8 0t8 0" fill="none" stroke="#B08A3E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>` },
+    { name: `a small comet`, power: `Passes once in a long while, and always on a good night.`, base: `b`, art: `<path d="M36 12C28 16 20 26 8 40" fill="none" stroke="#B08A3E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M34 15C28 21 21 29 12 38" fill="none" stroke="#F1E6D0" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/><path d="M38 15C32 22 26 31 14 41" fill="none" stroke="#B08A3E" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/><circle cx="37" cy="11" r="5" fill="#D4B466" stroke="#B08A3E" stroke-width="1.4"/><path d="M14 10Q14 12 16 12Q14 12 14 14Q14 12 12 12Q14 12 14 10z" fill="#F1E6D0"/><path d="M36 30.4Q36 32 37.6 32Q36 32 36 33.6Q36 32 34.4 32Q36 32 36 30.4z" fill="#F1E6D0"/><circle cx="26" cy="10" r="0.9" fill="#F1E6D0"/><circle cx="10" cy="28" r="0.9" fill="#F1E6D0"/>` },
+    { name: `a ringed planet`, power: `Spins slowly and wears its rings with confidence.`, base: `r`, art: `<circle cx="24" cy="24" r="9" fill="#B4532A" stroke="#B08A3E" stroke-width="1.3"/><path d="M17 21q7-2 14 0M16 26q8 2 16 0" fill="none" stroke="#B08A3E" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/><ellipse cx="24" cy="25" rx="17" ry="5" fill="none" stroke="#B08A3E" stroke-width="2" transform="rotate(-18 24 25)"/><path d="M13 28A9 9 0 0 0 34 29" fill="none" stroke="#8A3A1B" stroke-width="1.4"/><path d="M10 8Q10 10 12 10Q10 10 10 12Q10 10 8 10Q10 10 10 8z" fill="#F1E6D0"/><path d="M38 36.4Q38 38 39.6 38Q38 38 38 39.6Q38 38 36.4 38Q38 38 38 36.4z" fill="#F1E6D0"/><circle cx="38" cy="10" r="1" fill="#B08A3E"/>` },
+    { name: `a lantern`, power: `Lights the way to the fridge at midnight.`, base: `f`, art: `<path d="M18 12.500c0-7 12-7 12 0" fill="none" stroke="#B08A3E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M16.500 12.500h15l1 3H15.500z" fill="#B4532A" stroke="#B08A3E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M15.500 15.500h17l-1.500 22h-14z" fill="#D4B466" stroke="#B08A3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill-opacity="0.22"/><path d="M24 20c3.500 3.500 3.500 7 0 10c-3.500-3-3.500-6.500 0-10z" fill="#B08A3E"/><path d="M19 38h10l1 3H18z" fill="#B4532A" stroke="#B08A3E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 15.500V37" fill="none" stroke="#B08A3E" stroke-width=".7" opacity=".5"/><path d="M37 20.2Q37 22 38.8 22Q37 22 37 23.8Q37 22 35.2 22Q37 22 37 20.2z" fill="#F1E6D0"/><path d="M11 24.5Q11 26 12.5 26Q11 26 11 27.5Q11 26 9.5 26Q11 26 11 24.5z" fill="#F1E6D0"/>` },
+    { name: `a green sprout`, power: `Pushes up through the cracks of a hard week.`, base: `f`, art: `<path d="M24 38V22" fill="none" stroke="#6FA070" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M0 0Q6 -4.2 12 0Q6 4.2 0 0z" fill="#3E7B4A" stroke="#B08A3E" stroke-width=".9" stroke-linejoin="round" transform="translate(24 24) rotate(-150)"/><path d="M0 0Q6 -4.2 12 0Q6 4.2 0 0z" fill="#3E7B4A" stroke="#B08A3E" stroke-width=".9" stroke-linejoin="round" transform="translate(24 22) rotate(-30)"/><path d="M10 40Q24 33 38 40z" fill="#8A3A1B" stroke="#B08A3E" stroke-width="1.4" stroke-linejoin="round"/><circle cx="15" cy="38" r="0.8" fill="#D4B466"/><circle cx="31" cy="38" r="0.8" fill="#D4B466"/><circle cx="23" cy="36" r="0.8" fill="#D4B466"/><path d="M38 10.2Q38 12 39.8 12Q38 12 38 13.8Q38 12 36.2 12Q38 12 38 10.2z" fill="#F1E6D0"/>` },
+    { name: `a drifting jellyfish`, power: `Wanders the whole day without a plan, and glows while doing it.`, base: `b`, art: `<path d="M10 24a14 12 0 0 1 28 0z" fill="#9FC8D8" fill-opacity=".45" stroke="#B08A3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 24q-2 6 0 10t-1 8M22 24q-2 7 1 11t0 7M28 24q2 7-1 11t0 7M33 24q2 6 0 10t1 8" fill="none" stroke="#B08A3E" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="17" cy="17" r="1.1" fill="#F1E6D0"/><circle cx="24" cy="14" r="1.1" fill="#F1E6D0"/><circle cx="31" cy="18" r="1.1" fill="#F1E6D0"/><path d="M38 10.2Q38 12 39.8 12Q38 12 38 13.8Q38 12 36.2 12Q38 12 38 10.2z" fill="#F1E6D0"/><path d="M9 34.6Q9 36 10.4 36Q9 36 9 37.4Q9 36 7.6 36Q9 36 9 34.6z" fill="#F1E6D0"/>` },
+    { name: `a snowflake`, power: `Proves that being one of a kind can also be tidy.`, base: `f`, art: `<g transform="rotate(0 24 24)"><path d="M24 24V8" fill="none" stroke="#F1E6D0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 14l-4-4M24 14l4-4" fill="none" stroke="#F1E6D0" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 19l-3-3M24 19l3-3" fill="none" stroke="#F1E6D0" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></g><g transform="rotate(60 24 24)"><path d="M24 24V8" fill="none" stroke="#F1E6D0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 14l-4-4M24 14l4-4" fill="none" stroke="#F1E6D0" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 19l-3-3M24 19l3-3" fill="none" stroke="#F1E6D0" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></g><g transform="rotate(120 24 24)"><path d="M24 24V8" fill="none" stroke="#F1E6D0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 14l-4-4M24 14l4-4" fill="none" stroke="#F1E6D0" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 19l-3-3M24 19l3-3" fill="none" stroke="#F1E6D0" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></g><g transform="rotate(180 24 24)"><path d="M24 24V8" fill="none" stroke="#F1E6D0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 14l-4-4M24 14l4-4" fill="none" stroke="#F1E6D0" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 19l-3-3M24 19l3-3" fill="none" stroke="#F1E6D0" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></g><g transform="rotate(240 24 24)"><path d="M24 24V8" fill="none" stroke="#F1E6D0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 14l-4-4M24 14l4-4" fill="none" stroke="#F1E6D0" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 19l-3-3M24 19l3-3" fill="none" stroke="#F1E6D0" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></g><g transform="rotate(300 24 24)"><path d="M24 24V8" fill="none" stroke="#F1E6D0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 14l-4-4M24 14l4-4" fill="none" stroke="#F1E6D0" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 19l-3-3M24 19l3-3" fill="none" stroke="#F1E6D0" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></g><circle cx="24" cy="24" r="2.2" fill="#D4B466" stroke="#B08A3E" stroke-width="0.8"/>` },
+    { name: `a pointed star`, power: `Makes wishes arrive slightly early.`, base: `b`, art: `<path d="M24 8.5L26.3 18.46L34.96 13.04L29.54 21.7L39.5 24L29.54 26.3L34.96 34.96L26.3 29.54L24 39.5L21.7 29.54L13.04 34.96L18.46 26.3L8.5 24L18.46 21.7L13.04 13.04L21.7 18.46z" fill="#F1E6D0" stroke="#B08A3E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill-opacity="0.14"/><circle cx="24" cy="24" r="3.4" fill="#B4532A" stroke="#B08A3E" stroke-width="1"/><circle cx="24" cy="24" r="17.5" fill="none" stroke="#B08A3E" stroke-width=".7" stroke-dasharray="1 2.6" opacity=".7"/>` },
+    { name: `a small rainbow`, power: `Turns up just after the worst bit, as a courtesy.`, base: `r`, art: `<path d="M7 34A17 17 0 0 1 41 34" fill="none" stroke="#B4532A" stroke-width="3" opacity=".95"/><path d="M11 34A13 13 0 0 1 37 34" fill="none" stroke="#B08A3E" stroke-width="3"/><path d="M15 34A9 9 0 0 1 33 34" fill="none" stroke="#3E7B4A" stroke-width="3"/><ellipse cx="8" cy="35" rx="6" ry="3.5" fill="#F1E6D0" stroke="#B08A3E" stroke-width="1"/><ellipse cx="40" cy="35" rx="6" ry="3.5" fill="#F1E6D0" stroke="#B08A3E" stroke-width="1"/><path d="M24 8Q24 10 26 10Q24 10 24 12Q24 10 22 10Q24 10 24 8z" fill="#F1E6D0"/><circle cx="14" cy="12" r="1" fill="#B08A3E"/>` },
+    { name: `a friendly bat`, power: `Sees perfectly well in the dark, and is slightly offended you asked.`, base: `b`, art: `<path d="M24 22C20 14 12 12 5 16C8 18 8 22 11 24C13 22 15 24 17 27C19 25 21 25 24 28C27 25 29 25 31 27C33 24 35 22 37 24C40 22 40 18 43 16C36 12 28 14 24 22z" fill="#8A3A1B" stroke="#B08A3E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 20L21 13L24 18L27 13L28 20C28 28 20 28 20 20z" fill="#8A3A1B" stroke="#B08A3E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="22.2" cy="21" r="1" fill="#F1E6D0" stroke="#F1E6D0" stroke-width="0.2"/><circle cx="25.8" cy="21" r="1" fill="#F1E6D0" stroke="#F1E6D0" stroke-width="0.2"/><path d="M23 25.500l1 1.500 1-1.500" fill="none" stroke="#F1E6D0" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 17q4 1 6 5M39 17q-4 1-6 5" fill="none" stroke="#B08A3E" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/><path d="M10 34.4Q10 36 11.6 36Q10 36 10 37.6Q10 36 8.4 36Q10 36 10 34.4z" fill="#F1E6D0"/><path d="M38 32.6Q38 34 39.4 34Q38 34 38 35.4Q38 34 36.6 34Q38 34 38 32.6z" fill="#F1E6D0"/><circle cx="38" cy="10" r="3" fill="none" stroke="#F1E6D0" stroke-width="1" fill-opacity="0.4"/>` },
+    { name: `a brass lamp`, power: `Grants exactly one small wish, usually involving a snack.`, base: `r`, art: `<path d="M9 31Q10 24 22 24Q35 24 37 31Q36 37 24 37Q12 37 9 31z" fill="#B08A3E" fill-opacity=".85" stroke="#B08A3E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M36 29Q43 26 42 19" fill="none" stroke="#B08A3E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M13 28Q4 26 5 20" fill="none" stroke="#B08A3E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 24Q24 18 30 24z" fill="#B08A3E" stroke="#B08A3E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24" cy="18" r="1.6" fill="#D4B466" stroke="#B08A3E" stroke-width="1"/><path d="M20 37h8l1 3H19z" fill="#8A3A1B" stroke="#B08A3E" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 16q-6-3-2-8q4-4 0-7" fill="none" stroke="#F1E6D0" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/><path d="M34 7.8Q34 10 36.2 10Q34 10 34 12.2Q34 10 31.8 10Q34 10 34 7.8z" fill="#F1E6D0"/><path d="M14 31q5 3 10 3" fill="none" stroke="#8A3A1B" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>` },
+    { name: `a treasure chest`, power: `Contains whatever you were quietly hoping to find.`, base: `f`, art: `<path d="M9 22Q9 11 24 11Q39 11 39 22z" fill="#8A3A1B" stroke="#B08A3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 22h30v16H9z" fill="#B4532A" stroke="#B08A3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 11v27M32 11v27M9 22h30" fill="none" stroke="#B08A3E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 20h6v7h-6z" fill="#D4B466" stroke="#B08A3E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24" cy="23.5" r="1" fill="#8A3A1B" stroke="#8A3A1B" stroke-width="0.2"/><circle cx="13" cy="17" r="0.9" fill="#D4B466"/><circle cx="35" cy="17" r="0.9" fill="#D4B466"/><path d="M38 5.8Q38 8 40.2 8Q38 8 38 10.2Q38 8 35.8 8Q38 8 38 5.8z" fill="#F1E6D0"/><path d="M10 7.6Q10 9 11.4 9Q10 9 10 10.4Q10 9 8.6 9Q10 9 10 7.6z" fill="#F1E6D0"/>` },
+    { name: `a wishing well`, power: `Returns every coin as a small piece of good timing.`, base: `b`, art: `<path d="M13 31h22v8a3 3 0 0 1-3 3H16a3 3 0 0 1-3-3z" fill="#F1E6D0" stroke="#B08A3E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M13 36h22M20 31v11M28 31v11" fill="none" stroke="#B08A3E" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/><ellipse cx="24" cy="31" rx="11" ry="2.8" fill="#2D3A66" stroke="#B08A3E" stroke-width="1.3"/><path d="M13 31V18M35 31V18" fill="none" stroke="#B08A3E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 18L24 7L39 18z" fill="#B4532A" stroke="#B08A3E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 10v14" fill="none" stroke="#B08A3E" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 24h6v4h-6z" fill="#8A3A1B" stroke="#B08A3E" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M38 32.4Q38 34 39.6 34Q38 34 38 35.6Q38 34 36.4 34Q38 34 38 32.4z" fill="#F1E6D0"/><path d="M9 32.7Q9 34 10.3 34Q9 34 9 35.3Q9 34 7.7 34Q9 34 9 32.7z" fill="#F1E6D0"/>` },
+    { name: `a hand mirror`, power: `Shows you as your best friend sees you.`, base: `r`, art: `<ellipse cx="24" cy="19" rx="10" ry="12" fill="#2D3A66" stroke="#B08A3E" stroke-width="2.2"/><ellipse cx="24" cy="19" rx="7.5" ry="9.5" fill="none" stroke="#F1E6D0" stroke-width="0.8"/><path d="M19 12q3-4 7-3" fill="none" stroke="#F1E6D0" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/><path d="M28 19Q28 22 31 22Q28 22 28 25Q28 22 25 22Q28 22 28 19z" fill="#F1E6D0"/><path d="M22 31h4l1 11h-6z" fill="#B08A3E" fill-opacity=".85" stroke="#B08A3E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24" cy="43" r="1.5" fill="#D4B466" stroke="#B08A3E" stroke-width="1"/><path d="M38 10.2Q38 12 39.8 12Q38 12 38 13.8Q38 12 36.2 12Q38 12 38 10.2z" fill="#F1E6D0"/><path d="M10 28.6Q10 30 11.4 30Q10 30 10 31.4Q10 30 8.6 30Q10 30 10 28.6z" fill="#F1E6D0"/>` },
+    { name: `a laurel wreath`, power: `Awards a medal for the thing nobody noticed you did.`, base: `f`, art: `<path d="M14 36A15 15 0 0 1 12 18M34 36A15 15 0 0 0 36 18" fill="none" stroke="#B08A3E" stroke-width="1.2"/><path d="M0 0Q3.5 -2.4 7 0Q3.5 2.4 0 0z" fill="#3E7B4A" stroke="#B08A3E" stroke-width=".9" stroke-linejoin="round" transform="translate(13 33) rotate(-100)"/><path d="M0 0Q3.5 -2.4 7 0Q3.5 2.4 0 0z" fill="#3E7B4A" stroke="#B08A3E" stroke-width=".9" stroke-linejoin="round" transform="translate(12 28) rotate(-80)"/><path d="M0 0Q3.5 -2.4 7 0Q3.5 2.4 0 0z" fill="#3E7B4A" stroke="#B08A3E" stroke-width=".9" stroke-linejoin="round" transform="translate(11.5 23) rotate(-95)"/><path d="M0 0Q3.5 -2.4 7 0Q3.5 2.4 0 0z" fill="#3E7B4A" stroke="#B08A3E" stroke-width=".9" stroke-linejoin="round" transform="translate(13 18) rotate(-70)"/><path d="M0 0Q3.5 -2.4 7 0Q3.5 2.4 0 0z" fill="#3E7B4A" stroke="#B08A3E" stroke-width=".9" stroke-linejoin="round" transform="translate(16 14) rotate(-50)"/><path d="M0 0Q3.5 -2.4 7 0Q3.5 2.4 0 0z" fill="#3E7B4A" stroke="#B08A3E" stroke-width=".9" stroke-linejoin="round" transform="translate(35 33) rotate(-80)"/><path d="M0 0Q3.5 -2.4 7 0Q3.5 2.4 0 0z" fill="#3E7B4A" stroke="#B08A3E" stroke-width=".9" stroke-linejoin="round" transform="translate(36 28) rotate(-100)"/><path d="M0 0Q3.5 -2.4 7 0Q3.5 2.4 0 0z" fill="#3E7B4A" stroke="#B08A3E" stroke-width=".9" stroke-linejoin="round" transform="translate(36.5 23) rotate(-85)"/><path d="M0 0Q3.5 -2.4 7 0Q3.5 2.4 0 0z" fill="#3E7B4A" stroke="#B08A3E" stroke-width=".9" stroke-linejoin="round" transform="translate(35 18) rotate(-110)"/><path d="M0 0Q3.5 -2.4 7 0Q3.5 2.4 0 0z" fill="#3E7B4A" stroke="#B08A3E" stroke-width=".9" stroke-linejoin="round" transform="translate(32 14) rotate(-130)"/><path d="M24 17.5L25.6 21.79L30.18 21.99L26.6 24.84L27.82 29.26L24 26.73L20.18 29.26L21.4 24.84L17.82 21.99L22.4 21.79z" fill="#D4B466" stroke="#B08A3E" stroke-width=".8" stroke-linejoin="round"/><circle cx="24" cy="38" r="1.2" fill="#B08A3E"/>` },
+    { name: `a small harp`, power: `Plays softly in the background of any stressful hour.`, base: `b`, art: `<path d="M14 40V14Q14 8 22 8Q36 8 36 20Q36 30 26 36L22 40z" fill="#B08A3E" fill-opacity=".25" stroke="#B08A3E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 40h8" fill="none" stroke="#B08A3E" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 11L18 38" fill="none" stroke="#F1E6D0" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 10L22 36" fill="none" stroke="#F1E6D0" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/><path d="M26 12L26 33" fill="none" stroke="#F1E6D0" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/><path d="M30 14L30 29" fill="none" stroke="#F1E6D0" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/><path d="M37 32Q37 34 39 34Q37 34 37 36Q37 34 35 34Q37 34 37 32z" fill="#F1E6D0"/><path d="M38 6.6Q38 8 39.4 8Q38 8 38 9.4Q38 8 36.6 8Q38 8 38 6.6z" fill="#F1E6D0"/><circle cx="10" cy="26" r="1" fill="#B08A3E"/>` },
+    { name: `a stone bridge`, power: `Appears exactly where the gap in the plan was.`, base: `f`, art: `<circle cx="35" cy="14" r="5" fill="#F1E6D0" stroke="#B08A3E" stroke-width="1.2"/><path d="M5 32Q24 14 43 32v6H5z" fill="#CDBF98" stroke="#B08A3E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 38Q24 26 34 38" fill="none" stroke="#B08A3E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 28q15-12 30 0" fill="none" stroke="#B08A3E" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/><path d="M18 32l1 4M30 32l-1 4M24 26v4" fill="none" stroke="#8A3A1B" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/><path d="M3 42q4-3 8 0t8 0t8 0t8 0t8 0" fill="none" stroke="#B08A3E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/><path d="M11 11.2Q11 13 12.8 13Q11 13 11 14.8Q11 13 9.2 13Q11 13 11 11.2z" fill="#F1E6D0"/><path d="M24 6.8Q24 8 25.2 8Q24 8 24 9.2Q24 8 22.8 8Q24 8 24 6.8z" fill="#F1E6D0"/>` },
+    { name: `a small kite`, power: `Lifts a heavy mood with nothing but wind and a bit of string.`, base: `r`, art: `<path d="M26 6L38 18L26 34L14 18z" fill="#B4532A" stroke="#B08A3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M26 6L26 34M14 18h24" fill="none" stroke="#B08A3E" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path d="M26 6L38 18L26 18z" fill="#D4B466" stroke="#B08A3E" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M26 34q-4 4 0 7t0 6" fill="none" stroke="#F1E6D0" stroke-width="1.2"/><path d="M23 38l-3-1 1 3zM27 43l3-1-2 3z" fill="#F1E6D0" stroke="#B08A3E" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 10.2Q10 12 11.8 12Q10 12 10 13.8Q10 12 8.2 12Q10 12 10 10.2z" fill="#F1E6D0"/><path d="M40 32.5Q40 34 41.5 34Q40 34 40 35.5Q40 34 38.5 34Q40 34 40 32.5z" fill="#F1E6D0"/>` },
+    { name: `a nest with eggs`, power: `Keeps small hopes warm until they are ready to fly.`, base: `b`, art: `<ellipse cx="17" cy="22" rx="4.5" ry="6" fill="#CFE3F0" stroke="#B08A3E" stroke-width="1.2" transform="rotate(-15 17 22)"/><ellipse cx="24" cy="20" rx="4.5" ry="6" fill="#E8F1F6" stroke="#B08A3E" stroke-width="1.2"/><ellipse cx="31" cy="22" rx="4.5" ry="6" fill="#CFE3F0" stroke="#B08A3E" stroke-width="1.2" transform="rotate(15 31 22)"/><circle cx="15" cy="21" r="0.7" fill="#8A3A1B"/><circle cx="23" cy="18" r="0.7" fill="#8A3A1B"/><circle cx="31" cy="23" r="0.7" fill="#8A3A1B"/><circle cx="26" cy="22" r="0.7" fill="#8A3A1B"/><path d="M7 27Q24 22 41 27Q40 40 24 40Q8 40 7 27z" fill="#8A3A1B" stroke="#B08A3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 31q14 4 28 0M11 35q13 4 26 0M9 28q6-2 10 0M29 28q6-2 10 0" fill="none" stroke="#B08A3E" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/><path d="M38 8.2Q38 10 39.8 10Q38 10 38 11.8Q38 10 36.2 10Q38 10 38 8.2z" fill="#F1E6D0"/>` },
+    { name: `a hedgehog`, power: `Rolls into a ball whenever the day gets too prickly.`, base: `f`, art: `<path d="M7 36C7 22 15 13 27 13S42 22 42 36z" fill="#6B4A2A" stroke="#B08A3E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 19l-3 -3" fill="none" stroke="#B08A3E" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/><path d="M20 15l-1 -4" fill="none" stroke="#B08A3E" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/><path d="M26 13l0 -4" fill="none" stroke="#B08A3E" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/><path d="M32 15l2 -4" fill="none" stroke="#B08A3E" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/><path d="M37 19l3 -3" fill="none" stroke="#B08A3E" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/><path d="M40 26l4 -2" fill="none" stroke="#B08A3E" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/><path d="M7 36C7 29 11 25 17 26Q20 31 20 36z" fill="#F1E6D0" stroke="#B08A3E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="13" cy="31" r="1.1" fill="#2B1A22" stroke="#2B1A22" stroke-width="0.3"/><circle cx="7.5" cy="34" r="1.4" fill="#2B1A22" stroke="#2B1A22" stroke-width="0.3"/><path d="M13 42h26" fill="none" stroke="#B08A3E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/><path d="M38 6.2Q38 8 39.8 8Q38 8 38 9.8Q38 8 36.2 8Q38 8 38 6.2z" fill="#F1E6D0"/>` },
+    { name: `a wind chime`, power: `Turns a bit of breeze into background music.`, base: `r`, art: `<path d="M24 4v6" fill="none" stroke="#B08A3E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 10h20v3H14z" fill="#8A3A1B" stroke="#B08A3E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 13V20" fill="none" stroke="#F1E6D0" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/><rect x="15.4" y="20" width="3.2" height="16" rx="1.2" fill="#D4B466" stroke="#B08A3E" stroke-width="1"/><path d="M22 13V24" fill="none" stroke="#F1E6D0" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/><rect x="20.4" y="24" width="3.2" height="14" rx="1.2" fill="#D4B466" stroke="#B08A3E" stroke-width="1"/><path d="M27 13V18" fill="none" stroke="#F1E6D0" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/><rect x="25.4" y="18" width="3.2" height="18" rx="1.2" fill="#D4B466" stroke="#B08A3E" stroke-width="1"/><path d="M32 13V22" fill="none" stroke="#F1E6D0" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/><rect x="30.4" y="22" width="3.2" height="13" rx="1.2" fill="#D4B466" stroke="#B08A3E" stroke-width="1"/><path d="M24 30v6" fill="none" stroke="#F1E6D0" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/><ellipse cx="24" cy="38" rx="3.5" ry="1.8" fill="#B08A3E" stroke="#B08A3E" stroke-width="0.5"/><path d="M38 18q3 2 3 5M7 26q-3 2-3 5" fill="none" stroke="#B08A3E" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>` },
+    { name: `a ladder to the moon`, power: `Is always long enough, as long as you do not look down.`, base: `b`, art: `<path d="M32 6a8 8 0 1 0 6 11A6.500 6.500 0 0 1 32 6z" fill="#D4B466" stroke="#B08A3E" stroke-width="1.300"/><path d="M15 42L30 17M22 42L37 17" fill="none" stroke="#F1E6D0" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M17.5 37.8l7 0" fill="none" stroke="#B08A3E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M20.0 33.6l7 0" fill="none" stroke="#B08A3E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M22.5 29.4l7 0" fill="none" stroke="#B08A3E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M25.0 25.2l7 0" fill="none" stroke="#B08A3E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 14Q10 16 12 16Q10 16 10 18Q10 16 8 16Q10 16 10 14z" fill="#F1E6D0"/><path d="M40 32.4Q40 34 41.6 34Q40 34 40 35.6Q40 34 38.4 34Q40 34 40 32.4z" fill="#F1E6D0"/><circle cx="8" cy="30" r="1" fill="#B08A3E"/>` },
+    { name: `a golden apple`, power: `Settles any argument in favour of whoever asked politely.`, base: `f`, art: `<path d="M24 14C16 8 8 16 10 28C12 38 19 42 24 40C29 42 36 38 38 28C40 16 32 8 24 14z" fill="#C29B44" stroke="#B08A3E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 14Q25 9 28 6" fill="none" stroke="#8A3A1B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M0 0Q4 -3.2 8 0Q4 3.2 0 0z" fill="#3E7B4A" stroke="#B08A3E" stroke-width=".9" stroke-linejoin="round" transform="translate(26 9) rotate(-30)"/><path d="M15 22q1-4 5-5" fill="none" stroke="#F1E6D0" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/><path d="M36 36Q36 38 38 38Q36 38 36 40Q36 38 34 38Q36 38 36 36z" fill="#F1E6D0"/><path d="M9 10.4Q9 12 10.6 12Q9 12 9 13.6Q9 12 7.4 12Q9 12 9 10.4z" fill="#F1E6D0"/>` },
+    { name: `a sunflower`, power: `Faces the good news, whichever direction it comes from.`, base: `r`, art: `<path d="M24 30Q24 38 24 44" fill="none" stroke="#6FA070" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M0 0Q4.5 -3 9 0Q4.5 3 0 0z" fill="#3E7B4A" stroke="#B08A3E" stroke-width=".9" stroke-linejoin="round" transform="translate(24 38) rotate(-150)"/><g transform="rotate(0 24 21)"><path d="M24 12C21 6 24 3 24 3C24 3 27 6 24 12z" fill="#C29B44" stroke="#B08A3E" stroke-width="1" stroke-linejoin="round"/></g><g transform="rotate(30 24 21)"><path d="M24 12C21 6 24 3 24 3C24 3 27 6 24 12z" fill="#C29B44" stroke="#B08A3E" stroke-width="1" stroke-linejoin="round"/></g><g transform="rotate(60 24 21)"><path d="M24 12C21 6 24 3 24 3C24 3 27 6 24 12z" fill="#C29B44" stroke="#B08A3E" stroke-width="1" stroke-linejoin="round"/></g><g transform="rotate(90 24 21)"><path d="M24 12C21 6 24 3 24 3C24 3 27 6 24 12z" fill="#C29B44" stroke="#B08A3E" stroke-width="1" stroke-linejoin="round"/></g><g transform="rotate(120 24 21)"><path d="M24 12C21 6 24 3 24 3C24 3 27 6 24 12z" fill="#C29B44" stroke="#B08A3E" stroke-width="1" stroke-linejoin="round"/></g><g transform="rotate(150 24 21)"><path d="M24 12C21 6 24 3 24 3C24 3 27 6 24 12z" fill="#C29B44" stroke="#B08A3E" stroke-width="1" stroke-linejoin="round"/></g><g transform="rotate(180 24 21)"><path d="M24 12C21 6 24 3 24 3C24 3 27 6 24 12z" fill="#C29B44" stroke="#B08A3E" stroke-width="1" stroke-linejoin="round"/></g><g transform="rotate(210 24 21)"><path d="M24 12C21 6 24 3 24 3C24 3 27 6 24 12z" fill="#C29B44" stroke="#B08A3E" stroke-width="1" stroke-linejoin="round"/></g><g transform="rotate(240 24 21)"><path d="M24 12C21 6 24 3 24 3C24 3 27 6 24 12z" fill="#C29B44" stroke="#B08A3E" stroke-width="1" stroke-linejoin="round"/></g><g transform="rotate(270 24 21)"><path d="M24 12C21 6 24 3 24 3C24 3 27 6 24 12z" fill="#C29B44" stroke="#B08A3E" stroke-width="1" stroke-linejoin="round"/></g><g transform="rotate(300 24 21)"><path d="M24 12C21 6 24 3 24 3C24 3 27 6 24 12z" fill="#C29B44" stroke="#B08A3E" stroke-width="1" stroke-linejoin="round"/></g><g transform="rotate(330 24 21)"><path d="M24 12C21 6 24 3 24 3C24 3 27 6 24 12z" fill="#C29B44" stroke="#B08A3E" stroke-width="1" stroke-linejoin="round"/></g><circle cx="24" cy="21" r="6.5" fill="#4A2A12" stroke="#B08A3E" stroke-width="1.3"/><circle cx="22" cy="20" r="0.7" fill="#B08A3E"/><circle cx="26" cy="20" r="0.7" fill="#B08A3E"/><circle cx="24" cy="23" r="0.7" fill="#B08A3E"/><circle cx="21.5" cy="23.5" r="0.7" fill="#B08A3E"/><circle cx="26.5" cy="23.5" r="0.7" fill="#B08A3E"/><circle cx="24" cy="18.5" r="0.7" fill="#B08A3E"/>` }
+  ];
+
+  function stickerSVG(art) {
+    return '<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle class="bg" cx="24" cy="24" r="22.5" stroke="#B08A3E" stroke-width="1.5"/><circle cx="24" cy="24" r="20.5" fill="none" stroke="#B08A3E" stroke-width=".6" stroke-dasharray="1 2.2" opacity=".6"/>' + art + '</svg>';
+  }
+
+
+  // Keep the name label inside the screen, wherever the sticker sits.
+  function placeTip(e) {
+    var tip = e.currentTarget.querySelector(".tip");
+    tip.style.setProperty("--dx", "0px");
+    var rect = tip.getBoundingClientRect(), dx = 0, m = 8;
+    if (rect.left < m) dx = m - rect.left;
+    else if (rect.right > window.innerWidth - m) dx = (window.innerWidth - m) - rect.right;
+    tip.style.setProperty("--dx", dx + "px");
+  }
+
+  function renderStickers(freshIndex) {
+    var list = state.stickers, box = $("stickers");
+    box.innerHTML = "";
+    var BASES = { f: "#1E3B2A", r: "#6B2E16", b: "#3F2E10" };
+    for (var i = 0; i < list.length; i++) {
+      var def = STICKERS[list[i].i % STICKERS.length];
+      var label = def.name.charAt(0).toUpperCase() + def.name.slice(1);
+      var wrap = document.createElement("div");
+      wrap.className = "sticker-wrap";
+      wrap.tabIndex = 0;
+      wrap.setAttribute("role", "img");
+      wrap.setAttribute("aria-label", "Sticker: " + def.name + ". Power: " + def.power);
+      var el = document.createElement("div");
+      el.className = "sticker" + (i === freshIndex ? " pop" : "");
+      el.style.setProperty("--r", (((i * 37) % 17) - 8) + "deg");
+      el.style.setProperty("--sb", BASES[def.base] || BASES.f);
+      el.innerHTML = stickerSVG(def.art);
+      var tip = document.createElement("span");
+      tip.className = "tip";
+      tip.innerHTML = "<b></b><i></i>";
+      tip.firstChild.textContent = label;
+      tip.lastChild.textContent = "Power: " + def.power;
+      tip.setAttribute("aria-hidden", "true");
+      wrap.appendChild(el);
+      wrap.appendChild(tip);
+      wrap.addEventListener("mouseenter", placeTip);
+      wrap.addEventListener("focus", placeTip);
+      box.appendChild(wrap);
+    }
+    // Ghosted outlines of the charms still to find
+    var ghostCount = Math.min(3, STICKERS.length - list.length);
+    for (var g = 0; g < ghostCount; g++) {
+      var gdef = STICKERS[(list.length + g) % STICKERS.length];
+      var gw = document.createElement("div");
+      gw.className = "sticker-wrap ghost";
+      gw.tabIndex = 0;
+      gw.setAttribute("role", "img");
+      gw.setAttribute("aria-label", "A charm still to be found");
+      var ge = document.createElement("div");
+      ge.className = "sticker";
+      ge.style.setProperty("--r", (((g * 53 + 5) % 15) - 7) + "deg");
+      ge.style.setProperty("--go", [0.34, 0.22, 0.13][g]);
+      ge.style.setProperty("--sb", BASES[gdef.base] || BASES.f);
+      ge.innerHTML = stickerSVG(gdef.art);
+      var gt = document.createElement("span");
+      gt.className = "tip";
+      gt.innerHTML = "<b></b><i></i>";
+      gt.firstChild.textContent = "A charm still to find";
+      gt.lastChild.textContent = "Finish a small thing to reveal its power.";
+      gt.setAttribute("aria-hidden", "true");
+      gw.appendChild(ge);
+      gw.appendChild(gt);
+      gw.addEventListener("mouseenter", placeTip);
+      gw.addEventListener("focus", placeTip);
+      box.appendChild(gw);
+    }
+    $("bookSub").textContent = list.length >= STICKERS.length
+      ? "All " + STICKERS.length + " powers collected. You are now, officially, a little bit magic."
+      : list.length
+      ? list.length + (list.length === 1 ? " power" : " powers") + " collected so far. Hover a charm to read what it does."
+      : "Finish a small thing to find your first charm, and the power that comes with it.";
+    $("book").hidden = special === SPECIAL.first && !list.length;
+  }
+
+  var TIER_LABEL = { "2": "2-ish minutes", "10": "10-ish minutes" };
   var REPEAT_GAP_DAYS = 35;
   var STORE_KEY = "nearly-new-year.v1";
 
@@ -661,6 +917,7 @@
   var state = loadState();
   state.seen = state.seen || {};      // seen[tier][idx] = last day shown
   state.tally = state.tally || 0;
+  state.stickers = state.stickers || [];
   var today = dayNumber(new Date());
   var tier = "2";
 
@@ -714,6 +971,28 @@
 
   // ---------- Moon ----------
 
+  // A small picture of the moon as it really looks tonight: craters and seas, lit on the correct side.
+  function moonSVG(age, syn) {
+    var k = Math.cos(2 * Math.PI * age / syn), rx = (Math.abs(k) * 46).toFixed(2), d;
+    if (age < syn / 2) d = "M50 4A46 46 0 0 1 50 96A" + rx + " 46 0 0 " + (k > 0 ? 0 : 1) + " 50 4z";
+    else d = "M50 4A46 46 0 0 0 50 96A" + rx + " 46 0 0 " + (k > 0 ? 1 : 0) + " 50 4z";
+    var tex =
+      '<g filter="url(#mBlur)" fill="#867E64" opacity=".55">' +
+      '<ellipse cx="30" cy="48" rx="15" ry="20"/><circle cx="40" cy="30" r="12"/><circle cx="60" cy="33" r="8"/>' +
+      '<ellipse cx="66" cy="48" rx="11" ry="8"/><ellipse cx="82" cy="40" rx="5" ry="4"/>' +
+      '<ellipse cx="42" cy="68" rx="9" ry="6"/><ellipse cx="76" cy="62" rx="6" ry="8"/></g>' +
+      '<g fill="#F6EFD9" opacity=".9"><circle cx="46" cy="82" r="3"/><circle cx="38" cy="45" r="2.4"/><circle cx="28" cy="42" r="1.6"/><circle cx="24" cy="36" r="1.6"/></g>' +
+      '<g fill="none" stroke="#F6EFD9" stroke-width=".5" opacity=".5"><path d="M46 82L46 66M46 82L58 72M46 82L34 74M46 82L60 90"/></g>' +
+      '<g fill="#6F684F" opacity=".35"><circle cx="58" cy="76" r="2"/><circle cx="68" cy="26" r="1.8"/><circle cx="52" cy="58" r="1.4"/><circle cx="20" cy="58" r="1.8"/><circle cx="72" cy="78" r="1.5"/></g>';
+    return '<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The moon tonight">' +
+      '<defs><radialGradient id="mLit" cx="42%" cy="38%" r="70%"><stop offset="0" stop-color="#FBF5E1"/><stop offset=".65" stop-color="#E3D9BA"/><stop offset="1" stop-color="#BDB08A"/></radialGradient>' +
+      '<filter id="mBlur"><feGaussianBlur stdDeviation="1.2"/></filter>' +
+      '<clipPath id="mLitClip"><path d="' + d + '"/></clipPath></defs>' +
+      '<circle cx="50" cy="50" r="46" fill="#1E2644"/><g opacity=".2">' + tex + '</g>' +
+      '<g clip-path="url(#mLitClip)"><circle cx="50" cy="50" r="46" fill="url(#mLit)"/>' + tex + '</g>' +
+      '<circle cx="50" cy="50" r="46" fill="none" stroke="#E0C680" stroke-opacity=".25" stroke-width="1"/></svg>';
+  }
+
   function moonTonight() {
     var SYN = 29.530588853;
     var REF = Date.UTC(2000, 0, 6, 18, 14) / 864e5;
@@ -729,7 +1008,7 @@
     var start = p === 8 ? upper[7] : (p === 0 ? 0 : upper[p - 1]);
     var dip = Math.min(3, Math.max(0, Math.floor(age - start)));
     var line = MOON_LINES[phase][(((cycle * 4 + dip) % 8) + 8) % 8];
-    return { icon: MOON_ICONS[phase], name: MOON_NAMES[phase], line: line };
+    return { icon: MOON_ICONS[phase], name: MOON_NAMES[phase], line: line, age: age, syn: SYN };
   }
 
   // ---------- Render ----------
@@ -754,8 +1033,12 @@
 
     var m = moonTonight();
     $("moon").innerHTML = "";
+    var pic = document.createElement("span");
+    pic.className = "moonpic";
+    pic.innerHTML = moonSVG(m.age, m.syn);
+    $("moon").appendChild(pic);
     var b = document.createElement("b");
-    b.textContent = m.icon + " Moon tonight: " + m.name + ".";
+    b.textContent = "Moon tonight: " + m.name + ".";
     $("moon").appendChild(b);
     $("moon").appendChild(document.createTextNode(" " + m.line));
   }
@@ -763,7 +1046,7 @@
   function renderTask() {
     if (!special && state.picks[tier] === undefined) { state.picks[tier] = choose(tier); saveState(); }
     var done = !!state.done[tier];
-    $("takes").textContent = "Takes about " + TIER_LABEL[tier];
+    $("takes").textContent = "Takes " + TIER_LABEL[tier];
     $("task").textContent = special ? special.tasks[tier] : TASKS[tier][state.picks[tier]];
     $("swapBtn").hidden = !!special;
     $("task").classList.toggle("is-done", done);
@@ -775,9 +1058,6 @@
     for (var i = 0; i < buttons.length; i++) {
       buttons[i].setAttribute("aria-pressed", String(buttons[i].getAttribute("data-tier") === tier));
     }
-    $("tally").textContent = state.tally
-      ? "Small things done so far: " + state.tally + ". Tiny, but cumulative."
-      : "";
   }
 
   // ---------- Events ----------
@@ -788,9 +1068,8 @@
     for (var i = 0; i < 12; i++) {
       var p = document.createElement("span");
       p.className = "burst";
-      p.textContent = i % 2 ? "✦" : "✧";
       p.style.left = cx + "px"; p.style.top = cy + "px";
-      p.style.fontSize = (10 + Math.random() * 12) + "px";
+      var d = 5 + Math.random() * 8; p.style.width = d + "px"; p.style.height = d + "px";
       document.body.appendChild(p);
       var a = (Math.PI * 2 * i) / 12 + Math.random() * 0.4, dist = 50 + Math.random() * 60;
       p.animate([
@@ -807,8 +1086,20 @@
     state.thanks = state.thanks || {};
     state.thanks[tier] = THANKS[(state.tally) % THANKS.length];
     state.tally += 1;
+    var key = today + "-" + tier, freshIndex = -1;
+    var have = state.stickers.some(function (x) { return x.k === key; });
+    if (!have && state.stickers.length >= STICKERS.length) {
+      state.thanks[tier] += "\nEvery charm in the margins is already yours.";
+    } else if (!have) {
+      state.stickers.push({ k: key, i: state.stickers.length % STICKERS.length });
+      freshIndex = state.stickers.length - 1;
+      var nm = STICKERS[state.stickers[freshIndex].i].name;
+      var pw = STICKERS[state.stickers[freshIndex].i].power;
+      state.thanks[tier] += "\nNew charm: " + nm + ". Power gained: " + pw.charAt(0).toLowerCase() + pw.slice(1);
+    }
     saveState();
     renderTask();
+    renderStickers(freshIndex);
   });
 
   $("swapBtn").addEventListener("click", function () {
@@ -834,6 +1125,7 @@
   startDay();
   renderHeader();
   renderTask();
+  renderStickers(-1);
   if (special === SPECIAL.first) setTimeout(function () { burst($("count")); }, 500);
 })();
 </script>
