@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#0E0F28">
-<title>A Pinch of Whimsy</title>
+<title>Mildly Whimsical</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
@@ -1090,15 +1090,14 @@
     state.thanks = state.thanks || {};
     state.thanks[tier] = THANKS[(state.tally) % THANKS.length];
     state.tally += 1;
-    var key = today + "-" + tier, freshIndex = -1;
-    var have = state.stickers.some(function (x) { return x.k === key; });
+    var key = today + "-" + tier + "-" + state.stickers.length, freshIndex = -1;
     var ownedIdx = {};
     state.stickers.forEach(function (x) { ownedIdx[x.i] = true; });
     var nextIdx = -1;
     for (var q = 0; q < STICKERS.length; q++) if (!ownedIdx[q]) { nextIdx = q; break; }
-    if (!have && nextIdx < 0) {
+    if (nextIdx < 0) {
       state.thanks[tier] += "\nEvery charm in the margins is already yours.";
-    } else if (!have) {
+    } else {
       state.stickers.push({ k: key, i: nextIdx });
       freshIndex = state.stickers.length - 1;
       var nm = STICKERS[state.stickers[freshIndex].i].name;
