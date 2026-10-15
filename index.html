@@ -57,7 +57,7 @@
     position: relative;
   }
   /* Bokeh dots: soft, glowing, gold */
-  .star, .spark, .rule i, .burst {
+  .star, .spark, .rule i, .burst, .glint {
     display: block;
     border-radius: 50%;
     background: radial-gradient(circle at 38% 36%, rgba(224, 198, 128, 0.95) 0%, rgba(214, 176, 90, 0.6) 38%, rgba(214, 176, 90, 0.18) 62%, rgba(214, 176, 90, 0) 74%);
@@ -176,6 +176,7 @@
   .sticker svg { display: block; width: 100%; height: 100%; }
   .sticker .bg { fill: var(--sb, #17383A); }
   .sticker .bgs { stroke: var(--sb, #1E3B2A); }
+  .glint { position: absolute; z-index: 3; opacity: 0; }
   .sticker.pop { animation: peel 0.55s ease-out both; }
   @keyframes peel {
     from { transform: rotate(var(--r, 0deg)) scale(1.8); opacity: 0; }
@@ -298,6 +299,34 @@
   .tiers { border: 1px solid #8A6B2C; }
   .tier { color: #4A3A22; }
   .tier[aria-pressed="true"] { color: #E4C673; }
+  /* progress page */
+  .navlink { margin: 22px 0 0; text-align: center; }
+  .navlink a { font-family: Cinzel, serif; font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); text-decoration: none; border-bottom: 1px solid rgba(214,176,90,.55); padding-bottom: 2px; }
+  .progress { width: 90%; margin: 0 auto; text-align: center; }
+  .progress[hidden] { display: none; }
+  .ptitle { font-family: Cinzel, serif; font-weight: 400; font-size: 1.55rem; letter-spacing: .07em; text-transform: uppercase; margin: 18px 0 4px; }
+  .psub { margin: 0 0 22px; font-size: 1.1rem; color: var(--muted); }
+  .pstats { display: flex; gap: 10px; justify-content: center; }
+  .pstat { flex: 1; border: 1px solid rgba(214,176,90,.6); border-radius: 16px; padding: 14px 6px 12px; }
+  .pstat b { display: block; font-family: "Ingrid Darling", cursive; font-weight: 400; font-size: 3rem; line-height: 1; color: var(--gold-light); }
+  .pstat span { display: block; margin-top: 8px; font-family: Cinzel, serif; font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .pstat { font: inherit; color: inherit; background: transparent; cursor: pointer; }
+  .pstat:hover, .pstat[aria-expanded="true"] { background: rgba(214,176,90,.1); border-color: var(--gold-light); }
+  .pstat:focus-visible { outline: 2px solid var(--gold-light); outline-offset: 2px; }
+  .pstat::after { content: "tap to open"; display: block; margin-top: 6px; font-size: .78rem; font-style: italic; color: var(--muted); opacity: .8; }
+  .pstat[aria-expanded="true"]::after { content: "tap to close"; }
+  .plist { margin: 16px 0 0; text-align: left; border: 1px solid rgba(214,176,90,.4); border-radius: 16px; padding: 6px 14px; }
+  .plist[hidden] { display: none; }
+  .plist .row { padding: 10px 0; border-bottom: 1px solid rgba(214,176,90,.18); font-size: 1.1rem; line-height: 1.3; }
+  .plist .row:last-child { border-bottom: 0; }
+  .plist .when { display: block; font-family: Cinzel, serif; font-size: .66rem; letter-spacing: .08em; text-transform: uppercase; color: var(--gold); margin-bottom: 2px; }
+  .plist .empty, .plist .note { padding: 12px 0; text-align: center; color: var(--muted); font-size: 1.05rem; }
+  .plist .charm { display: flex; gap: 12px; align-items: center; }
+  .plist .charm .sticker { flex: none; width: 44px; height: 44px; margin: 0; }
+  .plist .charm b { display: block; font-family: Cinzel, serif; font-weight: 600; font-size: .85rem; letter-spacing: .04em; }
+  .plist .charm i { font-style: normal; color: var(--muted); }
+  body.on-progress main > :not(.progress) { display: none; }
+  .pkept { margin: 26px 0 0; font-size: 1.05rem; font-style: italic; color: var(--muted); }
 </style>
 </head>
 <body>
@@ -372,8 +401,24 @@
 
   <p class="moon" id="moon"></p>
 
+  <p class="navlink"><a href="#progress" id="toProgress">Your progress</a></p>
+
   <p class="ask">Suggestions, complaints, or tasks for the <a href="https://tally.so/r/8Noaox" target="_blank" rel="noopener noreferrer">goblin</a> to consider?</p>
   <p class="feedback">Made with coffee, cake and a mild amount of magic.</p>
+
+<section class="progress" id="progressView" hidden aria-label="Your progress">
+  <p class="navlink" style="margin-top:6px"><a href="#" class="toToday">Back to today</a></p>
+  <h2 class="ptitle">Your progress</h2>
+  <p class="psub" id="pSub"></p>
+  <div class="pstats">
+    <button class="pstat" id="statTasks" aria-expanded="false" aria-controls="listTasks"><b id="pTasks">0</b><span>Tasks done</span></button>
+    <button class="pstat" id="statCharms" aria-expanded="false" aria-controls="listCharms"><b id="pCharms">0</b><span>Charms collected</span></button>
+  </div>
+  <div class="plist" id="listTasks" hidden></div>
+  <div class="plist" id="listCharms" hidden></div>
+  <p class="pkept">Your progress is kept on this device.</p>
+  <p class="navlink"><a href="#" class="toToday">Back to today</a></p>
+</section>
 </main>
 
 <script>
@@ -993,6 +1038,7 @@
   state.seen = state.seen || {};      // seen[tier][idx] = last day shown
   state.tally = state.tally || 0;
   state.stickers = state.stickers || [];
+  state.history = state.history || [];
   var today = dayNumber(new Date());
   var tier = "2";
 
@@ -1138,6 +1184,24 @@
 
   // ---------- Events ----------
 
+  // A few soft gold motes that drift off a newly found charm.
+  function sparkleCharm(wrap) {
+    if (!wrap || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    for (var i = 0; i < 6; i++) {
+      var g = document.createElement("span");
+      g.className = "glint";
+      var d = 4 + Math.random() * 4, a = (Math.PI * 2 * i) / 6 + Math.random() * 0.8, r0 = 16 + Math.random() * 6;
+      g.style.width = d + "px"; g.style.height = d + "px";
+      g.style.left = "calc(50% + " + Math.cos(a) * r0 + "px)"; g.style.top = "calc(50% + " + Math.sin(a) * r0 + "px)";
+      wrap.appendChild(g);
+      g.animate([
+        { opacity: 0, transform: "translate(-50%,-50%) scale(.3)" },
+        { opacity: .9, transform: "translate(-50%,-50%) scale(1)", offset: 0.4 },
+        { opacity: 0, transform: "translate(-50%, calc(-50% - 10px)) scale(.5)" }
+      ], { duration: 1500, delay: 450 + i * 170, easing: "ease-in-out" }).onfinish = (function (n) { return function () { n.remove(); }; })(g);
+    }
+  }
+
   function burst(el) {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     var r = el.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2;
@@ -1162,6 +1226,8 @@
     state.thanks = state.thanks || {};
     state.thanks[tier] = THANKS[(state.tally) % THANKS.length];
     state.tally += 1;
+    state.history.push({ d: new Date().toISOString().slice(0, 10), t: tier, x: $("task").textContent });
+    if (state.history.length > 400) state.history.shift();
     var key = today + "-" + tier + "-" + state.stickers.length, freshIndex = -1;
     var ownedIdx = {};
     state.stickers.forEach(function (x) { ownedIdx[x.i] = true; });
@@ -1179,6 +1245,7 @@
     saveState();
     renderTask();
     renderStickers(freshIndex);
+    if (freshIndex >= 0) { var fresh = document.querySelector("#stickers .sticker.pop"); sparkleCharm(fresh && fresh.parentNode); }
   });
 
   $("swapBtn").addEventListener("click", function () {
@@ -1201,10 +1268,74 @@
     if (dayNumber(new Date()) !== today) { startDay(); renderHeader(); renderTask(); }
   }, 60000);
 
+  function fmtDate(iso) {
+    var p = iso.split("-"), d = new Date(+p[0], +p[1] - 1, +p[2]);
+    return d.toLocaleDateString(undefined, { day: "numeric", month: "short" });
+  }
+  function toggleList(btnId, listId, otherBtn, otherList) {
+    var btn = $(btnId), list = $(listId), open = btn.getAttribute("aria-expanded") !== "true";
+    btn.setAttribute("aria-expanded", open); list.hidden = !open;
+    $(otherBtn).setAttribute("aria-expanded", "false"); $(otherList).hidden = true;
+  }
+  function renderProgress() {
+    $("pTasks").textContent = state.tally;
+    $("pCharms").textContent = state.stickers.length;
+    $("pSub").textContent = state.tally === 0 ? "Nothing yet. The first small thing is the hardest, and it is very small."
+      : state.stickers.length >= STICKERS.length ? "Every charm is yours. The goblin is quietly impressed."
+      : "Small things, quietly adding up.";
+    // what was done
+    var tl = $("listTasks"); tl.innerHTML = "";
+    var hist = (state.history || []).slice().reverse();
+    hist.forEach(function (h) {
+      var r = document.createElement("div"); r.className = "row";
+      var w = document.createElement("span"); w.className = "when";
+      w.textContent = fmtDate(h.d) + " · " + h.t + "-ish minutes";
+      var t = document.createElement("span"); t.textContent = h.x;
+      r.appendChild(w); r.appendChild(t); tl.appendChild(r);
+    });
+    if (!hist.length) { var e = document.createElement("p"); e.className = "empty"; e.textContent = "Nothing done yet. Today is a fine day to start."; tl.appendChild(e); }
+    else if (hist.length < state.tally) { var n = document.createElement("p"); n.className = "note"; n.textContent = "Earlier tasks were done before the diary began."; tl.appendChild(n); }
+    // what was collected
+    var cl = $("listCharms"); cl.innerHTML = "";
+    var BASES = { f: "#17383A", r: "#5A2630", b: "#3A2D4E" };
+    state.stickers.slice().reverse().forEach(function (x) {
+      var def = STICKERS[x.i % STICKERS.length];
+      var r = document.createElement("div"); r.className = "row charm";
+      var el = document.createElement("div"); el.className = "sticker";
+      el.style.setProperty("--sb", BASES[def.base] || BASES.f);
+      el.innerHTML = stickerSVG(def.art);
+      var tx = document.createElement("div"), nm = document.createElement("b"), pw = document.createElement("i");
+      nm.textContent = def.name.charAt(0).toUpperCase() + def.name.slice(1);
+      pw.textContent = def.power;
+      tx.appendChild(nm); tx.appendChild(pw); r.appendChild(el); r.appendChild(tx); cl.appendChild(r);
+    });
+    if (!state.stickers.length) { var e2 = document.createElement("p"); e2.className = "empty"; e2.textContent = "No charms yet. They arrive with each finished task."; cl.appendChild(e2); }
+  }
+  $("statTasks").addEventListener("click", function () { toggleList("statTasks", "listTasks", "statCharms", "listCharms"); });
+  $("statCharms").addEventListener("click", function () { toggleList("statCharms", "listCharms", "statTasks", "listTasks"); });
+  function setView(on) {
+    document.body.classList.toggle("on-progress", on);
+    $("progressView").hidden = !on;
+    if (on) { renderProgress(); window.scrollTo(0, 0); }
+  }
+  function route() { setView(location.hash === "#progress"); }
+  window.addEventListener("hashchange", route);
+  $("toProgress").addEventListener("click", function (e) {
+    e.preventDefault(); setView(true);
+    try { history.replaceState(null, "", "#progress"); } catch (x) {}
+  });
+  Array.prototype.forEach.call(document.querySelectorAll(".toToday"), function (a) {
+    a.addEventListener("click", function (e) {
+      e.preventDefault(); setView(false);
+      try { history.replaceState(null, "", location.pathname + location.search); } catch (x) {}
+    });
+  });
+
   startDay();
   renderHeader();
   renderTask();
   renderStickers(-1);
+  route();
   if (special === SPECIAL.first) setTimeout(function () { burst($("count")); }, 500);
 })();
 </script>
