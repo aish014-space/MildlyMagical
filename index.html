@@ -5,6 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#0E0F28">
 <title>Mildly Whimsical</title>
+<meta name="description" content="A countdown to New Year with one small, silly, kind thing to do each day. Find a little whimsy and collect a charm.">
+<!--OG--><meta property="og:type" content="website">
+<meta property="og:site_name" content="Mildly Whimsical">
+<meta property="og:title" content="Mildly Whimsical">
+<meta property="og:description" content="A countdown to New Year with one small, silly, kind thing to do each day. Find a little whimsy and collect a charm.">
+<meta property="og:url" content="https://mildlywhimsical.com/">
+<meta property="og:image" content="https://mildlywhimsical.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="A brass crescent moon and soft golden lights on a midnight blue sky">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Mildly Whimsical">
+<meta name="twitter:description" content="A countdown to New Year with one small, silly, kind thing to do each day. Find a little whimsy and collect a charm.">
+<meta name="twitter:image" content="https://mildlywhimsical.com/og-image.png"><!--/OG-->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
@@ -103,6 +117,7 @@
     main { max-width: 720px; padding-top: 56px; }
   }
 
+  .nojs { margin: 40px 0; font-size: 1.2rem; color: var(--ink); }
   .greeting { margin: 0 0 28px; }
   .hello, .tease { text-wrap: balance; }
   .hello { margin: 0; font-size: 1.4rem; font-weight: 700; color: var(--ink); }
@@ -237,7 +252,11 @@
   .moon b { color: var(--ink); font-weight: normal; }
   .moonpic { display: block; margin: 0 auto 8px; }
   .moonpic svg { display: block; margin: 0 auto; width: 2.55rem; height: 2.55rem; filter: drop-shadow(0 0 10px rgba(224, 198, 128, 0.35)); }
-  .feedback { margin: 36px 0 0; font-size: 1.05rem; color: var(--muted); }
+  .ask { margin: 34px 0 0; font-size: 1.1rem; color: var(--muted); }
+  .ask a { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
+  .ask a:hover { color: var(--ink); }
+  .ask a:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; border-radius: 3px; }
+  .feedback { margin: 10px 0 0; font-size: 1.05rem; color: var(--muted); }
 </style>
 </head>
 <body>
@@ -248,6 +267,7 @@
 <span class="star five" aria-hidden="true"></span>
 
 <main>
+  <noscript><p class="nojs">This page needs JavaScript to count the days and find the whimsy. Please switch it on, then come back. The kettle will wait.</p></noscript>
   <div class="greeting">
     <p class="hello" id="hello"></p>
     <p class="tease" id="greeting"></p>
@@ -311,6 +331,7 @@
 
   <p class="moon" id="moon"></p>
 
+  <p class="ask">Suggestions, complaints, or tasks for the <a href="https://tally.so/r/8Noaox" target="_blank" rel="noopener noreferrer">goblin</a> to consider?</p>
   <p class="feedback">Made with coffee, cake and a mild amount of magic.</p>
 </main>
 
@@ -608,11 +629,11 @@
   // 41 per length, so nothing comes round again for at least five weeks.
   var TASKS = {
     "2": [
-      `Drink a full glass of water, like you are downing a suspicious potion: with confidence and no questions. Committed to hydration.`,
+      `Drink a full glass of water, like you are downing a secret potion: with confidence and no questions. Committed to hydration.`,
       `Wash your face with warm water, slowly. Imagine the day’s nonsense going down the drain, because it is.`,
       `Put on moisturiser and sunscreen. Your face holds back many ill-timed sniggers. Be polite to it.`,
       `Text a friend a single word: “Biscuits.” Then watch to see where it goes.`,
-      `Unclench your jaw. Lower your shoulders from around your ears. Return the ears to their usual position.`,
+      `Make a silly face in the mirror. Try a few. Decide which one is your signature.`,
       `Take five slow breaths, in through the nose, out through the mouth, like a kettle that has made peace with itself.`,
       `Stand, stretch both arms at the ceiling and say a soft “Ta-da” to an empty room. The room won’t applaud. That’s fine.`,
       `Text someone: “Thinking of you. No reply needed.” It’s a rare kinda nice.`,
@@ -624,15 +645,15 @@
       `Eat something fruity or green and chew it with dignity.`,
       `Do a very small, very bad victory dance. Under thirty seconds. Witnesses optional.`,
       `Play the song that made you feel amazing when you were 16. Sing along too.`,
-      `Brush your teeth standing on one leg. Balance is crucial, and so is dental care.`,
+      `Stand on one leg for a minute. Balance is crucial. Giggling or grinning while at it is encouraged.`,
       `Run cool water over your wrists for twenty seconds. Folk wisdom says it helps. Folk are occasionally right.`,
       `Tell the mirror one nice thing about yourself. Use an accent if the sincerity is too much.`,
-      `Tidy one square foot of your desk. Just one. The rest will wait; it is very patient.`,
+      `Tidy one square foot of your desk. Just one. The rest will wait. It is very patient.`,
       `Open a window and take three deep breaths of outside. It’s free.`,
       `Send a friend a photo of something mildly ridiculous that you can see right now.`,
       `Massage your scalp with your fingertips for a minute, as if gently persuading an idea out or maybe a few strands of new hair.`,
       `Hug someone, a cushion, or a tree. Count to six. Six is the minimum.`,
-      `Make your tea or coffee, then sit down for the first three sips. Revolutionary.`,
+      `Sit down for the first three sips of your tea or coffee. Revolutionary.`,
       `Scrunch a scrap of paper and take a shot at the bin. Score yourself generously.`,
       `Put on your silliest socks. Nobody needs to know. The socks will know.`,
       `Write “Not today, nonsense” on a sticky note and put it where you will see it.`,
@@ -732,6 +753,15 @@
       foot: `* As promised, the cake has arrived. The management still recommends a fork.`,
       label: `Welcome, dear human.`,
       lock: `Today’s task is locked in. A new year deserves a gentle start.`
+    },
+    // 2 January until the end of September: the countdown has finished and a new one has not begun.
+    after: {
+      count: `Happy New Year`,
+      tasks: { "2": ``, "10": `` },
+      tease: `The countdown is over. Thank you for finding a little whimsy along the way.`,
+      foot: `* Any remaining cake is yours. The management still recommends a fork.`,
+      label: ``,
+      lock: ``
     }
   };
   var special = null;
@@ -894,7 +924,7 @@
       : list.length
       ? list.length + (list.length === 1 ? " power" : " powers") + " collected so far. Hover a charm to read what it does."
       : "Finish a small thing to find your first charm, and the power that comes with it.";
-    $("book").hidden = special === SPECIAL.first && !list.length;
+    $("book").hidden = (special === SPECIAL.first || special === SPECIAL.after) && !list.length;
   }
 
   var TIER_LABEL = { "2": "2-ish minutes", "10": "10-ish minutes" };
@@ -1025,12 +1055,13 @@
 
     var target = dayNumber(new Date(now.getFullYear() + 1, 0, 1));
     var left = target - today;
-    special = (now.getMonth() === 0 && now.getDate() === 1) ? SPECIAL.first : (left === 1 ? SPECIAL.last : null);
+    var isJan1 = now.getMonth() === 0 && now.getDate() === 1;
+    special = isJan1 ? SPECIAL.first : (now.getMonth() <= 8 ? SPECIAL.after : (left === 1 ? SPECIAL.last : null));
     $("greeting").textContent = special ? special.tease : TEASES[today % TEASES.length];
     $("count").textContent = special && special.count ? special.count : left;
     $("count").classList.toggle("is-text", !!(special && special.count));
     $("cake").hidden = !(special && special.count);
-    $("card").hidden = special === SPECIAL.first;
+    $("card").hidden = special === SPECIAL.first || special === SPECIAL.after;
     $("countLabel").hidden = !!(special && special.count);
     $("countLabel").textContent = special ? special.label : (left === 1 ? "day" : "days") + " until the new year";
     $("footnote").textContent = special ? special.foot : FOOTNOTES[today % FOOTNOTES.length];
