@@ -328,6 +328,7 @@
   body.on-progress main > :not(.progress) { display: none; }
   .pkept { margin: 26px 0 0; font-size: 1.05rem; font-style: italic; color: var(--muted); }
 </style>
+<script data-goatcounter="https://mildlywhimsical.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </head>
 <body>
 <span class="star one" aria-hidden="true"></span>
@@ -393,8 +394,8 @@
     </div>
   </section>
 
-  <section class="book" id="book" aria-label="Your sticker sheet">
-    <h2>Sticker sheet</h2>
+  <section class="book" id="book" aria-label="My charms">
+    <h2>My Charms</h2>
     <p class="book-sub" id="bookSub"></p>
     <div class="stickers" id="stickers"></div>
   </section>
@@ -1008,7 +1009,7 @@
     $("bookSub").textContent = list.length >= STICKERS.length
       ? "All " + STICKERS.length + " powers collected. You are now, officially, a little bit magic."
       : list.length
-      ? list.length + (list.length === 1 ? " power" : " powers") + " collected so far. Hover a charm to read what it does."
+      ? list.length + (list.length === 1 ? " power" : " powers") + " collected so far. Tap a charm to read what it does."
       : "Finish a small thing to find your first charm, and the power that comes with it.";
     $("book").hidden = (special === SPECIAL.first || special === SPECIAL.after) && !list.length;
   }
@@ -1202,6 +1203,10 @@
     }
   }
 
+  function count(path, title) {
+    try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: path, title: title, event: true }); } catch (e) {}
+  }
+
   function burst(el) {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     var r = el.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2;
@@ -1222,6 +1227,8 @@
   $("doneBtn").addEventListener("click", function () {
     if (state.done[tier]) return;
     burst($("doneBtn"));
+    // Anonymous count only (no task text): which length was finished.
+    count("task-done-" + tier + "ish", "Task done (" + tier + "-ish)");
     state.done[tier] = true;
     state.thanks = state.thanks || {};
     state.thanks[tier] = THANKS[(state.tally) % THANKS.length];
@@ -1237,6 +1244,7 @@
       state.thanks[tier] += "\nEvery charm in the margins is already yours.";
     } else {
       state.stickers.push({ k: key, i: nextIdx });
+      count("charm-collected", "Charm collected");
       freshIndex = state.stickers.length - 1;
       var nm = STICKERS[state.stickers[freshIndex].i].name;
       var pw = STICKERS[state.stickers[freshIndex].i].power;
@@ -1321,7 +1329,7 @@
   function route() { setView(location.hash === "#progress"); }
   window.addEventListener("hashchange", route);
   $("toProgress").addEventListener("click", function (e) {
-    e.preventDefault(); setView(true);
+    e.preventDefault(); setView(true); count("progress-opened", "Progress page opened");
     try { history.replaceState(null, "", "#progress"); } catch (x) {}
   });
   Array.prototype.forEach.call(document.querySelectorAll(".toToday"), function (a) {
