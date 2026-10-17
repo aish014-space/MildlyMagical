@@ -1449,20 +1449,17 @@
   }
   $("statTasks").addEventListener("click", function () { toggleList("statTasks", "listTasks", "statCharms", "listCharms"); });
   $("statCharms").addEventListener("click", function () { toggleList("statCharms", "listCharms", "statTasks", "listTasks"); });
-  // "Remind me": a calendar event that repeats every 4 days until New Year. Their phone sends the alert.
-  function icsDate(d) { function z(n) { return (n < 10 ? "0" : "") + n; } return d.getFullYear() + z(d.getMonth() + 1) + z(d.getDate()); }
-  function makeICS(hhmm) {
-    var now = new Date(), start = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
-    var t = hhmm.split(":"), tm = t[0] + t[1] + "00";
-    var stamp = now.toISOString().replace(/[-:]/g, "").replace(/\.\d+/, "");
-    return ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Mildly Whimsical//EN", "CALSCALE:GREGORIAN", "BEGIN:VEVENT",
-      "UID:mildly-whimsical-" + now.getTime() + "@mildlywhimsical.com", "DTSTAMP:" + stamp,
-      "DTSTART:" + icsDate(start) + "T" + tm, "DURATION:PT10M",
-      "RRULE:FREQ=DAILY;INTERVAL=4;UNTIL=" + now.getFullYear() + "1231T235959",
-      "SUMMARY:Mildly Whimsical: one small, kind thing",
-      "DESCRIPTION:One small thing is waiting for you. https://mildlywhimsical.com",
-      "URL:https://mildlywhimsical.com", "BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:Mildly Whimsical", "TRIGGER:PT0S", "END:VALARM",
-      "END:VEVENT", "END:VCALENDAR"].join("\r\n");
+  // "Remind me": a calendar event that repeats every 4 days until 31 Dec (files: remind-morning.ics, remind-lunch.ics, remind-evening.ics).
+  var REMIND_YEAR = 2026;
+  var REMIND_FILES = { "09:00": "remind-morning.ics", "12:30": "remind-lunch.ics", "19:00": "remind-evening.ics" };
+  function isApple() { return /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1); }
+  function googleCalURL(hhmm) {
+    var t = hhmm.split(":"), start = REMIND_YEAR + "1018T" + t[0] + t[1] + "00";
+    var mins = parseInt(t[0], 10) * 60 + parseInt(t[1], 10) + 10, pad = function (n) { return (n < 10 ? "0" : "") + n; };
+    var end = REMIND_YEAR + "1018T" + pad(Math.floor(mins / 60)) + pad(mins % 60) + "00";
+    return "https://calendar.google.com/calendar/render?action=TEMPLATE&text=" + encodeURIComponent("Mildly Whimsical: one small, kind thing") +
+      "&details=" + encodeURIComponent("One small thing is waiting for you. https://mildlywhimsical.com") +
+      "&dates=" + start + "/" + end + "&recur=" + encodeURIComponent("RRULE:FREQ=DAILY;INTERVAL=4;UNTIL=" + REMIND_YEAR + "1231T235959Z");
   }
   $("remindBtn").addEventListener("click", function () {
     var open = $("remindTimes").hidden; $("remindTimes").hidden = !open; this.setAttribute("aria-expanded", open);
@@ -1470,21 +1467,22 @@
   });
   Array.prototype.forEach.call(document.querySelectorAll("#remindTimes .btn"), function (b) {
     b.addEventListener("click", function () {
-      try {
-        var blob = new Blob([makeICS(b.getAttribute("data-t"))], { type: "text/calendar;charset=utf-8" });
-        var a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "mildly-whimsical-reminder.ics";
-        document.body.appendChild(a); a.click(); a.remove();
-        setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
-        $("remindMsg").textContent = "Open the file to add it to your calendar. See you soon.";
-        count("remind-me", "Remind me tapped");
-      } catch (e) { $("remindMsg").textContent = "Your browser would not make the reminder. Sorry about that."; }
+      var t = b.getAttribute("data-t");
+      count("remind-me", "Remind me tapped");
+      if (isApple()) {
+        $("remindMsg").textContent = "Opening your calendar…";
+        window.location.href = REMIND_FILES[t];
+      } else {
+        $("remindMsg").textContent = "Opening your calendar in a new tab. Tap Save there.";
+        window.open(googleCalURL(t), "_blank", "noopener");
+      }
     });
   });
 
   function setView(on) {
     document.body.classList.toggle("on-progress", on);
     $("progressView").hidden = !on;
-    if (on) { renderProgress(); $("remind").hidden = new Date().getMonth() <= 8; window.scrollTo(0, 0); }
+    if (on) { renderProgress(); $("remind").hidden = new Date().getMonth() <= 8 || new Date().getFullYear() !== REMIND_YEAR; window.scrollTo(0, 0); }
   }
   function route() { setView(location.hash === "#progress"); }
   window.addEventListener("hashchange", route);

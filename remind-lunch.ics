@@ -1,0 +1,20 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Mildly Whimsical//EN
+CALSCALE:GREGORIAN
+BEGIN:VEVENT
+UID:mildly-whimsical-lunch-2026@mildlywhimsical.com
+DTSTAMP:20261017T000000Z
+DTSTART:20261018T123000
+DURATION:PT10M
+RRULE:FREQ=DAILY;INTERVAL=4;UNTIL=20261231T235959
+SUMMARY:Mildly Whimsical: one small\, kind thing
+DESCRIPTION:One small thing is waiting for you. https://mildlywhimsical.com
+URL:https://mildlywhimsical.com
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mildly Whimsical
+TRIGGER:PT0S
+END:VALARM
+END:VEVENT
+END:VCALENDAR
