@@ -327,6 +327,12 @@
   .plist .charm i { font-style: normal; color: var(--muted); }
   body.on-progress main > :not(.progress) { display: none; }
   .pkept { margin: 26px 0 0; font-size: 1.05rem; font-style: italic; color: var(--muted); }
+  .premind { margin: 26px 0 0; text-align: center; }
+  .premind[hidden], .premind-times[hidden] { display: none; }
+  .premind-line { margin: 0 0 10px; font-size: 1.1rem; color: var(--muted); }
+  .premind .btn { width: auto; min-width: 11rem; }
+  .premind-times { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 10px; }
+  .premind-times .btn { min-width: 0; flex: 1 1 6.5rem; padding-left: 8px; padding-right: 8px; font-size: .7rem; }
 </style>
 <script data-goatcounter="https://mildlywhimsical.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </head>
@@ -417,6 +423,16 @@
   </div>
   <div class="plist" id="listTasks" hidden></div>
   <div class="plist" id="listCharms" hidden></div>
+  <div class="premind" id="remind" hidden>
+    <p class="premind-line">Would a gentle nudge every few days help?</p>
+    <button class="btn ghost" id="remindBtn" aria-expanded="false">Remind me</button>
+    <div class="premind-times" id="remindTimes" hidden>
+      <button class="btn ghost" data-t="09:00">Morning</button>
+      <button class="btn ghost" data-t="12:30">Lunchtime</button>
+      <button class="btn ghost" data-t="19:00">Evening</button>
+    </div>
+    <p class="pmsg" id="remindMsg" aria-live="polite"></p>
+  </div>
   <p class="pkept">Your progress is kept on this device.</p>
   <p class="navlink"><a href="#" class="toToday">Back to today</a></p>
 </section>
@@ -1433,10 +1449,42 @@
   }
   $("statTasks").addEventListener("click", function () { toggleList("statTasks", "listTasks", "statCharms", "listCharms"); });
   $("statCharms").addEventListener("click", function () { toggleList("statCharms", "listCharms", "statTasks", "listTasks"); });
+  // "Remind me": a calendar event that repeats every 4 days until New Year. Their phone sends the alert.
+  function icsDate(d) { function z(n) { return (n < 10 ? "0" : "") + n; } return d.getFullYear() + z(d.getMonth() + 1) + z(d.getDate()); }
+  function makeICS(hhmm) {
+    var now = new Date(), start = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+    var t = hhmm.split(":"), tm = t[0] + t[1] + "00";
+    var stamp = now.toISOString().replace(/[-:]/g, "").replace(/\.\d+/, "");
+    return ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Mildly Whimsical//EN", "CALSCALE:GREGORIAN", "BEGIN:VEVENT",
+      "UID:mildly-whimsical-" + now.getTime() + "@mildlywhimsical.com", "DTSTAMP:" + stamp,
+      "DTSTART:" + icsDate(start) + "T" + tm, "DURATION:PT10M",
+      "RRULE:FREQ=DAILY;INTERVAL=4;UNTIL=" + now.getFullYear() + "1231T235959",
+      "SUMMARY:Mildly Whimsical: one small, kind thing",
+      "DESCRIPTION:One small thing is waiting for you. https://mildlywhimsical.com",
+      "URL:https://mildlywhimsical.com", "BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:Mildly Whimsical", "TRIGGER:PT0S", "END:VALARM",
+      "END:VEVENT", "END:VCALENDAR"].join("\r\n");
+  }
+  $("remindBtn").addEventListener("click", function () {
+    var open = $("remindTimes").hidden; $("remindTimes").hidden = !open; this.setAttribute("aria-expanded", open);
+    $("remindMsg").textContent = "";
+  });
+  Array.prototype.forEach.call(document.querySelectorAll("#remindTimes .btn"), function (b) {
+    b.addEventListener("click", function () {
+      try {
+        var blob = new Blob([makeICS(b.getAttribute("data-t"))], { type: "text/calendar;charset=utf-8" });
+        var a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "mildly-whimsical-reminder.ics";
+        document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+        $("remindMsg").textContent = "Open the file to add it to your calendar. See you soon.";
+        count("remind-me", "Remind me tapped");
+      } catch (e) { $("remindMsg").textContent = "Your browser would not make the reminder. Sorry about that."; }
+    });
+  });
+
   function setView(on) {
     document.body.classList.toggle("on-progress", on);
     $("progressView").hidden = !on;
-    if (on) { renderProgress(); window.scrollTo(0, 0); }
+    if (on) { renderProgress(); $("remind").hidden = new Date().getMonth() <= 8; window.scrollTo(0, 0); }
   }
   function route() { setView(location.hash === "#progress"); }
   window.addEventListener("hashchange", route);
