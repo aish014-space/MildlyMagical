@@ -327,6 +327,7 @@
   .plist .charm i { font-style: normal; color: var(--muted); }
   body.on-progress main > :not(.progress) { display: none; }
   .pkept { margin: 26px 0 0; font-size: 1.05rem; font-style: italic; color: var(--muted); }
+  .passmsg { margin: 6px 0 0; min-height: 1.4em; text-align: center; font-size: 1.05rem; color: var(--muted); }
   .premind { margin: 26px 0 0; text-align: center; }
   .premind[hidden], .premind-times[hidden] { display: none; }
   .premind-line { margin: 0 0 10px; font-size: 1.1rem; color: var(--muted); }
@@ -409,6 +410,9 @@
   <p class="moon" id="moon"></p>
 
   <p class="navlink"><a href="#progress" id="toProgress">Your progress</a></p>
+
+  <p class="navlink"><a href="#" id="passOn">Pass it on</a></p>
+  <p class="passmsg" id="passMsg" aria-live="polite"></p>
 
   <p class="ask">Suggestions, complaints, or tasks for the <a href="https://tally.so/r/8Noaox" target="_blank" rel="noopener noreferrer">goblin</a> to consider?</p>
   <p class="feedback">Made with coffee, cake and a mild amount of magic.</p>
@@ -1461,6 +1465,23 @@
       "&details=" + encodeURIComponent("One small thing is waiting for you. https://mildlywhimsical.com") +
       "&dates=" + start + "/" + end + "&recur=" + encodeURIComponent("RRULE:FREQ=DAILY;INTERVAL=4;UNTIL=" + REMIND_YEAR + "1231T235959Z");
   }
+  // Pass it on: share sheet on phones, copy on computers. Nothing is sent or stored.
+  $("passOn").addEventListener("click", function (e) {
+    e.preventDefault();
+    var text = "I thought you deserved two minutes of gentle nonsense today.\nOne small, silly, kind task a day until New Year, free.";
+    var url = "https://mildlywhimsical.com/?ref=friend";
+    count("pass-it-on", "Pass it on tapped");
+    if (navigator.share) {
+      navigator.share({ text: text, url: url }).catch(function () {});
+    } else if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text + "\n" + url).then(function () {
+        $("passMsg").textContent = "Copied. Paste it to someone nice.";
+      }, function () { $("passMsg").textContent = "Share this link: " + url; });
+    } else {
+      $("passMsg").textContent = "Share this link: " + url;
+    }
+  });
+
   $("remindBtn").addEventListener("click", function () {
     var open = $("remindTimes").hidden; $("remindTimes").hidden = !open; this.setAttribute("aria-expanded", open);
     $("remindMsg").textContent = "";
