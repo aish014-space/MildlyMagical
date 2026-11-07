@@ -1298,7 +1298,25 @@
     $("moon").appendChild(document.createTextNode(" " + m.line));
   }
 
+  // Featured tasks: on these dates, the 2-ish task is this one (once per visitor per day, so swapping still works).
+  var FEATURED = {
+    "2": { "2026-11-07": "If you were a snack, which would you be?", "2026-11-08": "If you were a snack, which would you be?" }
+  };
+  function applyFeatured() {
+    var f = FEATURED[tier]; if (!f || special) return;
+    var n = new Date(), ymd = n.getFullYear() + "-" + ("0" + (n.getMonth() + 1)).slice(-2) + "-" + ("0" + n.getDate()).slice(-2);
+    var want = f[ymd]; if (!want) return;
+    var flags = state.featured || (state.featured = {}), key = tier + ymd;
+    if (flags[key] || state.done[tier]) return;
+    for (var i = 0; i < TASKS[tier].length; i++) {
+      if (TASKS[tier][i].indexOf(want) === 0) {
+        state.picks[tier] = i; (state.seen[tier] || (state.seen[tier] = {}))[i] = today; flags[key] = true; saveState(); return;
+      }
+    }
+  }
+
   function renderTask() {
+    applyFeatured();
     if (!special && state.picks[tier] === undefined) { state.picks[tier] = choose(tier); saveState(); }
     var done = !!state.done[tier];
     $("takes").textContent = "Takes " + TIER_LABEL[tier];
